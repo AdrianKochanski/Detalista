@@ -15,48 +15,48 @@ namespace Infrastructure.Data
         {
             try
             {
-                if(!context.ProductBrands.Any()) 
+                if (!context.ProductBrands.Any())
                 {
-                    string brandsData = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/brands.json");
-                    List<ProductBrand> brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
+                    var brandsData = File.ReadAllText("../Infrastructure/Data/SeedData/brands.json");
+                    var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
 
-                    foreach(ProductBrand brand in brands) 
+                    foreach (var item in brands)
                     {
-                        await context.ProductBrands.AddAsync(brand);
+                        context.ProductBrands.Add(item);
                     }
 
                     await context.SaveChangesAsync();
                 }
 
-                if(!context.ProductTypes.Any()) 
+                if (!context.ProductTypes.Any())
                 {
-                    string typesData = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/types.json");
-                    List<ProductType> types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
+                    var typesData = File.ReadAllText("../Infrastructure/Data/SeedData/types.json");
+                    var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
 
-                    foreach(ProductType type in types) 
+                    foreach (var item in types)
                     {
-                        await context.ProductTypes.AddAsync(type);
+                        context.ProductTypes.Add(item);
                     }
 
                     await context.SaveChangesAsync();
                 }
 
-                if(!context.Products.Any()) 
+                if (!context.Products.Any())
                 {
-                    string productsData = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/products.json");
-                    List<Product> products = JsonSerializer.Deserialize<List<Product>>(productsData);
+                    var productsData = File.ReadAllText("../Infrastructure/Data/SeedData/products.json");
+                    var products = JsonSerializer.Deserialize<List<Product>>(productsData);
 
-                    foreach(Product product in products) 
+                    foreach (var item in products)
                     {
-                        await context.Products.AddAsync(product);
+                        context.Products.Add(item);
                     }
 
                     await context.SaveChangesAsync();
                 }
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
-                ILogger<StoreContextSeed> logger = loggerFactory.CreateLogger<StoreContextSeed>();
+                var logger = loggerFactory.CreateLogger<StoreContextSeed>();
                 logger.LogError(ex.Message);
             }
         }

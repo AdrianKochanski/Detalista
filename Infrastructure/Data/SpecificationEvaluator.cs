@@ -1,40 +1,39 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Core.Entities;
-using Core.Specification;
+using Core.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-    public class SpecificationEvaluator<TEntity> where TEntity: BaseEntity
+    public class SpecificationEvaluator<TEntity> where TEntity : BaseEntity
     {
-        public static IQueryable<TEntity> GetQuery(IQueryable<TEntity> inputQuery, ISpecification<TEntity> spec) 
+        public static IQueryable<TEntity> GetQuery(IQueryable<TEntity> inputQuery, ISpecification<TEntity> spec)
         {
-            if(spec.Criteria != null)
+            var query = inputQuery;
+
+            if (spec.Criteria != null)
             {
-                inputQuery.Where(spec.Criteria);
+                query = query.Where(spec.Criteria);
             }
 
-            if(spec.OrderBy != null)
+            if (spec.OrderBy != null)
             {
-                inputQuery.OrderBy(spec.OrderBy);
+                query = query.OrderBy(spec.OrderBy);
             }
 
-            if(spec.OrderByDescending != null)
+            if (spec.OrderByDescending != null)
             {
-                inputQuery.OrderBy(spec.OrderByDescending);
+                query = query.OrderByDescending(spec.OrderByDescending);
             }
 
-            if(spec.IsPagingEnabled)
+            if (spec.IsPagingEnabled)
             {
-                inputQuery.Skip(spec.Skip).Take(spec.Take);
+                query = query.Skip(spec.Skip).Take(spec.Take);
             }
 
-            inputQuery = spec.Includes.Aggregate(inputQuery, (current, include) => current.Include(include));
-            
-            return inputQuery;
+            query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+
+            return query;
         }
     }
 }
