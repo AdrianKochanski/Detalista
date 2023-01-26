@@ -1,0 +1,26 @@
+<div class="d-flex justify-content-center">
+  <div class="col-3">
+
+    <form class="form-signin" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+      </div>
+
+      <app-text-input
+        *ngFor="let field of fields"
+        formControlName="{{field.controlName}}"
+        [label]="field.label"
+        [type]="field.type ? field.type : ''">
+      </app-text-input>
+
+      <ul class="text-danger list-unstyled" *ngIf="errors">
+        <li *ngFor="let error of errors">
+          {{error}}
+        </li>
+      </ul>
+
+      <button [disabled]="registerForm.invalid" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+    </form>
+
+  </div>
+</div>
