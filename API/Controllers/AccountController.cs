@@ -57,7 +57,7 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpGet("address")]
+        [HttpPut("address")]
         public async Task<ActionResult<AddressDto>> UpdateUserAddress(AddressDto address) {
             AppUser user = await _userManager.FindByClaimsPrincipleWithAddressAsync(User);
             user.Address = _mapper.Map<AddressDto, Address>(address);

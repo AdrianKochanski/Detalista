@@ -25,7 +25,6 @@ namespace API.Controllers
             _mapper = mapper;
         }
         
-        [Authorize]
         [HttpPost]
         public async Task<ActionResult<OrderToReturnDto>> CreateOrder(OrderDto orderDto)
         {
@@ -46,7 +45,6 @@ namespace API.Controllers
             return Ok(_mapper.Map<OrderToReturnDto>(order));
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrdersForUser() 
         {

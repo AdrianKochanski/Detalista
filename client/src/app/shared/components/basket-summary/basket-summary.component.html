@@ -1,0 +1,83 @@
+<ng-container *ngIf="basket$ | async">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="border-0" scope="col" [class.bg.light]="actionsActive">
+            <div class="p-2 px3 text-uppercase">Product</div>
+          </th>
+          <th scope="col" class="border-0" [class.bg.light]="actionsActive">
+            <div class="py-2 text-uppercase">Price</div>
+          </th>
+          <th scope="col" class="border-0" [class.bg.light]="actionsActive">
+            <div class="py-2 text-uppercase">Quantity</div>
+          </th>
+          <th scope="col" class="border-0" [class.bg.light]="actionsActive">
+            <div class="py-2 text-uppercase">Total</div>
+          </th>
+          <th *ngIf="actionsActive" scope="col" class="border-0" [class.bg.light]="actionsActive">
+            <div class="py-2 text-uppercase">Remove</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf="(basket$ | async).items">
+        <tr *ngFor="let item of (basket$ | async).items">
+          <th scope="row">
+            <div class="p-2">
+              <img
+                src="{{item.pictureUrl}}"
+                alt="{{item.productName}}"
+                class="img-fluid"
+                style="max-height: 50px;"
+              >
+              <div class="ml-3 d-inline-block align-middle">
+                <h5 class="mb-0">
+                  <a routerLink="/shop/{{item.id}}" class="text-dark">{{item.productName}}</a>
+                </h5>
+                <span class="text-muted font-weight-normal font-italic d-block">
+                  Type: {{item.type}}
+                </span>
+              </div>
+            </div>
+          </th>
+          <td class="align-middle">
+            <strong>{{item.price | currency}}</strong>
+          </td>
+          <td class="align-middle">
+            <div
+              [class.justify-content-center]="!actionsActive"
+              class="d-flex align-items-center">
+              <i
+                *ngIf="actionsActive"
+                class="fa fa-minus-circle text-warning mr-2"
+                style="cursor: pointer; font-size: 2em"
+                (click)="decrementItemQuantity(item)"
+              ></i>
+              <span class="font-weight-bold" style="font-size: 1.5em;">{{item.quantity}}</span>
+              <i
+                *ngIf="actionsActive"
+                class="fa fa-plus-circle text-warning mx-2"
+                style="cursor: pointer; font-size: 2em"
+                (click)="incrementItemQuantity(item)"
+              ></i>
+            </div>
+          </td>
+          <td class="align-middle">
+            <strong>{{(item.price * item.quantity) | currency}}</strong>
+          </td>
+          <td
+            *ngIf="actionsActive"
+            class="align-middle text-center">
+            <a class="text-danger">
+              <i
+                class="fa fa-trash"
+                style="font-size: 2em;"
+                (click)="removeBasketItem(item)"
+              ></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>

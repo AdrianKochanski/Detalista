@@ -9,6 +9,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TextInputComponent } from './components/text-input/text-input.component';
 import { TextMagnificantDirective } from './directives/text-magnificant.directive';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { StepperComponent } from './components/stepper/stepper.component';
+import { BasketSummaryComponent } from './components/basket-summary/basket-summary.component';
+import { RouterModule } from '@angular/router';
+import { StepperControlComponent } from './components/stepper-control/stepper-control.component';
 
 
 @NgModule({
@@ -17,14 +22,19 @@ import { TextMagnificantDirective } from './directives/text-magnificant.directiv
     PagerComponent,
     OrderTotalsComponent,
     TextInputComponent,
-    TextMagnificantDirective
+    TextMagnificantDirective,
+    StepperComponent,
+    BasketSummaryComponent,
+    StepperControlComponent
   ],
   imports: [
     CommonModule,
     PaginationModule.forRoot(),
     CarouselModule.forRoot(),
     BsDropdownModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CdkStepperModule,
+    RouterModule
   ],
   exports: [
     PaginationModule,
@@ -35,7 +45,11 @@ import { TextMagnificantDirective } from './directives/text-magnificant.directiv
     ReactiveFormsModule,
     BsDropdownModule,
     TextInputComponent,
-    TextMagnificantDirective
+    TextMagnificantDirective,
+    CdkStepperModule,
+    StepperComponent,
+    BasketSummaryComponent,
+    StepperControlComponent
   ]
 })
 export class SharedModule { }

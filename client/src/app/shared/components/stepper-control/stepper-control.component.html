@@ -1,0 +1,8 @@
+<div class="float-none d-flex justify-content-between flex-column flex-lg-row mb-5">
+  <button class="btn btn-outline-primary" cdkStepperPrevious [routerLink]="backRouterLink">
+    <i class="fa fa-angle-left"></i> {{previousStepText}}
+  </button>
+  <button class="btn btn-primary" cdkStepperNext (click)="nexButtonClicked()">
+    {{nextStepText}} <i class="fa fa-angle-right"></i>
+  </button>
+</div>
