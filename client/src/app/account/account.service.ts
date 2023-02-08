@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, map, of, ReplaySubject } from 'rxjs';
+import { map, of, ReplaySubject } from 'rxjs';
 import { baseUrl } from 'src/environments/environment';
 import { IAddress } from '../shared/models/address';
 import { IUser } from '../shared/models/user';

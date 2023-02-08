@@ -1,0 +1,14 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-8">
+        <app-basket-summary
+        [basket$]="basketHistory$"
+        ></app-basket-summary>
+    </div>
+    <div class="col-4">
+      <app-order-totals
+        [basketTotal$]="basketTotalsHistory$"
+      ></app-order-totals>
+    </div>
+  </div>
+</div>

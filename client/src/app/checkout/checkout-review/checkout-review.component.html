@@ -1,5 +1,7 @@
 <div class="container mt-4">
-  <app-basket-summary></app-basket-summary>
+  <app-basket-summary
+  [basket$]="basket$"
+  ></app-basket-summary>
 </div>
 
 <app-stepper-control

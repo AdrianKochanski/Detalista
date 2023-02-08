@@ -34,7 +34,7 @@
                 <h5 class="mb-0">
                   <a routerLink="/shop/{{item.id}}" class="text-dark">{{item.productName}}</a>
                 </h5>
-                <span class="text-muted font-weight-normal font-italic d-block">
+                <span *ngIf="item.type" class="text-muted font-weight-normal font-italic d-block">
                   Type: {{item.type}}
                 </span>
               </div>

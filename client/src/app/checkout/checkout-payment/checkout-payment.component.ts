@@ -26,6 +26,7 @@ export class CheckoutPaymentComponent {
   submitOrder() {
     const basket = this.basketService.getCurrentBasketValue();
     const orderToCreate = this.getOrderToCreate(basket);
+
     this.checkoutService.createOrder(orderToCreate).subscribe((order: IOrder) => {
       this.toastr.success('Order created successfully');
       this.basketService.deleteLocalBasket(basket.id);

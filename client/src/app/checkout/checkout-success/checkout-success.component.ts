@@ -19,4 +19,12 @@ export class CheckoutSuccessComponent {
     }
   }
 
+  goToOrders() {
+    if(this.order) {
+      this.router.navigate(["orders", this.order.id]);
+    }
+    else {
+      this.router.navigate(["orders"]);
+    }
+  }
 }
