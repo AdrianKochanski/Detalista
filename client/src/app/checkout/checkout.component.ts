@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { AccountService } from '../account/account.service';
 import { BasketService } from '../basket/basket.service';
@@ -14,11 +15,15 @@ export class CheckoutComponent implements OnInit {
   checkoutForm: FormGroup;
   basketTotals$: Observable<IBasketTotals>;
 
-  constructor(private fb: FormBuilder, private accountService: AccountService, private basketService: BasketService) {}
+  constructor(private fb: FormBuilder, private accountService: AccountService,
+    private basketService: BasketService, private toastr: ToastrService) {
+      this.createPaymentIntent = this.createPaymentIntent.bind(this);
+    }
 
   ngOnInit(): void {
     this.createCheckoutForm();
     this.getAddressFormValues();
+    this.getDeliveryMethodValue();
     this.basketTotals$ = this.basketService.basketTotal$;
   }
 
@@ -41,6 +46,17 @@ export class CheckoutComponent implements OnInit {
     });
   };
 
+  createPaymentIntent(stepIndex: number) {
+    if(stepIndex == 3) {
+      this.basketService.createPaymentIntent().subscribe({
+        next: () => {},
+        error: (error) => {
+          this.toastr.error(error.message);
+        }
+      });
+    }
+  }
+
   getAddressFormValues() {
     this.accountService.getUserAddress().subscribe(address => {
       if(address) {
@@ -49,5 +65,13 @@ export class CheckoutComponent implements OnInit {
     }, error => {
       console.log(error);
     })
+  }
+
+  getDeliveryMethodValue() {
+    const basket = this.basketService.getCurrentBasketValue();
+    if(basket && basket.deliveryMethodId){
+      this.checkoutForm.get('deliveryForm')?.get('deliveryMethod')
+        ?.patchValue(basket.deliveryMethodId.toString());
+    }
   }
 }

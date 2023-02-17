@@ -21,4 +21,5 @@
 <app-stepper-control
   [nextStepText]="'Go to Review'"
   [previousStepText]="'Back to Address'"
-></app-stepper-control>
+  [nextButtonDisabled]="checkoutForm.get('addressForm').invalid"
+  ></app-stepper-control>

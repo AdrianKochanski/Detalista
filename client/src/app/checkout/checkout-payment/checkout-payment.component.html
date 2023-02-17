@@ -1,7 +1,39 @@
-<p>checkout-payment works!</p>
+<div class="mt-4" *ngIf="checkoutForm" [formGroup]="checkoutForm">
+  <div class="row">
+    <div class="form-group col-12" formGroupName="paymentForm">
+          <app-text-input
+            [label]="'Name on card'"
+            formControlName="nameOnCard">
+          </app-text-input>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-6">
+      <div class="form-floating">
+        <div class="form-control" #cardNumber></div>
+        <label>Card Number</label>
+        <span class="text-danger">{{cardErrors}}</span>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="form-floating">
+        <div class="form-control" #cardExpiry></div>
+        <label>Card Expiry</label>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="form-floating">
+        <div class="form-control" #cardCvc></div>
+        <label>Card Cvc</label>
+      </div>
+    </div>
+  </div>
+</div>
 
 <app-stepper-control
   [nextStepText]="'Submit Order'"
   [previousStepText]="'Back to Review'"
+  [loading]="isLoading"
   (onNextButtonClick)="submitOrder()"
+  [nextButtonDisabled]="isLoading || !paymentFormComplete"
 ></app-stepper-control>

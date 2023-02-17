@@ -7,4 +7,5 @@
 <app-stepper-control
   [nextStepText]="'Go to Payment'"
   [previousStepText]="'Back to Delivery'"
+  (onNextButtonClick)="afterCheckoutHeaderClick(3)"
 ></app-stepper-control>

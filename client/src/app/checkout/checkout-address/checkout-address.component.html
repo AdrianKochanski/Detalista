@@ -34,4 +34,5 @@
   [nextStepText]="'Go to Delivery'"
   [previousStepText]="'Back to Basket'"
   [backRouterLink]="'/basket'"
+  [nextButtonDisabled]="checkoutForm.get('addressForm').invalid"
 ></app-stepper-control>

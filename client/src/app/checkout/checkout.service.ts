@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { baseUrl } from 'src/environments/environment';
 import { IDeliveryMethod } from '../shared/models/deliveryMethod';
-import { IOrderToCreate } from '../shared/models/order';
+import { IOrder, IOrderToCreate } from '../shared/models/order';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,8 @@ export class CheckoutService {
 
   constructor(private http: HttpClient) { }
 
-  createOrder(order: IOrderToCreate){
-    return this.http.post(baseUrl + 'orders', order);
+  createOrder(order: IOrderToCreate) : Observable<IOrder>{
+    return this.http.post<IOrder>(baseUrl + 'orders', order);
   }
 
   getDeliveryMethods() {

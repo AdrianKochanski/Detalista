@@ -2,7 +2,8 @@
   <button class="btn btn-outline-primary" cdkStepperPrevious [routerLink]="backRouterLink">
     <i class="fa fa-angle-left"></i> {{previousStepText}}
   </button>
-  <button class="btn btn-primary" cdkStepperNext (click)="nexButtonClicked()">
+  <button class="btn btn-primary" cdkStepperNext (click)="nexButtonClicked()" [disabled]="nextButtonDisabled">
     {{nextStepText}} <i class="fa fa-angle-right"></i>
+    <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
   </button>
 </div>

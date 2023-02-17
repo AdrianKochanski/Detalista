@@ -9,6 +9,8 @@ export class StepperControlComponent {
   @Input() nextStepText: string;
   @Input() previousStepText: string;
   @Input() backRouterLink: string;
+  @Input() loading: boolean = false;
+  @Input() nextButtonDisabled: boolean = false;
   @Output() onNextButtonClick: EventEmitter<void> = new EventEmitter<void>();
 
   nexButtonClicked() {

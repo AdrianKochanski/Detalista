@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { IBasket, IBasketTotals } from 'src/app/shared/models/basket';
 import { IOrder, IOrderItem } from 'src/app/shared/models/order';
 import { BreadcrumbService } from 'xng-breadcrumb';
@@ -32,11 +32,12 @@ export class OrderDetailsComponent implements OnInit {
 
   getOrderDetails(): void {
     this.ordersService.getOrderDetails(+this.route.snapshot.paramMap.get("id")).subscribe((order: IOrder) => {
-    this.breadcrumbService.set('@orderDetails', "#" + order.id + " " + order.status + " - " + order.total + "$");
-
-    const basketHistory: IBasket = {
+      this.breadcrumbService.set('@orderDetails', "#" + order.id + " " + order.status + " - " + order.total + "$");
+      console.log(order);
+      const basketHistory: IBasket = {
         id: "",
-        items: []
+        items: [],
+        shippingPrice: order.shippingPrice
       };
 
       order.orderItems.forEach((orderItem: IOrderItem) => {

@@ -10,6 +10,7 @@ export class TextInputComponent implements OnInit, ControlValueAccessor {
   @ViewChild('input', {static: true}) input: ElementRef;
   @Input() type = "text";
   @Input() label: string;
+  @Input() changeFnc: Function;
 
   constructor(@Self() public controlDir: NgControl){
     this.controlDir.valueAccessor = this;
@@ -34,7 +35,12 @@ export class TextInputComponent implements OnInit, ControlValueAccessor {
   }
 
   registerOnChange(fn: any): void {
-    this.onChange = fn;
+    this.onChange = (event) => {
+      fn(event);
+      if(this.changeFnc) {
+        this.changeFnc(event);
+      }
+    };
   }
 
   registerOnTouched(fn: any): void {
