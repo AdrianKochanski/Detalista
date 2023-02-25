@@ -40,7 +40,7 @@ namespace Infrastructure.Services
                 shippingPrice = deliveryMethod.Price;
             }
 
-            foreach(var item in basket.Items) 
+            foreach(var item in basket.Items)
             {
                 var product = await _unitOfWork.Repository<Product>().GetByIdAsync(item.Id);
 
@@ -55,11 +55,13 @@ namespace Infrastructure.Services
 
             if(string.IsNullOrEmpty(basket.PaymentIntentId))
             {
-                var options = new PaymentIntentCreateOptions() 
+                var options = new PaymentIntentCreateOptions()
                 {
                     Amount = (long)basket.Items.Sum(i => i.Quantity * (i.Price * 100)) + (long)shippingPrice * 100,
-                    Currency = "usd",
-                    PaymentMethodTypes = new List<string> {"card"}
+                    Currency = "pln",
+                    AutomaticPaymentMethods = new PaymentIntentAutomaticPaymentMethodsOptions {
+                        Enabled = true,
+                    }
                 };
                 intent = await service.CreateAsync(options);
                 basket.PaymentIntentId = intent.Id;

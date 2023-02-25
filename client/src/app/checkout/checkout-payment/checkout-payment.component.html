@@ -1,5 +1,5 @@
 <div class="mt-4" *ngIf="checkoutForm" [formGroup]="checkoutForm">
-  <div class="row">
+  <div class="row" *ngIf="cardPaymentSelected">
     <div class="form-group col-12" formGroupName="paymentForm">
           <app-text-input
             [label]="'Name on card'"
@@ -8,32 +8,32 @@
     </div>
   </div>
   <div class="row mb-3">
-    <div class="col-6">
-      <div class="form-floating">
-        <div class="form-control" #cardNumber></div>
-        <label>Card Number</label>
-        <span class="text-danger">{{cardErrors}}</span>
-      </div>
-    </div>
-    <div class="col-3">
-      <div class="form-floating">
-        <div class="form-control" #cardExpiry></div>
-        <label>Card Expiry</label>
-      </div>
-    </div>
-    <div class="col-3">
-      <div class="form-floating">
-        <div class="form-control" #cardCvc></div>
-        <label>Card Cvc</label>
-      </div>
+    <div #paymentForm class="col-12" style="height: 400px;">
+        <div class="form-floating">
+          <div #linkAuthenticationElement>
+            <!--Stripe.js injects the Link Authentication Element-->
+          </div>
+        </div>
+
+        <div class="form-floating">
+          <div #paymentElement>
+            <!--Stripe.js injects the Payment Element-->
+          </div>
+        </div>
+
+        <div #paymentMessage class="hidden"></div>
+
+        <div class="mt-3">
+          <app-stepper-control
+            [nextStepText]="'Submit Order'"
+            [previousStepText]="'Back to Review'"
+            [loading]="isLoading"
+            (onNextButtonClick)="submitOrder()"
+            [nextButtonDisabled]="isLoading || !paymentFormComplete"
+          ></app-stepper-control>
+        </div>
     </div>
   </div>
 </div>
 
-<app-stepper-control
-  [nextStepText]="'Submit Order'"
-  [previousStepText]="'Back to Review'"
-  [loading]="isLoading"
-  (onNextButtonClick)="submitOrder()"
-  [nextButtonDisabled]="isLoading || !paymentFormComplete"
-></app-stepper-control>
+
