@@ -22,6 +22,7 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
   payment?: StripePaymentElement;
   linkAuthentication?: StripeLinkAuthenticationElement;
   stripe: Stripe;
+  elementsLoaded: boolean = false;
   paymentComplete = false;
   cardOrLinkPaymentSelected = true;
   currentNameOnCard = "";
@@ -85,7 +86,8 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
     if(basket === null || basket.clientSecret === null) return;
     const elements: StripeElements = await this.stripeService.loadStripeElements(basket.clientSecret);
 
-    if(elements) {
+    if(elements && !this.elementsLoaded) {
+      this.elementsLoaded = true;
       this.mountLinkElement(elements);
       this.mountPaymentElement(elements);
     }
@@ -103,16 +105,18 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
   }
 
   private mountPaymentElement(elements: StripeElements) {
-    this.payment = elements.create('payment',
-    {
-      layout: {
-        type: 'tabs',
-        defaultCollapsed: false,
-        radios: true,
-        spacedAccordionItems: false
-      },
-      paymentMethodOrder: ['card', 'p24', 'blik', 'apple_pay', 'google_pay', 'paynow', 'link']
-    });
+    if(!this.payment) {
+      this.payment = elements.create('payment',
+      {
+        layout: {
+          type: 'tabs',
+          defaultCollapsed: false,
+          radios: true,
+          spacedAccordionItems: false
+        },
+        paymentMethodOrder: ['card', 'p24', 'blik', 'apple_pay', 'google_pay', 'paynow', 'link']
+      });
+    }
 
     this.payment.mount(this.paymentElement?.nativeElement);
     this.payment.on("change", event => {

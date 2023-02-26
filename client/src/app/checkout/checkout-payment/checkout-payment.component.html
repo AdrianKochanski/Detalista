@@ -1,5 +1,5 @@
 <div class="mt-4" *ngIf="checkoutForm" [formGroup]="checkoutForm">
-  <div class="row" *ngIf="cardPaymentSelected">
+  <div class="row" *ngIf="cardOrLinkPaymentSelected">
     <div class="form-group col-12" formGroupName="paymentForm">
           <app-text-input
             [label]="'Name on card'"
