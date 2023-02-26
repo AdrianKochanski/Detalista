@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -6,9 +6,9 @@ import { BasketService } from 'src/app/basket/basket.service';
 import { IBasket } from 'src/app/shared/models/basket';
 import { IOrder, IOrderToCreate } from 'src/app/shared/models/order';
 import { CheckoutService } from '../checkout.service';
-import { loadStripe, Stripe, StripeElements, StripeElementsOptions, StripeLinkAuthenticationElement, StripePaymentElement } from '@stripe/stripe-js';
+import { Stripe, StripeElements, StripeLinkAuthenticationElement, StripePaymentElement } from '@stripe/stripe-js';
 import { firstValueFrom, map, Subscription } from 'rxjs';
-import { BusyService } from 'src/app/core/services/busy.service';
+import { StripeService } from 'src/app/core/services/stripe.service';
 
 @Component({
   selector: 'app-checkout-payment',
@@ -19,13 +19,12 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
   @Input() checkoutForm: FormGroup;
   @ViewChild('paymentElement') paymentElement?: ElementRef;
   @ViewChild('linkAuthenticationElement') linkAuthenticationElement?: ElementRef;
-  stripe: Stripe | null = null;
-  elements: StripeElements;
   payment?: StripePaymentElement;
   linkAuthentication?: StripeLinkAuthenticationElement;
+  stripe: Stripe;
   paymentComplete = false;
-  cardPaymentSelected = true;
-  currentPaymentMethod = "";
+  cardOrLinkPaymentSelected = true;
+  currentNameOnCard = "";
   isLoading: boolean = false;
   basketSub: Subscription;
 
@@ -34,7 +33,7 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
     private checkoutService: CheckoutService,
     private toastr: ToastrService,
     private router: Router,
-    private busyService: BusyService)
+    private stripeService: StripeService)
   {}
 
   ngOnDestroy(): void {
@@ -44,24 +43,23 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-     this.basketService.basket$.pipe(
-      map(async (basket: IBasket) => {
-          if(!this.elements) {
-            if(basket === null || basket.clientSecret === null) return;
-            this.elements = await this.loadStripeElements(basket.clientSecret);
-          }
-        }
-      )).subscribe();
+    this.stripe = await this.stripeService.loadStripe();
+
+    this.basketService.basket$.pipe(
+    map(async (basket: IBasket) => {
+        await this.loadStripeElements(basket);
+      }
+    )).subscribe();
   }
 
   async submitOrder() {
     this.isLoading = true;
     const basket = this.basketService.getCurrentBasketValue();
-    if(basket == null) throw new Error("Cannot get basket");
+    if(!basket || !basket.clientSecret) throw new Error("Cannot get basket");
 
     try {
       const createOrder: IOrder = await this.createOrder(basket);
-      await this.confirmPaymentWithStripe(this.elements, `https://localhost:4200/orders/${createOrder.id}`);
+      await this.confirmPaymentWithStripe(basket.clientSecret, `https://localhost:4200/orders/${createOrder.id}`);
       this.basketService.deleteBasket(basket);
       const navigationExtras: NavigationExtras = {state: createOrder};
       this.router.navigate(['checkout/success'], navigationExtras);
@@ -77,49 +75,20 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
 
   get paymentFormComplete()
   {
-    return (this.paymentComplete && this.checkoutForm?.get('paymentForm')?.valid)
+    const formValid: boolean = this.checkoutForm?.get('paymentForm')?.valid;
+    return (
+      this.paymentComplete && (formValid || !this.cardOrLinkPaymentSelected)
+    )
   }
 
-  private async loadStripeElements(clientSecret: string): Promise<StripeElements> {
-    this.busyService.busy();
-    let elements: StripeElements;
-
-    this.stripe = await loadStripe("pk_test_51MZCj7Lg5EnoM9iaWdWnRlcZzXc0gyuljxLNvyCpsmGXuhSQWhlfUzmzHI6SCvJiZeokvZMvCnSZ1fU2VIyl4uQt00WUlVTi2B");
-
-    if(clientSecret === null) throw new Error("Cannot get client secret");
-
-    const options: StripeElementsOptions = {
-      clientSecret: clientSecret,
-      appearance: {
-        labels: 'floating',
-        variables: {
-          colorPrimary: '#333',
-          colorDanger: '#dc3545',
-          colorBackground: '#ffffff',
-          colorText: '#212529',
-          fontFamily: 'Neucha, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-          fontSizeBase: '1rem',
-          spacingUnit: '2px',
-          fontLineHeight: '1.25',
-          fontWeightNormal: '700'
-        },
-        rules: {
-          '.Input': {
-            border: "2px solid #333"
-          }
-        }
-      }
-    };
-
-    elements = this.stripe?.elements(options);
+  private async loadStripeElements(basket: IBasket): Promise<void> {
+    if(basket === null || basket.clientSecret === null) return;
+    const elements: StripeElements = await this.stripeService.loadStripeElements(basket.clientSecret);
 
     if(elements) {
       this.mountLinkElement(elements);
       this.mountPaymentElement(elements);
     }
-
-    this.busyService.idle();
-    return elements;
   }
 
   private mountLinkElement(elements: StripeElements) {
@@ -128,6 +97,9 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
     }
 
     this.linkAuthentication.mount(this.linkAuthenticationElement?.nativeElement);
+    this.linkAuthentication.on("change", event => {
+      this.currentNameOnCard = event.value.email;
+    });
   }
 
   private mountPaymentElement(elements: StripeElements) {
@@ -145,29 +117,37 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
     this.payment.mount(this.paymentElement?.nativeElement);
     this.payment.on("change", event => {
       this.paymentComplete = event.complete;
-      this.currentPaymentMethod = event.value.type;
 
       switch(event.value.type) {
         case "card":
-          this.cardPaymentSelected = true;
+          this.cardOrLinkPaymentSelected = true;
           this.mountLinkElement(elements);
           break;
         case "link":
-          this.cardPaymentSelected = false;
+          this.cardOrLinkPaymentSelected = true;
           this.mountLinkElement(elements);
+          this.setNameOnCard();
           break;
         default:
-          this.cardPaymentSelected = false;
+          this.cardOrLinkPaymentSelected = false;
           this.linkAuthentication.unmount();
           break;
       }
     });
   }
 
-  private async confirmPaymentWithStripe(elements: StripeElements, returnUrl: string): Promise<void> {
-    const nameOnCard = this.checkoutForm.get("paymentForm").get("nameOnCard").value;
+  private setNameOnCard() {
+    const paymentForm = this.checkoutForm.get("paymentForm");
+    if(!paymentForm.value.nameOnCard) {
+      paymentForm.patchValue({nameOnCard: this.currentNameOnCard});
+    }
+  }
 
-    const result = await this.stripe?.confirmPayment({
+  private async confirmPaymentWithStripe(clientSecret: string, returnUrl: string): Promise<void> {
+    const nameOnCard = this.checkoutForm.get("paymentForm").get("nameOnCard").value;
+    const elements = await this.stripeService.loadStripeElements(clientSecret)
+
+    const result = await this.stripe.confirmPayment({
       elements,
       confirmParams: {
         return_url: returnUrl ? returnUrl : 'https://localhost:4200/orders',

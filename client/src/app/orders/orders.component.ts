@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StripeService } from '../core/services/stripe.service';
 import { IOrder } from '../shared/models/order';
 import { OrdersService } from './orders.service';
 
@@ -10,9 +11,11 @@ import { OrdersService } from './orders.service';
 export class OrdersComponent implements OnInit {
   orders: IOrder[];
 
-  constructor(private ordersService: OrdersService){}
+  constructor(private ordersService: OrdersService, private stripeService: StripeService){}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.stripeService.removeBasketWhenPaymentSuccessfull();
+
     this.ordersService.getOrdersForUser().subscribe((data: IOrder[]) => {
       this.orders = data;
     }, error => {
