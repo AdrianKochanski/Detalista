@@ -94,14 +94,15 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
   }
 
   private mountLinkElement(elements: StripeElements) {
-    if(this.linkAuthentication == null) {
+    if(!this.linkAuthentication) {
       this.linkAuthentication = elements.create('linkAuthentication');
+
+      this.linkAuthentication.on("change", event => {
+        this.currentNameOnCard = event.value.email;
+      });
     }
 
     this.linkAuthentication.mount(this.linkAuthenticationElement?.nativeElement);
-    this.linkAuthentication.on("change", event => {
-      this.currentNameOnCard = event.value.email;
-    });
   }
 
   private mountPaymentElement(elements: StripeElements) {
@@ -114,30 +115,31 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
           radios: true,
           spacedAccordionItems: false
         },
-        paymentMethodOrder: ['card', 'p24', 'blik', 'apple_pay', 'google_pay', 'paynow', 'link']
+        paymentMethodOrder: ['card', 'p24', 'blik', 'google_pay', 'apple_pay', 'paynow', 'link']
+      });
+
+      this.payment.on("change", event => {
+        this.paymentComplete = event.complete;
+
+        switch(event.value.type) {
+          case "card":
+            this.cardOrLinkPaymentSelected = true;
+            this.mountLinkElement(elements);
+            break;
+          case "link":
+            this.cardOrLinkPaymentSelected = true;
+            this.mountLinkElement(elements);
+            this.setNameOnCard();
+            break;
+          default:
+            this.cardOrLinkPaymentSelected = false;
+            this.linkAuthentication.unmount();
+            break;
+        }
       });
     }
 
     this.payment.mount(this.paymentElement?.nativeElement);
-    this.payment.on("change", event => {
-      this.paymentComplete = event.complete;
-
-      switch(event.value.type) {
-        case "card":
-          this.cardOrLinkPaymentSelected = true;
-          this.mountLinkElement(elements);
-          break;
-        case "link":
-          this.cardOrLinkPaymentSelected = true;
-          this.mountLinkElement(elements);
-          this.setNameOnCard();
-          break;
-        default:
-          this.cardOrLinkPaymentSelected = false;
-          this.linkAuthentication.unmount();
-          break;
-      }
-    });
   }
 
   private setNameOnCard() {
