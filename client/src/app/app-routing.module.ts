@@ -44,6 +44,11 @@ const routes: Routes = [
     data: {breadcrumb: 'Order'}
   },
   {
+    path: 'crypto',
+    loadChildren: () => import('./crypto/crypto.module').then(mod => mod.CryptoModule),
+    data: {breadcrumb: 'Crypto'}
+  },
+  {
     path: 'account',
     loadChildren: () => import('./account/account.module').then(mod => mod.AccountModule),
     data: {breadcrumb: {skip: true}}
