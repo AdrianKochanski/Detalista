@@ -23,6 +23,36 @@ namespace API.Controllers
             _paymentService = paymentService;
         }
 
+        // Płatność krypto
+        // 0. Przy przechodzeniu do sekcji płatności oraz tworzeniu paymentIntent
+        //  a. Od tej pory koszyk oprócz kwoty w walucie bazowej, przechowuje również kursy innych walut
+        //  b. Wartośc zamówienia w ETH zostaje odświeżona jeżeli na koszyku nie ma jeszcze zapisanego transactionId
+        //  c. W przypadku gdy transactionId istnieje ale nie mamy pierwotnej kwoty oznacza to błąd
+        // 1. Client ma możliwośc dokonania wyboru płatności krypto
+        //  a. Przycisk uaktywnia metamaska i prosi o zezwolenie na połączenie
+        //  b. Forma płatności oraz waluta zostają wyświetlone dynamicznie w sekcji summary
+        //  c. Wciąż można dokonać płatności tradycyjną formą
+        // 2. Tworzymy order na którym zapisujemy dodatkowo informacje o walucie i przeliczonej kwocie transakcji
+        // 3. Tworzymy transakcję i zapisujemy transactionId na koszyku
+        // 4. Client dokonuje płatnosci na kontrakcie ethereum, na którym zostaje zapisane 
+        //  a. OrderId
+        //  b. Kwota ETH
+        //  c. Kwota $
+        //  d. Data płatności
+        //  e. TransactionId
+        // 5. Payment intent wraz z koszykiem zostaje usunięty [PUNKT TEN MOŻE NIE ZOSTAĆ WYKONANY!]
+        //  a. Jeżeli koszyk posiada aktualny transactionId to nie możemy modyfikować koszyka, ani dokonać powtórnej płatności,
+        //      wymagana informacja o tym że transakcja jest przetwarzana
+        //  b. Client odpytuje o status transakcji jeżeli koszyk posiada transactionId i jeżeli płatność została zakończona, 
+        //      payment intent wraz z koszykiem zostaje usunięty
+        // 6. Przechodzac do sekcji zamówień w zamówieniu widoczna jest forma płatności, oraz waluta
+        //
+        // 5. Server włącza joba, który odpytuje cyklicznie kontrakt o statusy płatności
+        //  a. Sprawdza czy płatność nie została już potwierdzona jeżeli tak to usuwa ją z kolejki
+        //  b. Sprawdza kwotę czy zgadza się z zapisaną w zamówieniu
+        //  c. Potwierdza płatność i usuwa ją z kolejki oczekujących w kontrakcie
+        //  d. Czyści obecny koszyk, jeżeli posiada on zapisane transactionId
+
         [Authorize]
         [HttpPost("{basketId}")]
         public async Task<ActionResult<CustomerBasket>> CreateOrUpdatePaymentIntent(string basketId)
