@@ -65,6 +65,10 @@ contract Dappazon is Ownable {
     for(uint i=0; i < _items.length; i++) unlistItem(_items[i].id);
   }
 
+  // Getters 
+  function queryItems() public view returns(Item[] memory) {
+    return items;
+  }
 
   // Checkers
   function getListItem(uint256 itemId) public view returns(Item memory) {

@@ -69,6 +69,7 @@ export interface DappazonInterface extends utils.Interface {
     "orderCount(address)": FunctionFragment;
     "orders(address,uint256)": FunctionFragment;
     "owner()": FunctionFragment;
+    "queryItems()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "unlistItems((uint256,string,string,string,uint256,uint256,uint256)[])": FunctionFragment;
@@ -86,6 +87,7 @@ export interface DappazonInterface extends utils.Interface {
       | "orderCount"
       | "orders"
       | "owner"
+      | "queryItems"
       | "renounceOwnership"
       | "transferOwnership"
       | "unlistItems"
@@ -126,6 +128,10 @@ export interface DappazonInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "queryItems",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
@@ -154,6 +160,7 @@ export interface DappazonInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "orderCount", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "orders", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "queryItems", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike
@@ -297,6 +304,10 @@ export interface Dappazon extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
+    queryItems(
+      overrides?: CallOverrides
+    ): Promise<[Dappazon.ItemStructOutput[]]>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -371,6 +382,8 @@ export interface Dappazon extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
+  queryItems(overrides?: CallOverrides): Promise<Dappazon.ItemStructOutput[]>;
+
   renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -444,6 +457,8 @@ export interface Dappazon extends BaseContract {
     >;
 
     owner(overrides?: CallOverrides): Promise<string>;
+
+    queryItems(overrides?: CallOverrides): Promise<Dappazon.ItemStructOutput[]>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -526,6 +541,8 @@ export interface Dappazon extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
+    queryItems(overrides?: CallOverrides): Promise<BigNumber>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -585,6 +602,8 @@ export interface Dappazon extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    queryItems(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }

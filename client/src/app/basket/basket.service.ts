@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { baseUrl } from 'src/environments/environment';
+import configuration from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { Basket, IBasket, IBasketItem, IBasketTotals } from '../shared/models/basket';
@@ -18,7 +18,7 @@ export class BasketService {
   constructor(private http: HttpClient) { }
 
   createPaymentIntent() {
-    return this.http.post<Basket>(baseUrl + 'payments/' + this.getCurrentBasketValue()?.id, {})
+    return this.http.post<Basket>(configuration.baseUrl + 'payments/' + this.getCurrentBasketValue()?.id, {})
       .pipe(
         map((basket: IBasket) => {
           this.basketSource.next(basket);
@@ -37,7 +37,7 @@ export class BasketService {
   }
 
   getBasket(id: string) {
-    return this.http.get(baseUrl + 'basket?id=' + id).pipe(
+    return this.http.get(configuration.baseUrl + 'basket?id=' + id).pipe(
       map((basket: IBasket) => {
         this.basketSource.next(basket);
         this.calculateTotals();
@@ -46,7 +46,7 @@ export class BasketService {
   }
 
   setBasket(basket: Basket) {
-    return this.http.post(baseUrl + 'basket', basket).subscribe((response: IBasket) => {
+    return this.http.post(configuration.baseUrl + 'basket', basket).subscribe((response: IBasket) => {
       this.basketSource.next(response);
       this.calculateTotals();
     }, error => {
@@ -109,7 +109,7 @@ export class BasketService {
   }
 
   deleteBasket(basket: IBasket) {
-    return this.http.delete(baseUrl + 'basket?id=' + basket.id).subscribe(() => {
+    return this.http.delete(configuration.baseUrl + 'basket?id=' + basket.id).subscribe(() => {
       this.deleteLocalBasket(basket.id);
     }, error => {
       console.log(error);

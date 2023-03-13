@@ -46,7 +46,11 @@ const routes: Routes = [
   {
     path: 'crypto',
     loadChildren: () => import('./crypto/crypto.module').then(mod => mod.CryptoModule),
-    data: {breadcrumb: 'Crypto'}
+    data: {
+      breadcrumb: {
+        alias: "crypto"
+      }
+    }
   },
   {
     path: 'account',

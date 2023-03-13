@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
-import { baseUrl } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+import configuration from 'src/environments/environment';
 import { IOrder } from '../shared/models/order';
 
 @Injectable({
@@ -11,10 +11,10 @@ export class OrdersService {
   constructor(private http: HttpClient) { }
 
   getOrdersForUser() : Observable<IOrder[]> {
-    return this.http.get<IOrder[]>(baseUrl + "orders");
+    return this.http.get<IOrder[]>(configuration.baseUrl + "orders");
   }
 
   getOrderDetails(id: number) : Observable<IOrder> {
-    return this.http.get<IOrder>(baseUrl + "orders/" + id);
+    return this.http.get<IOrder>(configuration.baseUrl + "orders/" + id);
   }
 }
