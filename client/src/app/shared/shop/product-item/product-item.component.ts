@@ -9,11 +9,11 @@ import { IProduct } from 'src/app/shared/models/product';
 })
 export class ProductItemComponent implements OnInit {
   @Input() product: IProduct;
+  @Input() isCrypto: boolean = false;
 
   constructor(private basketService: BasketService){}
 
   ngOnInit(): void {
-
   }
 
   addItemToBasket() {

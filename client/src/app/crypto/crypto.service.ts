@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ExternalProvider } from "@ethersproject/providers";
-import { ethers } from 'ethers';
+import { ethers, BigNumber } from 'ethers';
 import DappazonAbi from "../../../../crypto/artifacts/contracts/Dappazon.sol/Dappazon.json";
 import { Dappazon } from "../../../../crypto/typechain-types";
 import configuration from '../../environments/environment';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, from, map, Observable, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { IProduct } from '../shared/models/product';
 
@@ -24,32 +24,30 @@ export class CryptoService {
   private dappazonSource = new BehaviorSubject<ethers.Contract>(null);
   dappazon$ = this.dappazonSource.asObservable();
 
-  private productsSource = new BehaviorSubject<IProduct[]>([]);
-  products$ = this.productsSource.asObservable();
-
   constructor(private toastrService: ToastrService) {}
 
-  async getItems() {
-    if(this.getCurrentDappazon() == null) return;
+  getItems(): Observable<IProduct[]> {
+    if(this.getCurrentDappazon() == null) return from([]);
 
-    const items: Dappazon.ItemStructOutput[] = await this.dappazonSource.value.queryItems();
-    const products: IProduct[] = [];
+    return from(this.dappazonSource.value.queryItems()).pipe(
+      map((items: Dappazon.ItemStructOutput[]) => {
+        const products: IProduct[] = [];
+        items.forEach(i => {
+          products.push(this.formatItemToProduct(i));
+        });
+        return products;
+      })
+    );
+  }
 
-    items.forEach(i => {
-      const price = ethers.utils.formatEther(i.cost);
+  getItem(itemId: number): Observable<IProduct> {
+    if(this.getCurrentDappazon() == null) return of({} as IProduct);
 
-      products.push({
-        id: i.id.toNumber(),
-        description: i.name,
-        name: i.name,
-        pictureUrl: i.image,
-        price: parseFloat(price),
-        productBrand: "",
-        productType: ""
-      });
-    });
-
-    this.productsSource.next(products);
+    return from(this.dappazonSource.value.getItem(BigNumber.from(itemId))).pipe(
+      map((item: Dappazon.ItemStructOutput) => {
+        return this.formatItemToProduct(item);
+      })
+    );
   }
 
   getCurrentAccount(): string {
@@ -70,16 +68,16 @@ export class CryptoService {
   async loadDappazonContract(): Promise<void> {
     if(!this.verifyMetamaskExtension()) return;
 
-      const provider = new ethers.providers.Web3Provider(window.ethereum!);
-      const network = await provider.getNetwork();
+    const provider = new ethers.providers.Web3Provider(window.ethereum!);
+    const network = await provider.getNetwork();
 
-      const dappazon = new ethers.Contract(
-        configuration.crypto[network.chainId].dappazon.address,
-        DappazonAbi.abi,
-        provider
-      );
+    const dappazon = new ethers.Contract(
+      configuration.crypto[network.chainId].dappazon.address,
+      DappazonAbi.abi,
+      provider
+    );
 
-      this.dappazonSource.next(dappazon);
+    this.dappazonSource.next(dappazon);
   }
 
   private verifyMetamaskExtension(): boolean {
@@ -91,4 +89,18 @@ export class CryptoService {
       return false;
     }
   }
+
+  private formatItemToProduct(i: Dappazon.ItemStructOutput): IProduct {
+    const price = ethers.utils.formatEther(i.cost);
+
+    return {
+    id: i.id.toNumber(),
+    description: i.name,
+    name: i.name,
+    pictureUrl: i.image,
+    price: parseFloat(price),
+    productBrand: "",
+    productType: ""
+  };
+}
 }

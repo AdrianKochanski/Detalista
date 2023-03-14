@@ -12,7 +12,7 @@ import { CryptoService } from './crypto.service';
   styleUrls: ['./crypto.component.scss']
 })
 export class CryptoComponent implements OnInit, OnDestroy {
-  public products$: Observable<IProduct[]>;
+  public products: IProduct[];
 
   private subscriptions: Subscription[] = [];
 
@@ -24,8 +24,6 @@ export class CryptoComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    this.products$ = this.cryptoService.products$;
-
     this.subscriptions.push(this.cryptoService.account$.pipe(
       map((address) => {
         if(address.length >= 42) {
@@ -38,7 +36,7 @@ export class CryptoComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(this.cryptoService.dappazon$.pipe(
       map(async () => {
-        await this.cryptoService.getItems();
+        this.getProducts();
       })
     ).subscribe());
 
@@ -50,5 +48,14 @@ export class CryptoComponent implements OnInit, OnDestroy {
       if(subscription) subscription.unsubscribe();
     });
     this.subscriptions = [];
+  }
+
+  getProducts() {
+    this.cryptoService.getItems(
+    ).subscribe((resp: IProduct[]) => {
+      this.products = resp;
+    }, error => {
+      console.log(error);
+    });
   }
 }

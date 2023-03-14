@@ -61,7 +61,7 @@ export declare namespace Dappazon {
 export interface DappazonInterface extends utils.Interface {
   functions: {
     "buy(uint256)": FunctionFragment;
-    "getListItem(uint256)": FunctionFragment;
+    "getItem(uint256)": FunctionFragment;
     "isListed(uint256)": FunctionFragment;
     "items(uint256)": FunctionFragment;
     "itemsCounter()": FunctionFragment;
@@ -79,7 +79,7 @@ export interface DappazonInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "buy"
-      | "getListItem"
+      | "getItem"
       | "isListed"
       | "items"
       | "itemsCounter"
@@ -99,7 +99,7 @@ export interface DappazonInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getListItem",
+    functionFragment: "getItem",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -146,10 +146,7 @@ export interface DappazonInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
 
   decodeFunctionResult(functionFragment: "buy", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getListItem",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "getItem", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isListed", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "items", data: BytesLike): Result;
   decodeFunctionResult(
@@ -254,7 +251,7 @@ export interface Dappazon extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    getListItem(
+    getItem(
       itemId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[Dappazon.ItemStructOutput]>;
@@ -332,7 +329,7 @@ export interface Dappazon extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  getListItem(
+  getItem(
     itemId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<Dappazon.ItemStructOutput>;
@@ -408,7 +405,7 @@ export interface Dappazon extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    getListItem(
+    getItem(
       itemId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<Dappazon.ItemStructOutput>;
@@ -506,7 +503,7 @@ export interface Dappazon extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    getListItem(
+    getItem(
       itemId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -568,7 +565,7 @@ export interface Dappazon extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    getListItem(
+    getItem(
       itemId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;

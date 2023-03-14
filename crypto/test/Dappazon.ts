@@ -43,7 +43,7 @@ describe("Dappazon", () => {
     beforeEach(async () => {
       tListing = await dappazon.connect(deployer).listItems([ITEM]);
       await tListing.wait();
-      item = await dappazon.getListItem(1);
+      item = await dappazon.getItem(1);
     });
 
     it('adds item', async () => {
@@ -61,7 +61,7 @@ describe("Dappazon", () => {
 
     beforeEach(async () => {
       await dappazon.connect(deployer).listItems([ITEM]);
-      item = await dappazon.getListItem(1);
+      item = await dappazon.getItem(1);
       tBuying = await dappazon.connect(buyer).buy(item.id, { value: item.cost});
       await tBuying.wait();
     });
@@ -94,7 +94,7 @@ describe("Dappazon", () => {
 
     beforeEach(async () => {
       await dappazon.connect(deployer).listItems([ITEM]);
-      const item = await dappazon.getListItem(1);
+      const item = await dappazon.getItem(1);
       await dappazon.connect(buyer).buy(item.id, { value: item.cost});
 
       balanceBefore = await ethers.provider.getBalance(deployer.address);

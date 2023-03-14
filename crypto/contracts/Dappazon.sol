@@ -70,11 +70,12 @@ contract Dappazon is Ownable {
     return items;
   }
 
-  // Checkers
-  function getListItem(uint256 itemId) public view returns(Item memory) {
+  function getItem(uint256 itemId) public view returns(Item memory) {
       return items[itemsIdx[itemId]-1];
   }
 
+
+  // Checkers
   function isListed(uint256 itemId) public view returns (bool) {
       return itemsIdx[itemId] > 0 && itemId <= itemsCounter;
   }

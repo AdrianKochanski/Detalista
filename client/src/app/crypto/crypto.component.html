@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-4 mb-4" *ngFor="let product of (products$ | async)">
-    <app-product-item [product]="product"></app-product-item>
+  <div class="col-4 mb-4" *ngFor="let product of products">
+    <app-product-item [product]="product" [isCrypto]="true"></app-product-item>
   </div>
 </div>

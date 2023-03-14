@@ -16,6 +16,7 @@ import { RouterModule } from '@angular/router';
 import { StepperControlComponent } from './components/stepper-control/stepper-control.component';
 import { ProductItemComponent } from './shop/product-item/product-item.component';
 import { ProductFilterComponent } from './shop/product-filter/product-filter.component';
+import { ProductDetailsComponent } from './shop/product-details/product-details.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { ProductFilterComponent } from './shop/product-filter/product-filter.com
     BasketSummaryComponent,
     StepperControlComponent,
     ProductItemComponent,
-    ProductFilterComponent
+    ProductFilterComponent,
+    ProductDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -55,7 +57,8 @@ import { ProductFilterComponent } from './shop/product-filter/product-filter.com
     BasketSummaryComponent,
     StepperControlComponent,
     ProductItemComponent,
-    ProductFilterComponent
+    ProductFilterComponent,
+    ProductDetailsComponent
   ]
 })
 export class SharedModule { }
