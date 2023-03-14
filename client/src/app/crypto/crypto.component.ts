@@ -34,13 +34,7 @@ export class CryptoComponent implements OnInit, OnDestroy {
 
     await this.cryptoService.fetchEthereumAddress();
 
-    this.subscriptions.push(this.cryptoService.dappazon$.pipe(
-      map(async () => {
-        this.getProducts();
-      })
-    ).subscribe());
-
-    await this.cryptoService.loadDappazonContract();
+    this.getProducts();
   }
 
   ngOnDestroy(): void {
@@ -51,11 +45,11 @@ export class CryptoComponent implements OnInit, OnDestroy {
   }
 
   getProducts() {
-    this.cryptoService.getItems(
+    this.subscriptions.push(this.cryptoService.getItems(
     ).subscribe((resp: IProduct[]) => {
       this.products = resp;
     }, error => {
       console.log(error);
-    });
+    }));
   }
 }

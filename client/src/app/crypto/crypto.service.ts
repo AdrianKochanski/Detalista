@@ -4,7 +4,7 @@ import { ethers, BigNumber } from 'ethers';
 import DappazonAbi from "../../../../crypto/artifacts/contracts/Dappazon.sol/Dappazon.json";
 import { Dappazon } from "../../../../crypto/typechain-types";
 import configuration from '../../environments/environment';
-import { BehaviorSubject, from, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, filter, from, map, Observable, of, switchMap } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { IProduct } from '../shared/models/product';
 
@@ -18,34 +18,38 @@ declare global {
   providedIn: 'root'
 })
 export class CryptoService {
+  private dappazon: ethers.Contract = null;
   private accountSource = new BehaviorSubject<string>("");
   account$ = this.accountSource.asObservable();
-
-  private dappazonSource = new BehaviorSubject<ethers.Contract>(null);
-  dappazon$ = this.dappazonSource.asObservable();
 
   constructor(private toastrService: ToastrService) {}
 
   getItems(): Observable<IProduct[]> {
-    if(this.getCurrentDappazon() == null) return from([]);
-
-    return from(this.dappazonSource.value.queryItems()).pipe(
-      map((items: Dappazon.ItemStructOutput[]) => {
-        const products: IProduct[] = [];
-        items.forEach(i => {
-          products.push(this.formatItemToProduct(i));
-        });
-        return products;
+    return this.loadDappazonContract(false).pipe(
+      filter(d => d !== null),
+      switchMap(dapp => {
+        return from(dapp.queryItems()).pipe(
+          map((items: Dappazon.ItemStructOutput[]) => {
+            const products: IProduct[] = [];
+            items.forEach(i => {
+              products.push(this.formatItemToProduct(i));
+            });
+            return products;
+          })
+        );
       })
     );
   }
 
   getItem(itemId: number): Observable<IProduct> {
-    if(this.getCurrentDappazon() == null) return of({} as IProduct);
-
-    return from(this.dappazonSource.value.getItem(BigNumber.from(itemId))).pipe(
-      map((item: Dappazon.ItemStructOutput) => {
-        return this.formatItemToProduct(item);
+    return this.loadDappazonContract(false).pipe(
+      filter(dapp => dapp !== null),
+      switchMap(dapp => {
+        return from(dapp.getItem(BigNumber.from(itemId))).pipe(
+          map((item: Dappazon.ItemStructOutput) => {
+            return this.formatItemToProduct(item);
+          })
+        )
       })
     );
   }
@@ -61,23 +65,31 @@ export class CryptoService {
     this.accountSource.next(account);
   }
 
-  getCurrentDappazon(): ethers.Contract | null {
-    return this.dappazonSource.value;
-  }
+  loadDappazonContract(reload: boolean): Observable<ethers.Contract> {
+    if(!this.verifyMetamaskExtension()) return of(null);
 
-  async loadDappazonContract(): Promise<void> {
-    if(!this.verifyMetamaskExtension()) return;
+    return of(this.dappazon).pipe(
+      switchMap((dapp: ethers.Contract) => {
+        if(dapp !== null && reload === false) {
+          return of(dapp);
+        }
+        else {
+          const provider = new ethers.providers.Web3Provider(window.ethereum!);
 
-    const provider = new ethers.providers.Web3Provider(window.ethereum!);
-    const network = await provider.getNetwork();
-
-    const dappazon = new ethers.Contract(
-      configuration.crypto[network.chainId].dappazon.address,
-      DappazonAbi.abi,
-      provider
+          return from(provider.getNetwork()).pipe(
+            map((network: ethers.providers.Network) => {
+              const dapp: ethers.Contract = new ethers.Contract(
+                configuration.crypto[network.chainId].dappazon.address,
+                DappazonAbi.abi,
+                provider
+              );
+              this.dappazon = dapp;
+              return dapp;
+            })
+          );
+        }
+      })
     );
-
-    this.dappazonSource.next(dappazon);
   }
 
   private verifyMetamaskExtension(): boolean {
