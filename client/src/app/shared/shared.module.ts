@@ -14,6 +14,8 @@ import { StepperComponent } from './components/stepper/stepper.component';
 import { BasketSummaryComponent } from './components/basket-summary/basket-summary.component';
 import { RouterModule } from '@angular/router';
 import { StepperControlComponent } from './components/stepper-control/stepper-control.component';
+import { ProductItemComponent } from './shop/product-item/product-item.component';
+import { ProductFilterComponent } from './shop/product-filter/product-filter.component';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { StepperControlComponent } from './components/stepper-control/stepper-co
     TextMagnificantDirective,
     StepperComponent,
     BasketSummaryComponent,
-    StepperControlComponent
+    StepperControlComponent,
+    ProductItemComponent,
+    ProductFilterComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +53,9 @@ import { StepperControlComponent } from './components/stepper-control/stepper-co
     CdkStepperModule,
     StepperComponent,
     BasketSummaryComponent,
-    StepperControlComponent
+    StepperControlComponent,
+    ProductItemComponent,
+    ProductFilterComponent
   ]
 })
 export class SharedModule { }

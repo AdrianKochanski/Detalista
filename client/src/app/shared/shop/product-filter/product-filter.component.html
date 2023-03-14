@@ -1,0 +1,44 @@
+<ng-container *ngIf="brands && types">
+  <h5 class="text-warning ml-3 mt-4 mb-3">Sort</h5>
+  <select
+    name="sort" id="sort"
+    class="custom-select mb-4"
+    (change)="onSortSelected($event.target.value)">
+    <option
+      *ngFor="let sortOption of sortOptions"
+      [value]="sortOption.value"
+      [id]="sortOption.value"
+      [selected]="sortOption.value == this.filterParams.sortSelected"
+    >
+      {{sortOption.name}}
+    </option>
+  </select>
+
+  <h5 class="text-warning ml-3">Brands</h5>
+
+  <ul class="list-group my-3">
+    <li class="list-group-item"
+      id="{{brand.id}}"
+      *ngFor="let brand of brands"
+      [class.active]="brand.id === this.filterParams.brandIdSelected"
+      [value]="brand.id"
+      (click)="onBrandSelected(brand.id)"
+    >
+      {{brand.name}}
+    </li>
+  </ul>
+
+  <h5 class="text-warning ml-3">Types</h5>
+
+  <ul class="list-group my-3">
+    <li class="list-group-item"
+      id="{{type.id}}"
+      *ngFor="let type of types"
+      [class.active]='type.id === this.filterParams.typeIdSelected'
+      [value]="type.id"
+      (click)="onTypeSelected(type.id)"
+    >
+      {{type.name}}
+    </li>
+  </ul>
+</ng-container>

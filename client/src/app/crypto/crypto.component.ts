@@ -1,8 +1,9 @@
 import { OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { Component } from '@angular/core';
-import { Subscription, map} from 'rxjs';
+import { Subscription, map, Observable} from 'rxjs';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { IProduct } from '../shared/models/product';
 import { CryptoService } from './crypto.service';
 
 @Component({
@@ -11,6 +12,8 @@ import { CryptoService } from './crypto.service';
   styleUrls: ['./crypto.component.scss']
 })
 export class CryptoComponent implements OnInit, OnDestroy {
+  public products$: Observable<IProduct[]>;
+
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -21,6 +24,8 @@ export class CryptoComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
+    this.products$ = this.cryptoService.products$;
+
     this.subscriptions.push(this.cryptoService.account$.pipe(
       map((address) => {
         if(address.length >= 42) {

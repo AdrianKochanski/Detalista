@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { IBrand } from '../shared/models/brand';
+import { FilterParams } from '../shared/models/filterParams';
 import { IProduct } from '../shared/models/product';
 import { IType } from '../shared/models/productType';
 import { ShopParams } from '../shared/models/shopParams';
@@ -12,15 +13,10 @@ import { ShopService } from './shop.service';
 })
 export class ShopComponent implements OnInit {
   @ViewChild('search', {static: false}) searchTerm: ElementRef;
-  products: IProduct[]
-  brands: IBrand[]
-  types: IType[]
+  products: IProduct[];
+  brands: IBrand[];
+  types: IType[];
   shopParams: ShopParams = new ShopParams();
-  sortOptions = [
-    {name: 'Alphabetical', value: 'name'},
-    {name: 'Price: Low to High', value: 'priceAsc'},
-    {name: 'Price: High to Low', value: 'priceDesc'}
-  ];
 
   constructor(private shopService: ShopService) {}
 
@@ -59,20 +55,18 @@ export class ShopComponent implements OnInit {
     });
   }
 
-  onBrandSelected(brandId: number) {
-    this.shopParams.brandIdSelected = brandId;
-    this.shopParams.pageNumber = 1;
-    this.getProducts();
-  }
+  onFilterSelected(filterParams: FilterParams) {
+    if(this.shopParams.brandIdSelected !== filterParams.brandIdSelected
+      || this.shopParams.typeIdSelected !== filterParams.typeIdSelected
+    ) {
+      this.shopParams.pageNumber = 1;
+    }
 
-  onTypeSelected(typeId: number) {
-    this.shopParams.typeIdSelected = typeId;
-    this.shopParams.pageNumber = 1;
-    this.getProducts();
-  }
+    this.shopParams = {
+      ...this.shopParams,
+      ...filterParams
+    }
 
-  onSortSelected(sort: string) {
-    this.shopParams.sortSelected = sort;
     this.getProducts();
   }
 

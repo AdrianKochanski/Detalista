@@ -6,7 +6,7 @@ import { Dappazon } from "../../../../crypto/typechain-types";
 import configuration from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { map } from 'rxjs';
+import { IProduct } from '../shared/models/product';
 
 declare global {
   interface Window {
@@ -24,19 +24,32 @@ export class CryptoService {
   private dappazonSource = new BehaviorSubject<ethers.Contract>(null);
   dappazon$ = this.dappazonSource.asObservable();
 
-  private itemsSource = new BehaviorSubject<Dappazon.ItemStructOutput[]>([]);
-  itemst$ = this.itemsSource.asObservable();
+  private productsSource = new BehaviorSubject<IProduct[]>([]);
+  products$ = this.productsSource.asObservable();
 
-  constructor(private toastrService: ToastrService) {
-    console.log(configuration);
-    console.log(DappazonAbi);
-  }
+  constructor(private toastrService: ToastrService) {}
 
   async getItems() {
     if(this.getCurrentDappazon() == null) return;
 
     const items: Dappazon.ItemStructOutput[] = await this.dappazonSource.value.queryItems();
-    this.itemsSource.next(items);
+    const products: IProduct[] = [];
+
+    items.forEach(i => {
+      const price = ethers.utils.formatEther(i.cost);
+
+      products.push({
+        id: i.id.toNumber(),
+        description: i.name,
+        name: i.name,
+        pictureUrl: i.image,
+        price: parseFloat(price),
+        productBrand: "",
+        productType: ""
+      });
+    });
+
+    this.productsSource.next(products);
   }
 
   getCurrentAccount(): string {
