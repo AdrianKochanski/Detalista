@@ -29,11 +29,33 @@ import type {
 } from "../common";
 
 export declare namespace Dappazon {
+  export type BrandStruct = {
+    id: PromiseOrValue<BigNumberish>;
+    name: PromiseOrValue<string>;
+  };
+
+  export type BrandStructOutput = [BigNumber, string] & {
+    id: BigNumber;
+    name: string;
+  };
+
+  export type CategoryStruct = {
+    id: PromiseOrValue<BigNumberish>;
+    name: PromiseOrValue<string>;
+  };
+
+  export type CategoryStructOutput = [BigNumber, string] & {
+    id: BigNumber;
+    name: string;
+  };
+
   export type ItemStruct = {
     id: PromiseOrValue<BigNumberish>;
     name: PromiseOrValue<string>;
-    category: PromiseOrValue<string>;
+    brand: Dappazon.BrandStruct;
+    category: Dappazon.CategoryStruct;
     image: PromiseOrValue<string>;
+    description: PromiseOrValue<string>;
     cost: PromiseOrValue<BigNumberish>;
     rating: PromiseOrValue<BigNumberish>;
     stock: PromiseOrValue<BigNumberish>;
@@ -42,6 +64,8 @@ export declare namespace Dappazon {
   export type ItemStructOutput = [
     BigNumber,
     string,
+    Dappazon.BrandStructOutput,
+    Dappazon.CategoryStructOutput,
     string,
     string,
     BigNumber,
@@ -50,36 +74,114 @@ export declare namespace Dappazon {
   ] & {
     id: BigNumber;
     name: string;
-    category: string;
+    brand: Dappazon.BrandStructOutput;
+    category: Dappazon.CategoryStructOutput;
     image: string;
+    description: string;
     cost: BigNumber;
     rating: BigNumber;
     stock: BigNumber;
+  };
+
+  export type NewItemStruct = {
+    id: PromiseOrValue<BigNumberish>;
+    name: PromiseOrValue<string>;
+    brandId: PromiseOrValue<BigNumberish>;
+    categoryId: PromiseOrValue<BigNumberish>;
+    image: PromiseOrValue<string>;
+    description: PromiseOrValue<string>;
+    cost: PromiseOrValue<BigNumberish>;
+    rating: PromiseOrValue<BigNumberish>;
+    stock: PromiseOrValue<BigNumberish>;
+  };
+
+  export type NewItemStructOutput = [
+    BigNumber,
+    string,
+    BigNumber,
+    BigNumber,
+    string,
+    string,
+    BigNumber,
+    BigNumber,
+    BigNumber
+  ] & {
+    id: BigNumber;
+    name: string;
+    brandId: BigNumber;
+    categoryId: BigNumber;
+    image: string;
+    description: string;
+    cost: BigNumber;
+    rating: BigNumber;
+    stock: BigNumber;
+  };
+
+  export type FilterStruct = {
+    brandIdSelected: PromiseOrValue<BigNumberish>;
+    categoryIdSelected: PromiseOrValue<BigNumberish>;
+    sortSelected: PromiseOrValue<string>;
+    pageNumber: PromiseOrValue<BigNumberish>;
+    pageSize: PromiseOrValue<BigNumberish>;
+    itemsCount: PromiseOrValue<BigNumberish>;
+    search: PromiseOrValue<string>;
+  };
+
+  export type FilterStructOutput = [
+    BigNumber,
+    BigNumber,
+    string,
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    string
+  ] & {
+    brandIdSelected: BigNumber;
+    categoryIdSelected: BigNumber;
+    sortSelected: string;
+    pageNumber: BigNumber;
+    pageSize: BigNumber;
+    itemsCount: BigNumber;
+    search: string;
   };
 }
 
 export interface DappazonInterface extends utils.Interface {
   functions: {
+    "brandExist(uint256)": FunctionFragment;
+    "brands(uint256)": FunctionFragment;
     "buy(uint256)": FunctionFragment;
+    "categories(uint256)": FunctionFragment;
+    "categoryExist(uint256)": FunctionFragment;
     "getItem(uint256)": FunctionFragment;
+    "getLimitBrands(uint256)": FunctionFragment;
+    "getLimitCategories(uint256)": FunctionFragment;
     "isListed(uint256)": FunctionFragment;
     "items(uint256)": FunctionFragment;
     "itemsCounter()": FunctionFragment;
-    "listItems((uint256,string,string,string,uint256,uint256,uint256)[])": FunctionFragment;
+    "listItems((uint256,string,uint256,uint256,string,string,uint256,uint256,uint256)[])": FunctionFragment;
     "orderCount(address)": FunctionFragment;
     "orders(address,uint256)": FunctionFragment;
     "owner()": FunctionFragment;
-    "queryItems()": FunctionFragment;
+    "queryItems((uint256,uint256,string,uint256,uint256,uint256,string))": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "unlistItems((uint256,string,string,string,uint256,uint256,uint256)[])": FunctionFragment;
+    "unlistItems(uint256[])": FunctionFragment;
+    "updateBrands((uint256,string)[])": FunctionFragment;
+    "updateCategories((uint256,string)[])": FunctionFragment;
     "withdraw()": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "brandExist"
+      | "brands"
       | "buy"
+      | "categories"
+      | "categoryExist"
       | "getItem"
+      | "getLimitBrands"
+      | "getLimitCategories"
       | "isListed"
       | "items"
       | "itemsCounter"
@@ -91,15 +193,41 @@ export interface DappazonInterface extends utils.Interface {
       | "renounceOwnership"
       | "transferOwnership"
       | "unlistItems"
+      | "updateBrands"
+      | "updateCategories"
       | "withdraw"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "brandExist",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "brands",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(
     functionFragment: "buy",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
+    functionFragment: "categories",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "categoryExist",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "getItem",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getLimitBrands",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getLimitCategories",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -116,7 +244,7 @@ export interface DappazonInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "listItems",
-    values: [Dappazon.ItemStruct[]]
+    values: [Dappazon.NewItemStruct[]]
   ): string;
   encodeFunctionData(
     functionFragment: "orderCount",
@@ -129,7 +257,7 @@ export interface DappazonInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "queryItems",
-    values?: undefined
+    values: [Dappazon.FilterStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -141,12 +269,35 @@ export interface DappazonInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "unlistItems",
-    values: [Dappazon.ItemStruct[]]
+    values: [PromiseOrValue<BigNumberish>[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "updateBrands",
+    values: [Dappazon.BrandStruct[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "updateCategories",
+    values: [Dappazon.CategoryStruct[]]
   ): string;
   encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
 
+  decodeFunctionResult(functionFragment: "brandExist", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "brands", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "buy", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "categories", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "categoryExist",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "getItem", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getLimitBrands",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getLimitCategories",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "isListed", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "items", data: BytesLike): Result;
   decodeFunctionResult(
@@ -168,6 +319,14 @@ export interface DappazonInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "unlistItems",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateBrands",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateCategories",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
@@ -246,15 +405,45 @@ export interface Dappazon extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    brandExist(
+      brandId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
+    brands(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, string] & { id: BigNumber; name: string }>;
+
     buy(
       _id: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    categories(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, string] & { id: BigNumber; name: string }>;
+
+    categoryExist(
+      categoryId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     getItem(
       itemId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[Dappazon.ItemStructOutput]>;
+
+    getLimitBrands(
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[Dappazon.BrandStructOutput[]]>;
+
+    getLimitCategories(
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[Dappazon.CategoryStructOutput[]]>;
 
     isListed(
       itemId: PromiseOrValue<BigNumberish>,
@@ -265,11 +454,23 @@ export interface Dappazon extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, string, string, string, BigNumber, BigNumber, BigNumber] & {
+      [
+        BigNumber,
+        string,
+        Dappazon.BrandStructOutput,
+        Dappazon.CategoryStructOutput,
+        string,
+        string,
+        BigNumber,
+        BigNumber,
+        BigNumber
+      ] & {
         id: BigNumber;
         name: string;
-        category: string;
+        brand: Dappazon.BrandStructOutput;
+        category: Dappazon.CategoryStructOutput;
         image: string;
+        description: string;
         cost: BigNumber;
         rating: BigNumber;
         stock: BigNumber;
@@ -279,7 +480,7 @@ export interface Dappazon extends BaseContract {
     itemsCounter(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     listItems(
-      _items: Dappazon.ItemStruct[],
+      _items: Dappazon.NewItemStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -302,8 +503,9 @@ export interface Dappazon extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     queryItems(
+      filter: Dappazon.FilterStruct,
       overrides?: CallOverrides
-    ): Promise<[Dappazon.ItemStructOutput[]]>;
+    ): Promise<[Dappazon.ItemStructOutput[], Dappazon.FilterStructOutput]>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -315,7 +517,17 @@ export interface Dappazon extends BaseContract {
     ): Promise<ContractTransaction>;
 
     unlistItems(
-      _items: Dappazon.ItemStruct[],
+      _itemIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    updateBrands(
+      _brands: Dappazon.BrandStruct[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    updateCategories(
+      _category: Dappazon.CategoryStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -324,15 +536,45 @@ export interface Dappazon extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
+  brandExist(
+    brandId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
+  brands(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<[BigNumber, string] & { id: BigNumber; name: string }>;
+
   buy(
     _id: PromiseOrValue<BigNumberish>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  categories(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<[BigNumber, string] & { id: BigNumber; name: string }>;
+
+  categoryExist(
+    categoryId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   getItem(
     itemId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<Dappazon.ItemStructOutput>;
+
+  getLimitBrands(
+    limit: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<Dappazon.BrandStructOutput[]>;
+
+  getLimitCategories(
+    limit: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<Dappazon.CategoryStructOutput[]>;
 
   isListed(
     itemId: PromiseOrValue<BigNumberish>,
@@ -343,11 +585,23 @@ export interface Dappazon extends BaseContract {
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [BigNumber, string, string, string, BigNumber, BigNumber, BigNumber] & {
+    [
+      BigNumber,
+      string,
+      Dappazon.BrandStructOutput,
+      Dappazon.CategoryStructOutput,
+      string,
+      string,
+      BigNumber,
+      BigNumber,
+      BigNumber
+    ] & {
       id: BigNumber;
       name: string;
-      category: string;
+      brand: Dappazon.BrandStructOutput;
+      category: Dappazon.CategoryStructOutput;
       image: string;
+      description: string;
       cost: BigNumber;
       rating: BigNumber;
       stock: BigNumber;
@@ -357,7 +611,7 @@ export interface Dappazon extends BaseContract {
   itemsCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
   listItems(
-    _items: Dappazon.ItemStruct[],
+    _items: Dappazon.NewItemStruct[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -379,7 +633,10 @@ export interface Dappazon extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  queryItems(overrides?: CallOverrides): Promise<Dappazon.ItemStructOutput[]>;
+  queryItems(
+    filter: Dappazon.FilterStruct,
+    overrides?: CallOverrides
+  ): Promise<[Dappazon.ItemStructOutput[], Dappazon.FilterStructOutput]>;
 
   renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -391,7 +648,17 @@ export interface Dappazon extends BaseContract {
   ): Promise<ContractTransaction>;
 
   unlistItems(
-    _items: Dappazon.ItemStruct[],
+    _itemIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  updateBrands(
+    _brands: Dappazon.BrandStruct[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  updateCategories(
+    _category: Dappazon.CategoryStruct[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -400,15 +667,45 @@ export interface Dappazon extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    brandExist(
+      brandId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    brands(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, string] & { id: BigNumber; name: string }>;
+
     buy(
       _id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
+    categories(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, string] & { id: BigNumber; name: string }>;
+
+    categoryExist(
+      categoryId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     getItem(
       itemId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<Dappazon.ItemStructOutput>;
+
+    getLimitBrands(
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<Dappazon.BrandStructOutput[]>;
+
+    getLimitCategories(
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<Dappazon.CategoryStructOutput[]>;
 
     isListed(
       itemId: PromiseOrValue<BigNumberish>,
@@ -419,11 +716,23 @@ export interface Dappazon extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, string, string, string, BigNumber, BigNumber, BigNumber] & {
+      [
+        BigNumber,
+        string,
+        Dappazon.BrandStructOutput,
+        Dappazon.CategoryStructOutput,
+        string,
+        string,
+        BigNumber,
+        BigNumber,
+        BigNumber
+      ] & {
         id: BigNumber;
         name: string;
-        category: string;
+        brand: Dappazon.BrandStructOutput;
+        category: Dappazon.CategoryStructOutput;
         image: string;
+        description: string;
         cost: BigNumber;
         rating: BigNumber;
         stock: BigNumber;
@@ -433,7 +742,7 @@ export interface Dappazon extends BaseContract {
     itemsCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
     listItems(
-      _items: Dappazon.ItemStruct[],
+      _items: Dappazon.NewItemStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -455,7 +764,10 @@ export interface Dappazon extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    queryItems(overrides?: CallOverrides): Promise<Dappazon.ItemStructOutput[]>;
+    queryItems(
+      filter: Dappazon.FilterStruct,
+      overrides?: CallOverrides
+    ): Promise<[Dappazon.ItemStructOutput[], Dappazon.FilterStructOutput]>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -465,7 +777,17 @@ export interface Dappazon extends BaseContract {
     ): Promise<void>;
 
     unlistItems(
-      _items: Dappazon.ItemStruct[],
+      _itemIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    updateBrands(
+      _brands: Dappazon.BrandStruct[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    updateCategories(
+      _category: Dappazon.CategoryStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -498,13 +820,43 @@ export interface Dappazon extends BaseContract {
   };
 
   estimateGas: {
+    brandExist(
+      brandId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    brands(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     buy(
       _id: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    categories(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    categoryExist(
+      categoryId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getItem(
       itemId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getLimitBrands(
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getLimitCategories(
+      limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -521,7 +873,7 @@ export interface Dappazon extends BaseContract {
     itemsCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
     listItems(
-      _items: Dappazon.ItemStruct[],
+      _items: Dappazon.NewItemStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -538,7 +890,10 @@ export interface Dappazon extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    queryItems(overrides?: CallOverrides): Promise<BigNumber>;
+    queryItems(
+      filter: Dappazon.FilterStruct,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -550,7 +905,17 @@ export interface Dappazon extends BaseContract {
     ): Promise<BigNumber>;
 
     unlistItems(
-      _items: Dappazon.ItemStruct[],
+      _itemIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    updateBrands(
+      _brands: Dappazon.BrandStruct[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    updateCategories(
+      _category: Dappazon.CategoryStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -560,13 +925,43 @@ export interface Dappazon extends BaseContract {
   };
 
   populateTransaction: {
+    brandExist(
+      brandId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    brands(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     buy(
       _id: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    categories(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    categoryExist(
+      categoryId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getItem(
       itemId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getLimitBrands(
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getLimitCategories(
+      limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -583,7 +978,7 @@ export interface Dappazon extends BaseContract {
     itemsCounter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     listItems(
-      _items: Dappazon.ItemStruct[],
+      _items: Dappazon.NewItemStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -600,7 +995,10 @@ export interface Dappazon extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    queryItems(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    queryItems(
+      filter: Dappazon.FilterStruct,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -612,7 +1010,17 @@ export interface Dappazon extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     unlistItems(
-      _items: Dappazon.ItemStruct[],
+      _itemIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    updateBrands(
+      _brands: Dappazon.BrandStruct[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    updateCategories(
+      _category: Dappazon.CategoryStruct[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
