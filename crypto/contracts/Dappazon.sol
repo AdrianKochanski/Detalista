@@ -122,6 +122,7 @@ contract Dappazon is Ownable {
   // Getters 
   function queryItems(Filter memory filter) public view returns(Item[] memory, Filter memory) {
     uint256 arrayIdx = 0;
+
     // 0. Default filter
     if(filter.pageSize <= 0) {
       filter.pageSize = 6;
@@ -138,8 +139,12 @@ contract Dappazon is Ownable {
       Item memory item = items[id];
 
       if((filter.brandIdSelected == 0 || filter.brandIdSelected == item.brand.id)
-      && (filter.categoryIdSelected == 0 || filter.categoryIdSelected == item.category.id)
-      && (bytes(filter.search).length == 0 || ContainWord(filter.search, item.name) || ContainWord(filter.search, item.description))) {
+        && (filter.categoryIdSelected == 0 || 
+            filter.categoryIdSelected == item.category.id)
+        && (bytes(filter.search).length == 0 || 
+            ContainWord(filter.search, item.name) || 
+            ContainWord(filter.search, item.description))
+      ) {
         itemsFiltered[arrayIdx++] = item;
       }
     }
@@ -149,8 +154,11 @@ contract Dappazon is Ownable {
     filter.itemsCount = itemsFiltered.length;
 
     // 3. stronicowanie
+    if(arrayIdx > filter.pageSize) {
+      arrayIdx = filter.pageSize;
+    }
+    Item[] memory pageItems = new Item[](arrayIdx);
     arrayIdx = 0;
-    Item[] memory pageItems = new Item[](filter.pageSize);
     uint256 startId = filter.pageSize * (filter.pageNumber - 1);
     uint256 endId = startId + filter.pageSize;
     
