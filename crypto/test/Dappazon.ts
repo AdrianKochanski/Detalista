@@ -167,9 +167,9 @@ describe("Dappazon", () => {
         brandIdSelected: 0,
         categoryIdSelected: 0,
         itemsCount: 0,
-        pageNumber: 3,
-        pageSize: 2,
-        search: "",
+        pageNumber: 1,
+        pageSize: 6,
+        search: "search12",
         sortSelected: "asc"
       }
       console.log(await dappazon.queryItems(filter));

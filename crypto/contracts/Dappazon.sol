@@ -151,21 +151,21 @@ contract Dappazon is Ownable {
 
     // 2. sortowanie
     quickSort(itemsFiltered, int(0), int(itemsFiltered.length - 1));
-    filter.itemsCount = itemsFiltered.length;
+    filter.itemsCount = arrayIdx;
 
     // 3. stronicowanie
-    if(arrayIdx > filter.pageSize) {
-      arrayIdx = filter.pageSize;
-    }
-    Item[] memory pageItems = new Item[](arrayIdx);
-    arrayIdx = 0;
     uint256 startId = filter.pageSize * (filter.pageNumber - 1);
+    if(startId > arrayIdx) {
+      startId = arrayIdx;
+    }
     uint256 endId = startId + filter.pageSize;
-    
-    if(endId > itemsFiltered.length) {
-      endId = itemsFiltered.length;
+    if(endId > arrayIdx) {
+      endId = arrayIdx;
     }
 
+    Item[] memory pageItems = new Item[](endId-startId);
+    arrayIdx = 0;
+    
     for (uint256 id = startId; id < endId; id++) {
       pageItems[arrayIdx++] = itemsFiltered[id];
     }
