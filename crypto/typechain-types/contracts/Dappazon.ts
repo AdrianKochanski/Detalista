@@ -164,9 +164,7 @@ export interface DappazonInterface extends utils.Interface {
     "orders(address,uint256)": FunctionFragment;
     "owner()": FunctionFragment;
     "queryItems((uint256,uint256,string,uint256,uint256,uint256,string))": FunctionFragment;
-    "quickSort((uint256,string,(uint256,string),(uint256,string),string,string,uint256,uint256,uint256)[],int256,int256,uint256)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
-    "sameBytes(string,string)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "unlistItems(uint256[])": FunctionFragment;
     "updateBrands((uint256,string)[])": FunctionFragment;
@@ -192,9 +190,7 @@ export interface DappazonInterface extends utils.Interface {
       | "orders"
       | "owner"
       | "queryItems"
-      | "quickSort"
       | "renounceOwnership"
-      | "sameBytes"
       | "transferOwnership"
       | "unlistItems"
       | "updateBrands"
@@ -264,21 +260,8 @@ export interface DappazonInterface extends utils.Interface {
     values: [Dappazon.FilterStruct]
   ): string;
   encodeFunctionData(
-    functionFragment: "quickSort",
-    values: [
-      Dappazon.ItemStruct[],
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "sameBytes",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
@@ -326,12 +309,10 @@ export interface DappazonInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "orders", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "queryItems", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "quickSort", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "sameBytes", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike
@@ -526,23 +507,9 @@ export interface Dappazon extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[Dappazon.ItemStructOutput[], Dappazon.FilterStructOutput]>;
 
-    quickSort(
-      arr: Dappazon.ItemStruct[],
-      left: PromiseOrValue<BigNumberish>,
-      right: PromiseOrValue<BigNumberish>,
-      sortOption: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[void]>;
-
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
-
-    sameBytes(
-      name1: PromiseOrValue<string>,
-      name2: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
@@ -671,23 +638,9 @@ export interface Dappazon extends BaseContract {
     overrides?: CallOverrides
   ): Promise<[Dappazon.ItemStructOutput[], Dappazon.FilterStructOutput]>;
 
-  quickSort(
-    arr: Dappazon.ItemStruct[],
-    left: PromiseOrValue<BigNumberish>,
-    right: PromiseOrValue<BigNumberish>,
-    sortOption: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<void>;
-
   renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
-
-  sameBytes(
-    name1: PromiseOrValue<string>,
-    name2: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
@@ -816,21 +769,7 @@ export interface Dappazon extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[Dappazon.ItemStructOutput[], Dappazon.FilterStructOutput]>;
 
-    quickSort(
-      arr: Dappazon.ItemStruct[],
-      left: PromiseOrValue<BigNumberish>,
-      right: PromiseOrValue<BigNumberish>,
-      sortOption: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
-
-    sameBytes(
-      name1: PromiseOrValue<string>,
-      name2: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
@@ -956,22 +895,8 @@ export interface Dappazon extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    quickSort(
-      arr: Dappazon.ItemStruct[],
-      left: PromiseOrValue<BigNumberish>,
-      right: PromiseOrValue<BigNumberish>,
-      sortOption: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    sameBytes(
-      name1: PromiseOrValue<string>,
-      name2: PromiseOrValue<string>,
-      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     transferOwnership(
@@ -1075,22 +1000,8 @@ export interface Dappazon extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    quickSort(
-      arr: Dappazon.ItemStruct[],
-      left: PromiseOrValue<BigNumberish>,
-      right: PromiseOrValue<BigNumberish>,
-      sortOption: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    sameBytes(
-      name1: PromiseOrValue<string>,
-      name2: PromiseOrValue<string>,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(

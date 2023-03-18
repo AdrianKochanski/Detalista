@@ -6,4 +6,6 @@ export interface IProduct {
   pictureUrl: string;
   productType: string;
   productBrand: string;
+  stock: number;
+  rating: number
 }

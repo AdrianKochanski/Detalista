@@ -93,7 +93,6 @@ export class CryptoComponent implements OnInit, OnDestroy {
   getTypes() {
     this.subscriptions.push(this.cryptoService.getCategories()
     .subscribe((resp: IType[]) => {
-      console.log(resp);
       this.types = [{id: 0, name: 'All'}, ...resp];
     }, error => {
       console.log(error);
@@ -101,7 +100,6 @@ export class CryptoComponent implements OnInit, OnDestroy {
   }
 
   onFilterSelected(filterParams: FilterParams) {
-    console.log(filterParams);
     if(this.shopParams.brandIdSelected !== filterParams.brandIdSelected
       || this.shopParams.typeIdSelected !== filterParams.typeIdSelected
     ) {

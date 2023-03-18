@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ExternalProvider } from "@ethersproject/providers";
-import { ethers, BigNumber } from 'ethers';
+import { ethers, BigNumber, ContractTransaction } from 'ethers';
 import DappazonAbi from "../../../../crypto/artifacts/contracts/Dappazon.sol/Dappazon.json";
 import { Dappazon } from "../../../../crypto/typechain-types";
 import configuration from '../../environments/environment';
@@ -17,6 +17,11 @@ declare global {
   }
 }
 
+type DappazonProvider = {
+  dappazon: Dappazon,
+  provider: ethers.providers.Web3Provider
+}
+
  @Injectable({
   providedIn: 'root'
 })
@@ -27,11 +32,25 @@ export class CryptoService {
 
   constructor(private toastrService: ToastrService) {}
 
+
+  buyItem(product: IProduct): Observable<ContractTransaction> {
+    return this.loadDappazonContract(false).pipe(
+      filter(d => d.dappazon !== null),
+      switchMap(dapp =>
+        dapp.dappazon
+        .connect(dapp.provider.getSigner())
+        .buy(BigNumber.from(product.id), {
+          value: ethers.utils.parseEther(product.price.toString(10))
+        })
+      )
+    );
+  }
+
   getItems(filters: Dappazon.FilterStruct): Observable<IPagination> {
     return this.loadDappazonContract(false).pipe(
       filter(d => d !== null),
       switchMap(dapp => {
-        return from(dapp.queryItems(filters)).pipe(
+        return from(dapp.dappazon.queryItems(filters)).pipe(
           map((response) => {
             const [items, filtersBack] = response;
             const pagination: IPagination = {
@@ -54,7 +73,7 @@ export class CryptoService {
     return this.loadDappazonContract(false).pipe(
       filter(dapp => dapp !== null),
       switchMap(dapp => {
-        return from(dapp.getItem(BigNumber.from(itemId))).pipe(
+        return from(dapp.dappazon.getItem(BigNumber.from(itemId))).pipe(
           map((item: Dappazon.ItemStructOutput) => {
             return this.formatItemToProduct(item);
           })
@@ -67,7 +86,7 @@ export class CryptoService {
     return this.loadDappazonContract(false).pipe(
       filter(dapp => dapp !== null),
       switchMap(dapp => {
-        return from(dapp.getLimitBrands(BigNumber.from(10))).pipe(
+        return from(dapp.dappazon.getLimitBrands(BigNumber.from(10))).pipe(
           map((resp: Dappazon.BrandStructOutput[]) => {
             const brands: IBrand[] = [];
             resp.forEach(i => {
@@ -86,7 +105,7 @@ export class CryptoService {
     return this.loadDappazonContract(false).pipe(
       filter(dapp => dapp !== null),
       switchMap(dapp => {
-        return from(dapp.getLimitCategories(BigNumber.from(10))).pipe(
+        return from(dapp.dappazon.getLimitCategories(BigNumber.from(10))).pipe(
           map((resp: Dappazon.CategoryStructOutput[]) => {
             const categories: IType[] = [];
             resp.forEach(i => {
@@ -112,17 +131,17 @@ export class CryptoService {
     this.accountSource.next(account);
   }
 
-  loadDappazonContract(reload: boolean): Observable<Dappazon> {
+  loadDappazonContract(reload: boolean): Observable<DappazonProvider> {
     if(!this.verifyMetamaskExtension()) return of(null);
 
     return of(this.dappazon).pipe(
       switchMap((dapp: Dappazon) => {
         if(dapp !== null && reload === false) {
-          return of(dapp);
+          const provider = new ethers.providers.Web3Provider(window.ethereum!);
+          return of({dappazon: dapp, provider: provider});
         }
         else {
           const provider = new ethers.providers.Web3Provider(window.ethereum!);
-
           return from(provider.getNetwork()).pipe(
             map((network: ethers.providers.Network) => {
               const dapp: Dappazon = new ethers.Contract(
@@ -131,12 +150,27 @@ export class CryptoService {
                 provider
               ) as Dappazon;
               this.dappazon = dapp;
-              return dapp;
+              return {dappazon: dapp, provider: provider};
             })
           );
         }
       })
     );
+  }
+
+  parseMetamaskError(e: any) {
+    let errore: string = e.toString();
+    const search = 'reverted with reason string \'';
+    let idxStart = errore.indexOf(search);
+    if (idxStart > -1) {
+      idxStart += search.length;
+      let idxEnd = errore.indexOf('\'"', idxStart);
+      errore = errore.substring(idxStart, idxEnd);
+      this.toastrService.error(errore);
+    }
+    else {
+      this.toastrService.error("Unexpected error while processing transaction");
+    }
   }
 
   private verifyMetamaskExtension(): boolean {
@@ -154,12 +188,14 @@ export class CryptoService {
 
       return {
       id: i.id.toNumber(),
-      description: i.name,
+      description: i.description,
       name: i.name,
       pictureUrl: i.image,
       price: parseFloat(price),
-      productBrand: "",
-      productType: ""
+      productBrand: i.brand.name,
+      productType: i.category.name,
+      rating: i.rating.toNumber(),
+      stock: i.stock.toNumber()
     };
   }
 

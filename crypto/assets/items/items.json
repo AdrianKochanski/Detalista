@@ -2,37 +2,37 @@
   "brands": [
     {
       "id": 1,
-      "name": "apple"
+      "name": "Apple"
     },
     {
       "id": 2,
-      "name": "lego"
+      "name": "Lego"
     },
     {
       "id": 3,
-      "name": "automotox"
+      "name": "Automotox"
     },
     {
       "id": 4,
-      "name": "black rock"
+      "name": "Black rock"
     }
   ],
   "types": [
     {
       "id": 1,
-      "name": "electronics"
+      "name": "Electronics"
     },
     {
       "id": 2,
-      "name": "clothing"
+      "name": "Clothing"
     },
     {
       "id": 3,
-      "name": "toys"
+      "name": "Toys"
     },
     {
       "id": 4,
-      "name": "sport"
+      "name": "Sport"
     }
   ],
   "items": [
