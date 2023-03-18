@@ -36,10 +36,10 @@ const BRAND3: Dappazon.BrandStruct = {
 
 const ITEM11: Dappazon.ItemStruct = {
   id: BigNumber.from(1),
-  name: "Item",
-  category: CATEGORY1,
+  name: "Item1",
+  category: CATEGORY2,
   image: "Image",
-  cost: BigNumber.from(tokens(1)),
+  cost: BigNumber.from(tokens(2)),
   rating: BigNumber.from(10),
   stock: BigNumber.from(10),
   brand: BRAND1,
@@ -48,10 +48,10 @@ const ITEM11: Dappazon.ItemStruct = {
 
 const ITEM12: Dappazon.ItemStruct = {
   id: BigNumber.from(2),
-  name: "Item",
-  category: CATEGORY1,
+  name: "Item2",
+  category: CATEGORY2,
   image: "Image",
-  cost: BigNumber.from(tokens(1)),
+  cost: BigNumber.from(tokens(4)),
   rating: BigNumber.from(10),
   stock: BigNumber.from(10),
   brand: BRAND2,
@@ -60,7 +60,7 @@ const ITEM12: Dappazon.ItemStruct = {
 
 const ITEM13: Dappazon.ItemStruct = {
   id: BigNumber.from(3),
-  name: "Item",
+  name: "Item3",
   category: CATEGORY1,
   image: "Image",
   cost: BigNumber.from(tokens(1)),
@@ -72,22 +72,22 @@ const ITEM13: Dappazon.ItemStruct = {
 
 const ITEM23: Dappazon.ItemStruct = {
   id: BigNumber.from(4),
-  name: "Item",
+  name: "Item44",
   category: CATEGORY2,
   image: "Image",
-  cost: BigNumber.from(tokens(1)),
+  cost: BigNumber.from(tokens(7)),
   rating: BigNumber.from(10),
   stock: BigNumber.from(10),
   brand: BRAND3,
-  description: "search23"
+  description: "search14"
 };
 
 const ITEM33: Dappazon.ItemStruct = {
   id: BigNumber.from(5),
-  name: "Item",
+  name: "Item5",
   category: CATEGORY3,
   image: "Image",
-  cost: BigNumber.from(tokens(1)),
+  cost: BigNumber.from(tokens(5)),
   rating: BigNumber.from(10),
   stock: BigNumber.from(10),
   brand: BRAND3,
@@ -165,14 +165,16 @@ describe("Dappazon", () => {
     it('query items', async () => {
       const filter: Dappazon.FilterStruct = {
         brandIdSelected: 0,
-        categoryIdSelected: 0,
+        categoryIdSelected: 2,
         itemsCount: 0,
-        pageNumber: 1,
-        pageSize: 6,
-        search: "search12",
-        sortSelected: "asc"
+        pageNumber: 2,
+        pageSize: 2,
+        search: "search1",
+        sortSelected: "name"
       }
-      console.log(await dappazon.queryItems(filter));
+      const [items, filterBack] = await dappazon.queryItems(filter);
+      expect(filterBack.itemsCount).to.be.equal(BigNumber.from(3));
+      expect(items[0].id).to.be.equal(BigNumber.from(4));
     })
   })
 

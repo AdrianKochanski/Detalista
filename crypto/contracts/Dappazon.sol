@@ -148,49 +148,93 @@ contract Dappazon is Ownable {
         itemsFiltered[arrayIdx++] = item;
       }
     }
+    filter.itemsCount = arrayIdx;
 
     // 2. sortowanie
-    quickSort(itemsFiltered, int(0), int(itemsFiltered.length - 1));
-    filter.itemsCount = arrayIdx;
+    Item[] memory itemsSorted = new Item[](arrayIdx);
+    for (uint256 id = 0; id < arrayIdx; id++) {
+      itemsSorted[id] = itemsFiltered[id];
+    }
+    
+    uint256 sortOption = 1;
+    if(bytes(filter.sortSelected).length == 0)
+    {
+      filter.sortSelected = "name";
+    }
+    else if(ContainWord(filter.sortSelected, "priceDesc")) {
+      sortOption = 3;
+    }
+    else if(ContainWord(filter.sortSelected, "priceAsc")) {
+      sortOption = 2;
+    }
+    quickSort(itemsSorted, int(0), int(itemsSorted.length - 1), sortOption);
 
     // 3. stronicowanie
     uint256 startId = filter.pageSize * (filter.pageNumber - 1);
-    if(startId > arrayIdx) {
-      startId = arrayIdx;
+    if(startId > itemsSorted.length) {
+      startId = itemsSorted.length;
     }
     uint256 endId = startId + filter.pageSize;
-    if(endId > arrayIdx) {
-      endId = arrayIdx;
+    if(endId > itemsSorted.length) {
+      endId = itemsSorted.length;
     }
 
     Item[] memory pageItems = new Item[](endId-startId);
     arrayIdx = 0;
-    
     for (uint256 id = startId; id < endId; id++) {
-      pageItems[arrayIdx++] = itemsFiltered[id];
+      pageItems[arrayIdx++] = itemsSorted[id];
     }
 
     return (pageItems, filter);
   }
 
-  function quickSort(Item[] memory arr, int left, int right) internal pure {
+  function quickSort(Item[] memory arr, int left, int right, uint sortOption) public pure {
     int i = left;
     int j = right;
     if (i == j) return;
     Item memory pivot = arr[uint(left + (right - left) / 2)];
     while (i <= j) {
-        while (arr[uint(i)].cost < pivot.cost) i++;
-        while (pivot.cost < arr[uint(j)].cost) j--;
+        if(sortOption == 3) {
+          while (arr[uint(i)].cost > pivot.cost) i++;
+          while (pivot.cost > arr[uint(j)].cost) j--;
+        }
+        else if(sortOption == 2) {
+          while (arr[uint(i)].cost < pivot.cost) i++;
+          while (pivot.cost < arr[uint(j)].cost) j--;
+        }
+        else {
+          if (bytes(pivot.name).length == 0) return;
+          while (int(arr.length) > i && i >= 0 && sameBytes(arr[uint(i)].name, pivot.name)) i++;
+          while (int(arr.length) > j && j >= 0 && sameBytes(pivot.name, arr[uint(j)].name)) j--;
+        }
+        
         if (i <= j) {
-            (arr[uint(i)].cost, arr[uint(j)].cost) = (arr[uint(j)].cost, arr[uint(i)].cost);
+            (arr[uint(i)], arr[uint(j)]) = (arr[uint(j)], arr[uint(i)]);
             i++;
             j--;
         }
     }
     if (left < j)
-        quickSort(arr, left, j);
+        quickSort(arr, left, j, sortOption);
     if (i < right)
-        quickSort(arr, i, right);
+        quickSort(arr, i, right, sortOption);
+  }
+
+  function sameBytes(string memory name1, string memory name2) public pure returns(bool) {
+    bytes memory name1Bytes = bytes(name1);
+    bytes memory name2Bytes = bytes(name2);
+    
+    if(name1Bytes.length != name2Bytes.length) {
+      return false;
+    }
+
+    for (uint8 i = 0; i < name1Bytes.length; i++) {
+      if(uint8(name1Bytes[i]) > uint8(name2Bytes[i])) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   function getItem(uint256 itemId) public view returns(Item memory) {
