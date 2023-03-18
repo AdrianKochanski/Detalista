@@ -5,5 +5,5 @@ export class ShopParams {
   pageNumber = 1;
   pageSize = 6;
   itemsCount = 0;
-  search: string;
+  search: string = "";
 }

@@ -152,22 +152,25 @@ contract Dappazon is Ownable {
 
     // 2. sortowanie
     Item[] memory itemsSorted = new Item[](arrayIdx);
-    for (uint256 id = 0; id < arrayIdx; id++) {
-      itemsSorted[id] = itemsFiltered[id];
-    }
     
-    uint256 sortOption = 1;
-    if(bytes(filter.sortSelected).length == 0)
-    {
-      filter.sortSelected = "name";
+    if(arrayIdx > 0) {
+      for (uint256 id = 0; id < arrayIdx; id++) {
+        itemsSorted[id] = itemsFiltered[id];
+      }
+      
+      uint256 sortOption = 1;
+      if(bytes(filter.sortSelected).length == 0)
+      {
+        filter.sortSelected = "name";
+      }
+      else if(ContainWord(filter.sortSelected, "priceDesc")) {
+        sortOption = 3;
+      }
+      else if(ContainWord(filter.sortSelected, "priceAsc")) {
+        sortOption = 2;
+      }
+      quickSort(itemsSorted, int(0), int(itemsSorted.length - 1), sortOption);
     }
-    else if(ContainWord(filter.sortSelected, "priceDesc")) {
-      sortOption = 3;
-    }
-    else if(ContainWord(filter.sortSelected, "priceAsc")) {
-      sortOption = 2;
-    }
-    quickSort(itemsSorted, int(0), int(itemsSorted.length - 1), sortOption);
 
     // 3. stronicowanie
     uint256 startId = filter.pageSize * (filter.pageNumber - 1);

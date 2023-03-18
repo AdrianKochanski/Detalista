@@ -1,14 +1,17 @@
 import { ElementRef, OnInit, ViewChild } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { Component } from '@angular/core';
-import { Subscription, map, Observable} from 'rxjs';
+import { Subscription, map, Observable, retry} from 'rxjs';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { IBrand } from '../shared/models/brand';
 import { FilterParams } from '../shared/models/filterParams';
+import { IPagination } from '../shared/models/pagination';
 import { IProduct } from '../shared/models/product';
 import { IType } from '../shared/models/productType';
 import { ShopParams } from '../shared/models/shopParams';
 import { CryptoService } from './crypto.service';
+import { BigNumber } from "ethers";
+import { Dappazon } from '../../../../crypto/typechain-types';
 
 @Component({
   selector: 'app-crypto',
@@ -55,48 +58,46 @@ export class CryptoComponent implements OnInit, OnDestroy {
   }
 
   getProducts() {
-    this.subscriptions.push(this.cryptoService.getItems(
-    ).subscribe((resp: IProduct[]) => {
-      this.products = resp;
+    this.subscriptions.push(this.cryptoService.getItems(this.getFilter())
+    .subscribe((resp: IPagination) => {
+      this.products = resp.data;
+      this.shopParams.pageNumber = resp.pageIndex;
+      this.shopParams.pageSize = resp.pageSize;
+      this.shopParams.itemsCount = resp.count;
     }, error => {
       console.log(error);
     }));
   }
 
+  getFilter(): Dappazon.FilterStruct {
+    return {
+      brandIdSelected: BigNumber.from(this.shopParams.brandIdSelected),
+      categoryIdSelected: BigNumber.from(this.shopParams.typeIdSelected),
+      itemsCount: BigNumber.from(this.shopParams.itemsCount),
+      pageNumber: BigNumber.from(this.shopParams.pageNumber),
+      pageSize: BigNumber.from(this.shopParams.pageSize),
+      search: this.shopParams.search,
+      sortSelected: this.shopParams.sortSelected
+    };
+  }
+
   getBrands() {
-    // this.shopService.getBrands().subscribe(resp => {
-    //   this.brands = [{id: 0, name: 'All'}, ...resp];
-    // }, error => {
-    //   console.log(error);
-    // });
-    this.brands = [
-      {
-        id: 1,
-        name: "Brand 1"
-      },
-      {
-        id: 2,
-        name: "Brand 2"
-      }
-    ];
+    this.subscriptions.push(this.cryptoService.getBrands()
+    .subscribe((resp: IBrand[]) => {
+      this.brands = [{id: 0, name: 'All'}, ...resp];
+    }, error => {
+      console.log(error);
+    }));
   }
 
   getTypes() {
-    // this.shopService.getTypes().subscribe(resp => {
-    //   this.types = [{id: 0, name: 'All'}, ...resp];
-    // }, error => {
-    //   console.log(error);
-    // });
-    this.types = [
-      {
-        id: 1,
-        name: "Type 1"
-      },
-      {
-        id: 2,
-        name: "Type 2"
-      }
-    ];
+    this.subscriptions.push(this.cryptoService.getCategories()
+    .subscribe((resp: IType[]) => {
+      console.log(resp);
+      this.types = [{id: 0, name: 'All'}, ...resp];
+    }, error => {
+      console.log(error);
+    }));
   }
 
   onFilterSelected(filterParams: FilterParams) {
