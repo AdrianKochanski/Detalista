@@ -17,6 +17,7 @@ import { StepperControlComponent } from './components/stepper-control/stepper-co
 import { ProductItemComponent } from './shop/product-item/product-item.component';
 import { ProductFilterComponent } from './shop/product-filter/product-filter.component';
 import { ProductDetailsComponent } from './shop/product-details/product-details.component';
+import { ProductPricePipe } from './pipes/product-price.pipe';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ProductDetailsComponent } from './shop/product-details/product-details.
     StepperControlComponent,
     ProductItemComponent,
     ProductFilterComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    ProductPricePipe
   ],
   imports: [
     CommonModule,
@@ -58,7 +60,8 @@ import { ProductDetailsComponent } from './shop/product-details/product-details.
     StepperControlComponent,
     ProductItemComponent,
     ProductFilterComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    ProductPricePipe
   ]
 })
 export class SharedModule { }

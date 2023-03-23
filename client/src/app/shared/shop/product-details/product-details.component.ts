@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BasketService } from 'src/app/basket/basket.service';
+import { CryptoService } from 'src/app/crypto/crypto.service';
 import { IBasketItem } from 'src/app/shared/models/basket';
 import { IProduct } from 'src/app/shared/models/product';
 import { BreadcrumbService } from 'xng-breadcrumb';
@@ -17,7 +18,8 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private activateRoute: ActivatedRoute,
     private bcService: BreadcrumbService,
-    private basketService: BasketService
+    private basketService: BasketService,
+    private cryptoService: CryptoService
   ) {
       this.bcService.set('@productDetails', ' ');
   }
@@ -36,7 +38,9 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   increment() {
-    this.quantity++;
+    if(!this.product.isCrypto && this.quantity < this.product.stock) {
+      this.quantity++;
+    }
   }
 
   decrement() {
@@ -46,6 +50,13 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   addItemToBasket() {
-    this.basketService.addItemToBasket(this.product, this.quantity);
+    if(this.product.isCrypto) {
+      this.cryptoService.buyItem(this.product).subscribe(response => {
+        console.log(response);
+      }, e => this.cryptoService.parseMetamaskError(e));
+    }
+    else {
+      this.basketService.addItemToBasket(this.product, this.quantity);
+    }
   }
 }

@@ -7,5 +7,6 @@ export interface IProduct {
   productType: string;
   productBrand: string;
   stock: number;
-  rating: number
+  rating: number;
+  isCrypto: boolean;
 }

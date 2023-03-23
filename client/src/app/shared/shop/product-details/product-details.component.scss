@@ -1,0 +1,17 @@
+.rating-color{
+  color:#fbc634 !important;
+}
+
+.imageContainer {
+  //overflow: hidden;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+
+  & img {
+    display: block;
+    height: 450px;
+    object-fit: cover;
+    width: 100%;
+  }
+}

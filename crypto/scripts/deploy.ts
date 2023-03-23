@@ -70,7 +70,7 @@ async function main() {
       rating: BigNumber.from(i.rating),
       stock: BigNumber.from(i.stock)
     });
-
+    
     console.log(
       `Packed items ${i.id}: ${i.name}`
     );

@@ -1,23 +1,50 @@
-<div class="row">
-  <div class="col-6">
-    <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="img-fluid w-100">
+<div class="row px-5 pb-5" style="width: 99vw;">
+  <div class="col-12 col-md-6 imageContainer mb-3">
+    <img
+      src="{{product.pictureUrl}}"
+      alt="{{product.name}}"
+      class="img-fluid"
+    >
   </div>
 
-  <div class="col-6">
-    <h3>{{product.name}}</h3>
-    <p style="font-size: 2em;">{{product.price | currency}}</p>
-    <div class="d-flex justify-content-start align-items-center">
+  <div class="col-12 col-md-6">
+    <div class="d-flex justify-content-start align-items-start" style="gap: 10px;">
+      <h3>{{product.name}}</h3>
+      <div class="ratings">
+        <i class="fa fa-star" [class.rating-color] = "product.rating > 0"></i>
+        <i class="fa fa-star" [class.rating-color] = "product.rating > 1"></i>
+        <i class="fa fa-star" [class.rating-color] = "product.rating > 2"></i>
+        <i class="fa fa-star" [class.rating-color] = "product.rating > 3"></i>
+        <i class="fa fa-star" [class.rating-color] = "product.rating > 4"></i>
+      </div>
+    </div>
+    <div class="d-flex justify-content-start align-items-start" style="gap: 3px;">
+      <h5>Category:</h5>
+      {{product.productType}}
+      <h5 class="ml-2">Brand:</h5>
+      {{product.productBrand}}
+    </div>
+    <div class="d-flex justify-content-start align-items-start" style="gap: 3px;">
+      <h5>Price:</h5>
+      {{product | productPrice}}
+    </div>
+    <div class="d-flex justify-content-start align-items-center" style="gap: 10px;" *ngIf="!!product.stock">
       <i (click)="decrement()" class="fa fa-minus-circle text-warning mr-2" style="cursor: pointer; font-size: 2em"></i>
       <span class="font-weight-bold" style="font-size: 1.5em;">{{quantity}}</span>
-      <i (click)="increment()" class="fa fa-plus-circle text-warning mx-2" style="cursor: pointer; font-size: 2em"></i>
-      <button (click)="addItemToBasket()" class="btn btn-outline-secondary btn-lg ml-4">Add to Cart</button>
+      <span class="font-weight-bold" style="font-size: 1.5em;">of {{product.stock}}</span>
+      <i (click)="increment()" class="fa fa-plus-circle text-warning" style="cursor: pointer; font-size: 2em"></i>
+      <button [disabled]="product.stock <= 0" (click)="addItemToBasket()" class="btn btn-outline-secondary btn-lg">
+        {{
+          product.isCrypto
+          ? 'Buy ' + (product | productPrice: quantity)
+          : 'Add to Cart ' + (product | productPrice: quantity)
+        }}
+      </button>
     </div>
-  </div>
+    <div class="alert alert-warning" *ngIf="!product.stock">
+      Product out of stock
+    </div>
 
-  <div class="row mt-5">
-    <div class="col-12 ml-3">
-      <h4>Description</h4>
-      <p>{{product.description}}</p>
-    </div>
+    <p>{{product.description}}</p>
   </div>
 </div>

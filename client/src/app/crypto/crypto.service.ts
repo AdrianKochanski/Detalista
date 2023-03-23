@@ -195,7 +195,8 @@ export class CryptoService {
       productBrand: i.brand.name,
       productType: i.category.name,
       rating: i.rating.toNumber(),
-      stock: i.stock.toNumber()
+      stock: i.stock.toNumber(),
+      isCrypto: true
     };
   }
 
