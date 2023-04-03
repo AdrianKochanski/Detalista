@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ExternalProvider } from "@ethersproject/providers";
-import { ethers, BigNumber, ContractTransaction } from 'ethers';
+import { BigNumber, ContractTransaction, ethers } from 'ethers';
 import DappazonAbi from "../../../../crypto/artifacts/contracts/Dappazon.sol/Dappazon.json";
 import { Dappazon } from "../../../../crypto/typechain-types";
 import configuration from '../../environments/environment';
-import { BehaviorSubject, filter, from, map, Observable, of, retry, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, filter, from, map, Observable, of, switchMap } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { IProduct } from '../shared/models/product';
 import { IPagination } from '../shared/models/pagination';

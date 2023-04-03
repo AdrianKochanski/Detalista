@@ -1,9 +1,9 @@
 .featured {
-  height: 200px;
+  min-height: 200px;
 }
 
 img {
-  object-fit: cover;
-  height: 400px;
+  object-fit: contain;
+  max-height: 400px;
   width: 100%;
 }

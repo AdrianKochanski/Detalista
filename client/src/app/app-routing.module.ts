@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 import { ServerErrorComponent } from './core/server-error/server-error.component';
+import { ContactComponent } from './home/contact/contact.component';
+import { DetailsComponent } from './home/details/details.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
@@ -10,6 +12,16 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     data: {breadcrumb: 'Home'}
+  },
+  {
+    path: 'details',
+    component: DetailsComponent,
+    data: {breadcrumb: 'Details'}
+  },
+  {
+    path: 'contact',
+    component: ContactComponent,
+    data: {breadcrumb: 'Contact'}
   },
   {
     path: 'server-error',
