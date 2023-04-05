@@ -144,9 +144,139 @@
             Purchasing products on blockchain
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <p>I'm visible because I am open</p>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Solution description
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>The purchase process on the blockchain has been simplified due to its complexity and the inability to add a product from a blockchain contract to the basket. The <strong>basket only supports products from the server</strong>, however, both stores could have separate baskets. It would then be necessary to add additional logic to handle such a basket, as well as an additional contract or function to store information about it, which would not be a very good blockchain solution in a decentralized network. You would have to <strong>pay for each basket change</strong>.</p>
+          <p>The product <strong>search and filter functionality</strong> has been implemented on a blockchain contract and makes more sense than in the previous case because the <strong>user does not pay for reading the contract</strong>, but even in this situation it would be a good approach to handle this off-chain with only the necessary information on the contract.</p>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Cryto servis
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>The basic functionality responsible for connecting to the decentralized network is placed in the <strong>cryptoServis</strong> class and was written with functions operating on <strong>Observables</strong> from the <strong>rxjs</strong> library, this solution has its justification. Making a transaction requires: checking the <strong>availability of ethereum</strong> in the browser, <strong>connecting to metamask</strong> or another provider, as well as <strong>creating a local contract</strong>. All steps are checked every time we use the connection, and if at least one of them fails, the process is properly handled and you don't have to worry about unexpected errors.</p>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Purchasing process
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          The following steps illustrate the <strong>purchasing process</strong>:
+          <p><strong>1.</strong> Connecting to the provider (e.g. matamask) If the browser does not have the provider installed, the message <strong>"Please install the metamask extension"</strong> will pop up</p>
+          <p><strong>2.</strong> Product display</p>
+          <p><strong>3.</strong> Purchase of an article, on the product page or in its details <strong>(it is not possible to buy multiple products at once)</strong></p>
+          <p><strong>4.</strong> The provider will request confirmation of the transaction with its <strong>hash and amount</strong></p>
+          <p><strong>5.</strong> User Acceptance</p>
+          <p><strong>6.</strong> Waiting for confirmation and displaying the result</p>
+        </mat-expansion-panel>
+
       </mat-expansion-panel>
 
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Crypto payment method
+          </mat-panel-title>
+          <mat-panel-description>
+            Pay for products with crypto instead of traditional currencies
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="mb-3 ml-2">It is possible to implement an additional payment method for traditional products using ethereum, which would involve taking additional steps.</div>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Step 1
+            </mat-panel-title>
+            <mat-panel-description>
+              Updating basket model
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>
+            The cart should contain the current ethereum rate and the transaction ID. The basket along with the payment summary should display information about the amount of ethereum. If the customer leaves the payment process and then returns, the exchange rates will be refreshed.
+          </p>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Step 2
+            </mat-panel-title>
+            <mat-panel-description>
+              New payment method for choosing
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>
+            It is possible to choose the ethereum payment method, the metamask extension will be activated after selecting this form of payment, not before. We may still switch to another payment method at this stage.
+          </p>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Step 3
+            </mat-panel-title>
+            <mat-panel-description>
+              Transaction initialization
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>
+            As soon as the payment starts, an order with additional information about exchange rates will be created on the backend, the transaction will be initiated but not sent yet, and the transaction ID will be saved in the basket.
+          </p>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Step 4
+            </mat-panel-title>
+            <mat-panel-description>
+              Transaction execution with order creation
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>
+            When the clients awaits transaction completion, the second order entity will be created on a blockchain contract containing: OrderId from the server, amount in ETH, amount in payment currency, payment date and transaction ID. This order will go to the order queue, from which the server will fetch the payment information and update the original orders.
+          </p>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Step 5
+            </mat-panel-title>
+            <mat-panel-description>
+              Transaction confirmation
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>
+            Payment intent along with the basket will be removed and this is a special case in which when the customer leaves the website before finalizing the transaction, this code may not be executed. In such a situation, it is necessary to check whether the basket has information about the transactionId and if so, the modification of the basket and the start of a new payment should be blocked. The client sends a request to the blockchain explorer to retrieve the transaction status and perform the appropriate steps.
+          </p>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Step 6
+            </mat-panel-title>
+            <mat-panel-description>
+              Order update on the server
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>
+            There is a job on the server that checks the order queue on the blockchain contract and updates the original order so that the orders component displays the correct information. He also has the option to delete the cart with the corresponding transactionId, if it is still active.
+          </p>
+        </mat-expansion-panel>
+
+      </mat-expansion-panel>
     </mat-accordion>
   </div>
 </div>
