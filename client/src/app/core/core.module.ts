@@ -8,6 +8,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { SectionHeaderComponent } from './section-header/section-header.component';
 import { BreadcrumbModule } from 'xng-breadcrumb';
 import { SharedModule } from '../shared/shared.module';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { SharedModule } from '../shared/shared.module';
     NavBarComponent,
     NotFoundComponent,
     ServerErrorComponent,
-    SectionHeaderComponent
+    SectionHeaderComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,8 @@ import { SharedModule } from '../shared/shared.module';
   exports: [
     NavBarComponent,
     SectionHeaderComponent,
-    BreadcrumbModule
+    BreadcrumbModule,
+    FooterComponent
   ]
 })
 export class CoreModule { }

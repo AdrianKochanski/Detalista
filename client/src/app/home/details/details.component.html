@@ -1,283 +1,312 @@
 <div class="container-lg">
-  <carousel>
-    <slide>
-      <img src="assets/images/architecture.png" alt="first slide" style="display: block; width: 100%;">
-    </slide>
-    <slide>
-      <img src="assets/images/stripeCommunication.png" alt="first slide" style="display: block; width: 100%;">
-    </slide>
-    <slide>
-      <img src="assets/images/blockchain.png" alt="second slide" style="display: block; width: 100%;">
-    </slide>
-  </carousel>
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Project overview
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="details-carousel">
+        <carousel>
+          <slide>
+            <img src="assets/images/architecture.png" alt="first slide" style="display: block; width: 100%;">
+          </slide>
+          <slide>
+            <img src="assets/images/stripeCommunication.png" alt="first slide" style="display: block; width: 100%;">
+          </slide>
+          <slide>
+            <img src="assets/images/blockchainCommunication.png" alt="second slide" style="display: block; width: 100%;">
+          </slide>
+        </carousel>
+      </div>
+    </mat-expansion-panel>
 
-  <div class="mt-3">
-    <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Application architecture
+        </mat-panel-title>
+        <mat-panel-description>
+          Application architecture description, and used technologies
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="details-carousel">
+        <carousel>
+          <slide>
+            <img src="assets/images/architecture.png" alt="first slide" style="display: block; width: 100%;">
+          </slide>
+        </carousel>
+      </div>
 
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Application architecture
+            Technologies
           </mat-panel-title>
-          <mat-panel-description>
-            Application architecture description, and used technologies
-          </mat-panel-description>
         </mat-expansion-panel-header>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Technologies
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>The application consist of a three elements: <strong>angular</strong> client, <strong>.net core</strong> backend and contract on the <strong>blockchain</strong>. The utilization of .net backend and blockchain was introduced to compare those <strong>two technologies which are not connected in project between themselfs</strong> and lives separately. There is a solution to introduce it, and i already think about it, and it could be relatively easy, but time-consuming, and the final development would not have a big impact on the visible effect for the user, which was important to me.</p>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Shop products
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>When going to the <strong>shop tab</strong>, products from the database are displayed, in the <strong>crypto tab</strong> products from the blockchain contract are visible. The product displays the <strong>name, price</strong> and two buttons, one to <strong>buy</strong>, the other to open the <strong>product details</strong>.</p>
-          <p>Both stores use the <strong>same models and components</strong>. Products can be found by <strong>filtering</strong> and <strong>sorting</strong>, and <strong>searching</strong> by name or part of the description. The whole thing is wrapped in a <strong>pagination</strong> component, and the products for each page are downloaded every time the page is changed.</p>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Authentication
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>There are two modules in the application with <strong>guarded access</strong> by non-logged in users: the <strong>product purchase module</strong> and the <strong>order module</strong>. We can add the products with no logging to the basket but when we try to purchase a product and not being logged in, we will be redirected to the <strong>login page</strong> with the possibility of <strong>registration</strong>.</p>
-          <p>As an authentication module the <strong>UserManager</strong> was used. This is a class derived from <strong>Microsoft.AspNetCore.Identity</strong> and have all the necessary methods for logging in and registering as well as storing <strong>users in a separate database</strong>.</p>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Basket
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>After completing the login process, the user has the option to <strong>add the product to the basket</strong>. By performing this action, the number of independent items displayed next to the cart <strong>icon will be updated</strong>. Product information will be <strong>cached using 'redis'</strong> technology for fast, reliable and scalable memory access.</p>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Purchase
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>After completing the adding process, you can go to <strong>purchase products</strong> by clicking 'Proceed to checkout' in the basket, where you provide information about the <strong>shipping address</strong> and <strong>delivery method</strong>. The next step is <strong>order review</strong> and <strong>payment</strong>. The <strong>'stripe'</strong> library was used for payment, its implementation is described in the next chapter.</p>
-        </mat-expansion-panel>
-
+        <p>The application consist of a three elements: <strong>angular</strong> client, <strong>.net core</strong> backend and contract on the <strong>blockchain</strong>. The utilization of .net backend and blockchain was introduced to compare those <strong>two technologies which are not connected in project between themselfs</strong> and lives separately. There is a solution to introduce it, and i already think about it, and it could be relatively easy, but time-consuming, and the final development would not have a big impact on the visible effect for the user, which was important to me.</p>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Stripe communication
+            Shop products
           </mat-panel-title>
-          <mat-panel-description>
-            Purchasing products with stripe
-          </mat-panel-description>
         </mat-expansion-panel-header>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Step 1
-            </mat-panel-title>
-            <mat-panel-description>
-              Payment intent
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <p>When the customer proceeds to the payment, a <strong>PaymentIntent</strong> is created with the current amount to be paid and the payment currency in <strong>PLN</strong>. If the customer leaves the payment process, the PaymentIntent will be <strong>refreshed when he re-enters</strong> and the <strong>amount will be recalculated</strong>, taking into account possible changes in the basket.</p>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Step 2
-            </mat-panel-title>
-            <mat-panel-description>
-              Payment secret
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <p>After creating a PaymentIntent, the customer receives a <strong>secret</strong> thanks to which he will be able to <strong>complete the payment</strong>. The secret is stored in the <strong>basket model</strong> and does not change when updating the amount when re-entering the payment process.</p>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Step 3
-            </mat-panel-title>
-            <mat-panel-description>
-              Payment method and creation of an order
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <p>The last step is to choose a <strong>payment method</strong> and pay for the products. The <strong>'payment element'</strong> from the stripe library was used to <strong>handle payments</strong>, which allows you to automatically <strong>display the available payment methods</strong>, for the PLN currency these are: <strong>debit or credit card</strong>, <strong>przelewy 24</strong>, <strong>blik</strong> and <strong>google pay</strong>. The available options can be configured by logging in with your own account at <strong>https://stripe.com</strong>. An additional simplification of the process can be the use of the <strong>'link'</strong> method that can <strong>remember the details of the card</strong> and the next time you try to pay, the data will not be required anymore and you will be able to pay by entering only a <strong>six-digit pin</strong></p>
-          <p>After selecting the method and during the payment process, an <strong>order is created</strong> in the pending status, and immediately after that the <strong>payment process begins</strong></p>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Step 4
-            </mat-panel-title>
-            <mat-panel-description>
-              Payment finalization and webhook listener
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <p>The payment is made by calling the <strong>'confirmPayment'</strong> method from the stripe library, where additional parameters are provided, such as: <strong>return_url</strong>, <strong>billing_details</strong>, <strong>redirect</strong>, the first one allows you to <strong>redirect</strong> the page to the <strong>specified address</strong> after the payment is completed, it is most useful when redirecting the payment to an <strong>external website</strong>, which is required for some methods eg <strong>'google pay'</strong>. The <strong>billing details</strong> can include information such as the customer's <strong>name</strong> or <strong>e-mail address</strong>, it is an optional value and will be displayed in the <strong>payment panel</strong> at https://stripe.com, the last parameter allows you to specify whether the <strong>redirection should always occur</strong> or only in when it is required.</p>
-          <p>Redirecting to another address after payment is associated with some difficulties on the site, <strong>the code that should run after payment can no longer be executed</strong>, so in the case of redirection after payment, the basket will not be cleaned. This is a case that had to be <strong>handled separately</strong> by querying stripe for the current payment status using the <strong>'retrievePaymentIntent'</strong> function.</p>
-          <p>After confirming the payment, the <strong>basket is removed</strong> and the page with the <strong>payment success opens</strong>, as well as a button to go to the order, where you can track its status. There is a <strong>webhook</strong> for updating the <strong>order status</strong>, i.e. an api method created to listen to requests sent to it. Proper reading of the event and security of the api is ensured by the <strong>'Stripe-Signature'</strong> sent in the request header, reading this value and using the secret known to the server, you can properly read the event. Webook listens for two events: <strong>payment_intent.succeeded</strong> and <strong>payment_intent.payment_failed</strong>, after receiving one of them, the order status is updated accordingly.</p>
-        </mat-expansion-panel>
+        <p>When going to the <strong>shop tab</strong>, products from the database are displayed, in the <strong>crypto tab</strong> products from the blockchain contract are visible. The product displays the <strong>name, price</strong> and two buttons, one to <strong>buy</strong>, the other to open the <strong>product details</strong>.</p>
+        <p>Both stores use the <strong>same models and components</strong>. Products can be found by <strong>filtering</strong> and <strong>sorting</strong>, and <strong>searching</strong> by name or part of the description. The whole thing is wrapped in a <strong>pagination</strong> component, and the products for each page are downloaded every time the page is changed.</p>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Blockchain solution
+            Authentication
           </mat-panel-title>
-          <mat-panel-description>
-            Purchasing products on blockchain
-          </mat-panel-description>
         </mat-expansion-panel-header>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Solution description
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>The purchase process on the blockchain has been simplified due to its complexity and the inability to add a product from a blockchain contract to the basket. The <strong>basket only supports products from the server</strong>, however, both stores could have separate baskets. It would then be necessary to add additional logic to handle such a basket, as well as an additional contract or function to store information about it, which would not be a very good blockchain solution in a decentralized network. You would have to <strong>pay for each basket change</strong>.</p>
-          <p>The product <strong>search and filter functionality</strong> has been implemented on a blockchain contract and makes more sense than in the previous case because the <strong>user does not pay for reading the contract</strong>, but even in this situation it would be a good approach to handle this off-chain with only the necessary information on the contract.</p>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Cryto servis
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>The basic functionality responsible for connecting to the decentralized network is placed in the <strong>cryptoServis</strong> class and was written with functions operating on <strong>Observables</strong> from the <strong>rxjs</strong> library, this solution has its justification. Making a transaction requires: checking the <strong>availability of ethereum</strong> in the browser, <strong>connecting to metamask</strong> or another provider, as well as <strong>creating a local contract</strong>. All steps are checked every time we use the connection, and if at least one of them fails, the process is properly handled and you don't have to worry about unexpected errors.</p>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Purchasing process
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          The following steps illustrate the <strong>purchasing process</strong>:
-          <p><strong>1.</strong> Connecting to the provider (e.g. matamask) If the browser does not have the provider installed, the message <strong>"Please install the metamask extension"</strong> will pop up</p>
-          <p><strong>2.</strong> Product display</p>
-          <p><strong>3.</strong> Purchase of an article, on the product page or in its details <strong>(it is not possible to buy multiple products at once)</strong></p>
-          <p><strong>4.</strong> The provider will request confirmation of the transaction with its <strong>hash and amount</strong></p>
-          <p><strong>5.</strong> User Acceptance</p>
-          <p><strong>6.</strong> Waiting for confirmation and displaying the result</p>
-        </mat-expansion-panel>
-
+        <p>There are two modules in the application with <strong>guarded access</strong> by non-logged in users: the <strong>product purchase module</strong> and the <strong>order module</strong>. We can add the products with no logging to the basket but when we try to purchase a product and not being logged in, we will be redirected to the <strong>login page</strong> with the possibility of <strong>registration</strong>.</p>
+        <p>As an authentication module the <strong>UserManager</strong> was used. This is a class derived from <strong>Microsoft.AspNetCore.Identity</strong> and have all the necessary methods for logging in and registering as well as storing <strong>users in a separate database</strong>.</p>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Crypto payment method
+            Basket
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>After completing the login process, the user has the option to <strong>add the product to the basket</strong>. By performing this action, the number of independent items displayed next to the cart <strong>icon will be updated</strong>. Product information will be <strong>cached using 'redis'</strong> technology for fast, reliable and scalable memory access.</p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Purchase
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>After completing the adding process, you can go to <strong>purchase products</strong> by clicking 'Proceed to checkout' in the basket, where you provide information about the <strong>shipping address</strong> and <strong>delivery method</strong>. The next step is <strong>order review</strong> and <strong>payment</strong>. The <strong>'stripe'</strong> library was used for payment, its implementation is described in the next chapter.</p>
+      </mat-expansion-panel>
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Stripe communication
+        </mat-panel-title>
+        <mat-panel-description>
+          Purchasing products with stripe
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="details-carousel">
+        <carousel>
+          <slide>
+            <img src="assets/images/stripeCommunication.png" alt="first slide" style="display: block; width: 100%;">
+          </slide>
+        </carousel>
+      </div>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Step 1
           </mat-panel-title>
           <mat-panel-description>
-            Pay for products with crypto instead of traditional currencies
+            Payment intent
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div class="mb-3 ml-2">It is possible to implement an additional payment method for traditional products using ethereum, which would involve taking additional steps.</div>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Step 1
-            </mat-panel-title>
-            <mat-panel-description>
-              Updating basket model
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <p>
-            The cart should contain the current ethereum rate and the transaction ID. The basket along with the payment summary should display information about the amount of ethereum. If the customer leaves the payment process and then returns, the exchange rates will be refreshed.
-          </p>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Step 2
-            </mat-panel-title>
-            <mat-panel-description>
-              New payment method for choosing
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <p>
-            It is possible to choose the ethereum payment method, the metamask extension will be activated after selecting this form of payment, not before. We may still switch to another payment method at this stage.
-          </p>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Step 3
-            </mat-panel-title>
-            <mat-panel-description>
-              Transaction initialization
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <p>
-            As soon as the payment starts, an order with additional information about exchange rates will be created on the backend, the transaction will be initiated but not sent yet, and the transaction ID will be saved in the basket.
-          </p>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Step 4
-            </mat-panel-title>
-            <mat-panel-description>
-              Transaction execution with order creation
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <p>
-            When the clients awaits transaction completion, the second order entity will be created on a blockchain contract containing: OrderId from the server, amount in ETH, amount in payment currency, payment date and transaction ID. This order will go to the order queue, from which the server will fetch the payment information and update the original orders.
-          </p>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Step 5
-            </mat-panel-title>
-            <mat-panel-description>
-              Transaction confirmation
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <p>
-            Payment intent along with the basket will be removed and this is a special case in which when the customer leaves the website before finalizing the transaction, this code may not be executed. In such a situation, it is necessary to check whether the basket has information about the transactionId and if so, the modification of the basket and the start of a new payment should be blocked. The client sends a request to the blockchain explorer to retrieve the transaction status and perform the appropriate steps.
-          </p>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Step 6
-            </mat-panel-title>
-            <mat-panel-description>
-              Order update on the server
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <p>
-            There is a job on the server that checks the order queue on the blockchain contract and updates the original order so that the orders component displays the correct information. He also has the option to delete the cart with the corresponding transactionId, if it is still active.
-          </p>
-        </mat-expansion-panel>
-
+        <p>When the customer proceeds to the payment, a <strong>PaymentIntent</strong> is created with the current amount to be paid and the payment currency in <strong>PLN</strong>. If the customer leaves the payment process, the PaymentIntent will be <strong>refreshed when he re-enters</strong> and the <strong>amount will be recalculated</strong>, taking into account possible changes in the basket.</p>
       </mat-expansion-panel>
-    </mat-accordion>
-  </div>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Step 2
+          </mat-panel-title>
+          <mat-panel-description>
+            Payment secret
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>After creating a PaymentIntent, the customer receives a <strong>secret</strong> thanks to which he will be able to <strong>complete the payment</strong>. The secret is stored in the <strong>basket model</strong> and does not change when updating the amount when re-entering the payment process.</p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Step 3
+          </mat-panel-title>
+          <mat-panel-description>
+            Payment method and creation of an order
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>The last step is to choose a <strong>payment method</strong> and pay for the products. The <strong>'payment element'</strong> from the stripe library was used to <strong>handle payments</strong>, which allows you to automatically <strong>display the available payment methods</strong>, for the PLN currency these are: <strong>debit or credit card</strong>, <strong>przelewy 24</strong>, <strong>blik</strong> and <strong>google pay</strong>. The available options can be configured by logging in with your own account at <strong>https://stripe.com</strong>. An additional simplification of the process can be the use of the <strong>'link'</strong> method that can <strong>remember the details of the card</strong> and the next time you try to pay, the data will not be required anymore and you will be able to pay by entering only a <strong>six-digit pin</strong></p>
+        <p>After selecting the method and during the payment process, an <strong>order is created</strong> in the pending status, and immediately after that the <strong>payment process begins</strong></p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Step 4
+          </mat-panel-title>
+          <mat-panel-description>
+            Payment finalization and webhook listener
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>The payment is made by calling the <strong>'confirmPayment'</strong> method from the stripe library, where additional parameters are provided, such as: <strong>return_url</strong>, <strong>billing_details</strong>, <strong>redirect</strong>, the first one allows you to <strong>redirect</strong> the page to the <strong>specified address</strong> after the payment is completed, it is most useful when redirecting the payment to an <strong>external website</strong>, which is required for some methods eg <strong>'google pay'</strong>. The <strong>billing details</strong> can include information such as the customer's <strong>name</strong> or <strong>e-mail address</strong>, it is an optional value and will be displayed in the <strong>payment panel</strong> at https://stripe.com, the last parameter allows you to specify whether the <strong>redirection should always occur</strong> or only in when it is required.</p>
+        <p>Redirecting to another address after payment is associated with some difficulties on the site, <strong>the code that should run after payment can no longer be executed</strong>, so in the case of redirection after payment, the basket will not be cleaned. This is a case that had to be <strong>handled separately</strong> by querying stripe for the current payment status using the <strong>'retrievePaymentIntent'</strong> function.</p>
+        <p>After confirming the payment, the <strong>basket is removed</strong> and the page with the <strong>payment success opens</strong>, as well as a button to go to the order, where you can track its status. There is a <strong>webhook</strong> for updating the <strong>order status</strong>, i.e. an api method created to listen to requests sent to it. Proper reading of the event and security of the api is ensured by the <strong>'Stripe-Signature'</strong> sent in the request header, reading this value and using the secret known to the server, you can properly read the event. Webook listens for two events: <strong>payment_intent.succeeded</strong> and <strong>payment_intent.payment_failed</strong>, after receiving one of them, the order status is updated accordingly.</p>
+      </mat-expansion-panel>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Blockchain solution
+        </mat-panel-title>
+        <mat-panel-description>
+          Purchasing products on blockchain
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="details-carousel">
+        <carousel>
+          <slide>
+            <img src="assets/images/blockchainCommunication.png" alt="second slide" style="display: block; width: 100%;">
+          </slide>
+        </carousel>
+      </div>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Solution description
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>The purchase process on the blockchain has been simplified due to its complexity and the inability to add a product from a blockchain contract to the basket. The <strong>basket only supports products from the server</strong>, however, both stores could have separate baskets. It would then be necessary to add additional logic to handle such a basket, as well as an additional contract or function to store information about it, which would not be a very good blockchain solution in a decentralized network. You would have to <strong>pay for each basket change</strong>.</p>
+        <p>The product <strong>search and filter functionality</strong> has been implemented on a blockchain contract and makes more sense than in the previous case because the <strong>user does not pay for reading the contract</strong>, but even in this situation it would be a good approach to handle this off-chain with only the necessary information on the contract.</p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Cryto servis
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>The basic functionality responsible for connecting to the decentralized network is placed in the <strong>cryptoServis</strong> class and was written with functions operating on <strong>Observables</strong> from the <strong>rxjs</strong> library, this solution has its justification. Making a transaction requires: checking the <strong>availability of ethereum</strong> in the browser, <strong>connecting to metamask</strong> or another provider, as well as <strong>creating a local contract</strong>. All steps are checked every time we use the connection, and if at least one of them fails, the process is properly handled and you don't have to worry about unexpected errors.</p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Purchasing process
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        The following steps illustrate the <strong>purchasing process</strong>:
+        <p><strong>1.</strong> Connecting to the provider (e.g. matamask) If the browser does not have the provider installed, the message <strong>"Please install the metamask extension"</strong> will pop up</p>
+        <p><strong>2.</strong> Product display</p>
+        <p><strong>3.</strong> Purchase of an article, on the product page or in its details <strong>(it is not possible to buy multiple products at once)</strong></p>
+        <p><strong>4.</strong> The provider will request confirmation of the transaction with its <strong>hash and amount</strong></p>
+        <p><strong>5.</strong> User Acceptance</p>
+        <p><strong>6.</strong> Waiting for confirmation and displaying the result</p>
+      </mat-expansion-panel>
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Crypto payment method
+        </mat-panel-title>
+        <mat-panel-description>
+          Pay for products with crypto instead of traditional currencies
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="mb-3 ml-2">It is possible to implement an additional payment method for traditional products using ethereum, which would involve taking additional steps.</div>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Step 1
+          </mat-panel-title>
+          <mat-panel-description>
+            Updating basket model
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>
+          The cart should contain the current ethereum rate and the transaction ID. The basket along with the payment summary should display information about the amount of ethereum. If the customer leaves the payment process and then returns, the exchange rates will be refreshed.
+        </p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Step 2
+          </mat-panel-title>
+          <mat-panel-description>
+            New payment method for choosing
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>
+          It is possible to choose the ethereum payment method, the metamask extension will be activated after selecting this form of payment, not before. We may still switch to another payment method at this stage.
+        </p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Step 3
+          </mat-panel-title>
+          <mat-panel-description>
+            Transaction initialization
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>
+          As soon as the payment starts, an order with additional information about exchange rates will be created on the backend, the transaction will be initiated but not sent yet, and the transaction ID will be saved in the basket.
+        </p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Step 4
+          </mat-panel-title>
+          <mat-panel-description>
+            Transaction execution with order creation
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>
+          When the clients awaits transaction completion, the second order entity will be created on a blockchain contract containing: OrderId from the server, amount in ETH, amount in payment currency, payment date and transaction ID. This order will go to the order queue, from which the server will fetch the payment information and update the original orders.
+        </p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Step 5
+          </mat-panel-title>
+          <mat-panel-description>
+            Transaction confirmation
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>
+          Payment intent along with the basket will be removed and this is a special case in which when the customer leaves the website before finalizing the transaction, this code may not be executed. In such a situation, it is necessary to check whether the basket has information about the transactionId and if so, the modification of the basket and the start of a new payment should be blocked. The client sends a request to the blockchain explorer to retrieve the transaction status and perform the appropriate steps.
+        </p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Step 6
+          </mat-panel-title>
+          <mat-panel-description>
+            Order update on the server
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>
+          There is a job on the server that checks the order queue on the blockchain contract and updates the original order so that the orders component displays the correct information. He also has the option to delete the cart with the corresponding transactionId, if it is still active.
+        </p>
+      </mat-expansion-panel>
+
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>
-

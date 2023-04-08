@@ -1,30 +1,30 @@
-<div class="d-flex flex-column flex-md-row align-items-center justify-content-between p-3 px-md-4
-  mb-3 bg-white border-bottom shadow-sm fixed-top">
+<div class="d-flex flex-column flex-wrap flex-md-row align-items-center justify-content-between
+  p-3 bg-primary border-bottom shadow-sm sticky-top">
   <img src="/assets/images/logo.png" style="max-height: 70px;" alt="logo" routerLink="/" class="logo">
   <nav class="my-2 my-md-0 mr-md-3 text-uppercase" style="font-size: larger;">
-    <a class="p-2" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-    <a class="p-2" [routerLink]="['/shop']" routerLinkActive="active">Shop</a>
-    <a class="p-2" [routerLink]="['/crypto']" routerLinkActive="active">Crypto</a>
-    <a class="p-2" [routerLink]="['/details']" routerLinkActive="active">Details</a>
-    <a class="p-2" [routerLink]="['/contact']" routerLinkActive="active">Contact</a>
+    <a class="p-2 link-light" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+    <a class="p-2 link-light" [routerLink]="['/shop']" routerLinkActive="active">Shop</a>
+    <a class="p-2 link-light" [routerLink]="['/crypto']" routerLinkActive="active">Crypto</a>
+    <a class="p-2 link-light" [routerLink]="['/details']" routerLinkActive="active">Details</a>
+    <a class="p-2 link-light" [routerLink]="['/contact']" routerLinkActive="active">Contact</a>
   </nav>
-  <div class="d-flex align-items-center">
+  <div class="d-flex align-items-center float-right">
     <a class="position-relative" [routerLink]="['/basket']">
       <i class="fa fa-shopping-cart fa-2x mr-5 text-dark"></i>
       <div *ngIf="(basket$ | async) as basket" class="cart-no">{{basket.items.length}}</div>
     </a>
     <ng-container *ngIf="(currentUser$ | async) === null">
-      <a routerLink="account/login" class="btn btn-outline-secondary mr-2">Login</a>
-      <a routerLink="account/register" class="btn btn-outline-secondary mr-3">Sign up</a>
+      <a routerLink="account/login" class="link-light btn btn-outline-secondary mr-2">Login</a>
+      <a routerLink="account/register" class="link-light btn btn-outline-secondary mr-3">Sign up</a>
     </ng-container>
 
     <ng-container *ngIf="(currentUser$ | async) as user">
-      <div class="dropdown ml-3 mr-5" dropdown>
+      <div class="dropdown pl-3 pr-3" dropdown>
         <a
           id="button-basic"
           dropdownToggle
           type="button"
-          class="dropdown-toggle"
+          class="dropdown-toggle link-light"
           aria-controls="dropdown-basic"
           style="cursor: pointer;"
         >

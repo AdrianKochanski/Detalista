@@ -15,5 +15,23 @@ label.xng-breadcrumb-trail {
   padding: 0 0;
 }
 
-html, body { height: 100%; }
-body { margin: 0; }
+html, body {
+  height: 100%;
+}
+
+h1 {
+  font-family: var(--bs-body-font-family) !important;
+  font-weight: var(--bs-body-font-weight) !important;
+  line-height: var(--bs-body-line-height) !important;
+  color: var(--bs-body-color) !important;
+}
+
+body {
+  margin: 0;
+  font-family: var(--bs-body-font-family) !important;
+  font-size: var(--bs-body-font-size) !important;
+  font-weight: var(--bs-body-font-weight) !important;
+  line-height: var(--bs-body-line-height) !important;
+  color: var(--bs-body-color) !important;
+}
+
