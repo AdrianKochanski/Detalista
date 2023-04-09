@@ -1,3 +1,7 @@
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Cabin Sketch",cursive;
+}
+
 .rating-color{
   color:#fbc634 !important;
 }
@@ -7,6 +11,8 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
+  background-color: lightblue;
+  box-shadow: 1px 1px 3px 3px #888888;
 
   & img {
     display: block;

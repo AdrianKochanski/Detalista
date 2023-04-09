@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <section class="col-3">
+    <section class="col-12 col-sm-5 col-md-3">
       <app-product-filter
         [brands]="brands"
         [types]="types"
@@ -8,17 +8,23 @@
       ></app-product-filter>
     </section>
 
-    <section class="col-9">
-      <div class="d-flex justify-content-between align-items-center pb-2">
+    <section class="col-12 col-sm-7 col-md-9">
+      <div class="d-flex flex-column justify-content-between align-items-left pb-2">
 
         <app-paging-header
+        class="mr-3"
           [totalCount]="shopParams.itemsCount"
           [pageSize]="shopParams.pageSize"
           [pageNumber]="shopParams.pageNumber"
         ></app-paging-header>
 
         <div class="form-inline" *ngIf="products">
-          <input (keyup.enter)="onSearch()" type="text" class="form-control" style="width: 300px;" placeholder="Search" #search>
+          <input
+            (keyup.enter)="onSearch()"
+            type="text"
+            class="form-control"
+            style="max-width: 300px; width: 100%;"
+            placeholder="Search" #search>
           <button
             (click)="onSearch()"
             class="btn btn-outline-primary my-2"
@@ -30,22 +36,21 @@
       </div>
 
       <div class="row">
-        <div class="col-4 mb-4" *ngFor="let product of products">
+        <div class="col-12 col-sm-6 col-md-4 mb-4" *ngFor="let product of products">
           <app-product-item [product]="product" [isCrypto]="true"></app-product-item>
         </div>
       </div>
+    </section>
 
-      <div
-        *ngIf="this.shopParams.itemsCount > 0"
-        class="d-flex justify-content-center"
-      >
-        <app-pager
-          [totalCount] = "this.shopParams.itemsCount"
-          [pageSize] = "this.shopParams.pageSize"
-          (pageChanged) = "this.onPageChanged($event)"
-        ></app-pager>
-      </div>
-
+    <section
+      *ngIf="this.shopParams.itemsCount > 0"
+      class="d-flex justify-content-center"
+    >
+      <app-pager
+        [totalCount] = "this.shopParams.itemsCount"
+        [pageSize] = "this.shopParams.pageSize"
+        (pageChanged) = "this.onPageChanged($event)"
+      ></app-pager>
     </section>
   </div>
 </div>

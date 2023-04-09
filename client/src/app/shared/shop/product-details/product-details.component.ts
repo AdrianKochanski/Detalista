@@ -17,11 +17,9 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(
     private activateRoute: ActivatedRoute,
-    private bcService: BreadcrumbService,
     private basketService: BasketService,
     private cryptoService: CryptoService
   ) {
-      this.bcService.set('@productDetails', ' ');
   }
 
   ngOnInit(): void {
@@ -31,7 +29,6 @@ export class ProductDetailsComponent implements OnInit {
   loadProduct() {
     this.activateRoute.data.subscribe((data: {product: IProduct}) => {
       this.product = data.product;
-      this.bcService.set('@productDetails', this.product.name);
     }, error => {
       console.log(error);
     });

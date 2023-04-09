@@ -14,7 +14,7 @@ export class TextMagnificantDirective {
   }
 
   @HostListener('mouseleave') onClick() {
-    this.color = 'blue';
+    this.color = 'orange';
     this.decrease();
   }
 
@@ -24,7 +24,7 @@ export class TextMagnificantDirective {
     if(this.appTextMagnificant) {
       const metadata : AnimationMetadata[] = [
         style({ fontSize: '1rem' }),
-        animate('200ms ease-in', style({ fontSize: '1.1rem', color: 'blue' })),
+        animate('200ms ease-in', style({ fontSize: '1.1rem', color: 'orange' })),
       ];
 
       const factory = this.builder.build(metadata);

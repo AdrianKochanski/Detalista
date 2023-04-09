@@ -4,7 +4,7 @@ import { BigNumber, ContractTransaction, ethers } from 'ethers';
 import DappazonAbi from "../../../../crypto/artifacts/contracts/Dappazon.sol/Dappazon.json";
 import { Dappazon } from "../../../../crypto/typechain-types";
 import configuration from '../../environments/environment';
-import { BehaviorSubject, filter, from, map, Observable, of, switchMap } from 'rxjs';
+import { BehaviorSubject, filter, from, map, Observable, of, switchMap, tap } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { IProduct } from '../shared/models/product';
 import { IPagination } from '../shared/models/pagination';
@@ -48,6 +48,7 @@ export class CryptoService {
 
   getItems(filters: Dappazon.FilterStruct): Observable<IPagination> {
     return this.loadDappazonContract(false).pipe(
+      tap(o => console.log(o)),
       filter(d => d !== null),
       switchMap(dapp => {
         return from(dapp.dappazon.queryItems(filters)).pipe(
@@ -126,15 +127,22 @@ export class CryptoService {
 
   async fetchEthereumAddress(): Promise<void> {
     if(!this.verifyMetamaskExtension()) return;
-    const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
-    const account = ethers.utils.getAddress(accounts[0]);
-    this.accountSource.next(account);
+
+    try {
+      const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
+      const account = ethers.utils.getAddress(accounts[0]);
+      this.accountSource.next(account);
+    }
+    catch {
+      this.toastrService.warning("Please login to metamask");
+    }
   }
 
   loadDappazonContract(reload: boolean): Observable<DappazonProvider> {
-    if(!this.verifyMetamaskExtension()) return of(null);
-
     return of(this.dappazon).pipe(
+      tap(() => {
+        this.fetchEthereumAddress();
+      }),
       switchMap((dapp: Dappazon) => {
         if(dapp !== null && reload === false) {
           const provider = new ethers.providers.Web3Provider(window.ethereum!);
@@ -212,5 +220,5 @@ export class CryptoService {
     id: i.id.toNumber(),
     name: i.name
   };
-}
+  }
 }

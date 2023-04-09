@@ -1,3 +1,12 @@
+h6 {
+  font-size: 1rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-family: "Cabin Sketch",cursive;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
 .btn {
   width: 30%;
   height: 40px;
@@ -10,6 +19,13 @@
     transform: none;
     opacity: 1;
   }
+}
+
+.productImage {
+  width: 100%;
+  object-fit: fill;
+  background-color: lightblue;
+  box-shadow: 1px 1px 3px 3px #888888;
 }
 
 .hover-overlay {

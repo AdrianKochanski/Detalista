@@ -4,19 +4,31 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { CryptoService } from 'src/app/crypto/crypto.service';
 import { ShopService } from 'src/app/shop/shop.service';
 import { IProduct } from '../models/product';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductResolver implements Resolve<IProduct> {
 
-  constructor(private shopService: ShopService, private cryptoService: CryptoService){}
+  constructor(
+    private shopService: ShopService,
+    private bcService: BreadcrumbService,
+    private cryptoService: CryptoService
+  ){}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IProduct> {
+    this.bcService.set('@productDetails', ' ');
+    return this.getProducts(route, state).pipe(
+      tap(p => this.bcService.set('@productDetails', p.name))
+    );
+  }
+
+  getProducts(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IProduct> {
     switch(state.url.includes("crypto")) {
       case true:
         return this.cryptoService.getItem(+route.paramMap.get('id'));
