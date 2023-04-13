@@ -49,6 +49,7 @@
       <app-pager
         [totalCount] = "this.shopParams.itemsCount"
         [pageSize] = "this.shopParams.pageSize"
+        [pageNumber] = "this.shopParams.pageNumber"
         (pageChanged) = "this.onPageChanged($event)"
       ></app-pager>
     </section>
