@@ -1,19 +1,24 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable, filter } from 'rxjs';
+import { CryptoService } from 'src/app/crypto/crypto.service';
 import { IBrand } from 'src/app/shared/models/brand';
-import { FilterParams } from 'src/app/shared/models/filterParams';
 import { IType } from 'src/app/shared/models/productType';
+import { ShopService } from 'src/app/shop/shop.service';
+import { ShopParams } from '../../models/shopParams';
+import { ShopServiceBase } from '../interfaces/ShopServiceBase';
 
 @Component({
   selector: 'app-product-filter',
   templateUrl: './product-filter.component.html',
   styleUrls: ['./product-filter.component.scss']
 })
-export class ProductFilterComponent {
-  @Input() brands: IBrand[];
-  @Input() types: IType[];
-  @Output() filterSelected = new EventEmitter<FilterParams>();
-
-  filterParams: FilterParams = new FilterParams();
+export class ProductFilterComponent implements OnInit {
+  @Input() isCrypto: boolean = false;
+  shopParams$: Observable<ShopParams>;
+  brands$: Observable<IBrand[]>;
+  types$: Observable<IType[]>;
+  firstValue: boolean = false;
+  private currentService: ShopServiceBase = null;
 
   sortOptions = [
     {name: 'Alphabetical', value: 'name'},
@@ -21,18 +26,48 @@ export class ProductFilterComponent {
     {name: 'Price: High to Low', value: 'priceDesc'}
   ];
 
+  constructor(private shopService: ShopService, private cryptoService: CryptoService) {
+  }
+
+  ngOnInit(): void {
+    if (!this.isCrypto) {
+      this.currentService = this.shopService;
+    }
+    else {
+      this.currentService = this.cryptoService;
+    }
+
+    this.shopParams$ = this.currentService.shopParams$.pipe(
+      filter(f => {
+        if(!this.firstValue)
+        {
+          this.firstValue = true;
+          return true;
+        }
+        else {
+          return f.filterChanged;
+        }
+      }),
+    );
+    this.brands$ = this.currentService.brands$;
+    this.types$ = this.currentService.types$;
+  }
+
   onBrandSelected(brandId: number) {
-    this.filterParams.brandIdSelected = brandId;
-    this.filterSelected.emit(this.filterParams);
+    this.currentService.setShopParams({
+      brandIdSelected: brandId
+    });
   }
 
   onTypeSelected(typeId: number) {
-    this.filterParams.typeIdSelected = typeId;
-    this.filterSelected.emit(this.filterParams);
+    this.currentService.setShopParams({
+      typeIdSelected: typeId
+    });
   }
 
   onSortSelected(sort: string) {
-    this.filterParams.sortSelected = sort;
-    this.filterSelected.emit(this.filterParams);
+    this.currentService.setShopParams({
+      sortSelected: sort
+    });
   }
 }

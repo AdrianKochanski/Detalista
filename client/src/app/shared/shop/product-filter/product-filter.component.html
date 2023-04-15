@@ -1,4 +1,4 @@
-<ng-container *ngIf="brands && types">
+<ng-container *ngIf="(shopParams$ | async) as shopParams">
   <h5 class="text-warning ml-3 mt-4 mb-3">Sort</h5>
   <select
     name="sort" id="sort"
@@ -8,7 +8,7 @@
       *ngFor="let sortOption of sortOptions"
       [value]="sortOption.value"
       [id]="sortOption.value"
-      [selected]="sortOption.value == this.filterParams.sortSelected"
+      [selected]="sortOption.value == shopParams.sortSelected"
     >
       {{sortOption.name}}
     </option>
@@ -16,11 +16,11 @@
 
   <h5 class="text-warning ml-3">Brands</h5>
 
-  <ul class="list-group my-3">
+  <ul class="list-group my-3" *ngIf="(brands$ | async) as brands">
     <li class="list-group-item"
       id="{{brand.id}}"
       *ngFor="let brand of brands"
-      [class.active]="brand.id === this.filterParams.brandIdSelected"
+      [class.active]="brand.id === shopParams.brandIdSelected"
       [value]="brand.id"
       (click)="onBrandSelected(brand.id)"
     >
@@ -30,11 +30,11 @@
 
   <h5 class="text-warning ml-3">Types</h5>
 
-  <ul class="list-group my-3">
+  <ul class="list-group my-3" *ngIf="(types$ | async) as types">
     <li class="list-group-item"
       id="{{type.id}}"
       *ngFor="let type of types"
-      [class.active]='type.id === this.filterParams.typeIdSelected'
+      [class.active]='type.id === shopParams.typeIdSelected'
       [value]="type.id"
       (click)="onTypeSelected(type.id)"
     >

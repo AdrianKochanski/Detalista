@@ -1,20 +1,20 @@
-<header>
-  <span *ngIf="totalCount > 0">
+<header *ngIf="(shopParams$ | async) as params">
+  <span *ngIf="params.itemsCount > 0">
     Showing
     <strong>
-      {{(pageNumber-1) * pageSize+1}} -
-      {{pageNumber * pageSize
-        > totalCount
-        ? totalCount
-        : pageNumber * pageSize
+      {{(params.pageNumber-1) * params.pageSize+1}} -
+      {{params.pageNumber * params.pageSize
+        > params.itemsCount
+        ? params.itemsCount
+        : params.pageNumber * params.pageSize
       }}
     </strong> of
     <strong>
-      {{totalCount}}
+      {{params.itemsCount}}
     </strong>
     Results
   </span>
-  <span *ngIf="totalCount === 0">
+  <span *ngIf="params.itemsCount === 0">
     There are <strong>0</strong> results for specified filters
   </span>
 </header>

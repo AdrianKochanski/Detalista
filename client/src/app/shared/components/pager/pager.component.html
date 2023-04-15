@@ -1,12 +1,13 @@
 <pagination
+  *ngIf="(shopParams$| async) as shopParams"
   [boundaryLinks]="true"
   previousText="&lsaquo;"
   nextText="&rsaquo;"
   firstText="&laquo;"
   lastText="&raquo;"
-  [totalItems]="totalCount"
-  [itemsPerPage]="pageSize"
-  [ngModel]="pageNumber"
+  [totalItems]="shopParams.itemsCount"
+  [itemsPerPage]="shopParams.pageSize"
+  [ngModel]="shopParams.pageNumber"
   (pageChanged)="onPagerChange($event)"
 >
 </pagination>

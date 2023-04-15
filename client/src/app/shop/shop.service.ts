@@ -1,67 +1,74 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { ShopServiceBase } from '../shared/shop/interfaces/ShopServiceBase';
+import configuration from 'src/environments/environment';
+import { IType } from '../shared/models/productType';
 import { IBrand } from '../shared/models/brand';
 import { IPagination } from '../shared/models/pagination';
 import { IProduct } from '../shared/models/product';
-import { IType } from '../shared/models/productType';
-import { ShopParams } from '../shared/models/shopParams';
-import configuration from 'src/environments/environment';
+import { filter, map, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ShopService {
-  pagination?: IPagination;
-  shopParams = new ShopParams();
+export class ShopService extends ShopServiceBase {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    super();
 
-  getProducts(useCache = true): Observable<IPagination> {
-    let params = new HttpParams();
+    this.getCachedBrands(() => {
+      return this.http.get<IBrand[]>(configuration.baseUrl + 'products/brands');
+    }).subscribe(() => {
+    }, error => {
+      console.log(error);
+    });
 
-    if(this.shopParams.brandIdSelected !== 0) {
-      params = params.append("brandId", this.shopParams.brandIdSelected.toString());
-    }
+    this.getCachedTypes(() => {
+      return this.http.get<IType[]>(configuration.baseUrl + 'products/types');
+    }).subscribe(() => {
+    }, error => {
+      console.log(error);
+    });
 
-    if(this.shopParams.typeIdSelected !== 0) {
-      params = params.append("typeId", this.shopParams.typeIdSelected.toString());
-    }
+    this.shopParams$.pipe(
+      filter(f => f.filterChanged),
+      switchMap(shopParams => this.getCachedProducts(
+        () => {
+          let params = new HttpParams();
 
-    if (this.shopParams.search) {
-      params = params.append("search", this.shopParams.search);
-    }
+          if(shopParams.brandIdSelected !== 0) {
+            params = params.append("brandId", shopParams.brandIdSelected.toString());
+          }
 
-    params = params.append("sort", this.shopParams.sortSelected);
-    params = params.append("pageIndex", this.shopParams.pageNumber.toString());
-    params = params.append("pageSize", this.shopParams.pageSize.toString());
+          if(shopParams.typeIdSelected !== 0) {
+            params = params.append("typeId", shopParams.typeIdSelected.toString());
+          }
 
-    return this.http.get<IPagination>(configuration.baseUrl + 'products', {observe: 'response', params})
-    .pipe(
-      map(r => {
-        this.pagination = r.body;
-        return r.body;
-      })
+          if (shopParams.search) {
+            params = params.append("search", shopParams.search);
+          }
+
+          params = params.append("sort", shopParams.sortSelected);
+          params = params.append("pageIndex", shopParams.pageNumber.toString());
+          params = params.append("pageSize", shopParams.pageSize.toString());
+
+          return this.http.get<IPagination>(configuration.baseUrl + 'products', {observe: 'response', params}).pipe(map(r => r.body));
+        },
+        shopParams,
+        true
+      ))
+    ).subscribe(() => {
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  getProduct(id: number) {
+    return this.getCachedProduct(
+      (id: number) => {
+        return this.http.get<IProduct>(`${configuration.baseUrl}products/${id}`);
+      },
+      id
     );
-  }
-
-  setShopParams(params: ShopParams) {
-    this.shopParams = params;
-  }
-
-  getShopParams(): ShopParams {
-    return this.shopParams;
-  }
-
-  getProduct(id: number): Observable<IProduct> {
-    return this.http.get<IProduct>(`${configuration.baseUrl}products/${id}`);
-  }
-
-  getBrands(): Observable<IBrand[]> {
-    return this.http.get<IBrand[]>(configuration.baseUrl + 'products/brands');
-  }
-
-  getTypes(): Observable<IType[]> {
-    return this.http.get<IType[]>(configuration.baseUrl + 'products/types');
   }
 }

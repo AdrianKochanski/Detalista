@@ -10,6 +10,7 @@ import { IProduct } from '../shared/models/product';
 import { IPagination } from '../shared/models/pagination';
 import { IBrand } from '../shared/models/brand';
 import { IType } from '../shared/models/productType';
+import { ShopServiceBase } from '../shared/shop/interfaces/ShopServiceBase';
 
 declare global {
   interface Window {
@@ -25,13 +26,48 @@ type DappazonProvider = {
  @Injectable({
   providedIn: 'root'
 })
-export class CryptoService {
+export class CryptoService extends ShopServiceBase {
   private dappazon: Dappazon = null;
   private accountSource = new BehaviorSubject<string>("");
   account$ = this.accountSource.asObservable();
 
-  constructor(private toastrService: ToastrService) {}
+  constructor(private toastrService: ToastrService) {
+    super();
 
+    this.getCachedBrands(() => {
+      return this.getBrands();
+    }).subscribe(() => {
+    }, error => {
+      console.log(error);
+    });
+
+    this.getCachedTypes(() => {
+      return this.getCategories();
+    }).subscribe(() => {
+    }, error => {
+      console.log(error);
+    });
+
+    this.shopParams$.pipe(
+      filter(f => f.filterChanged),
+      switchMap(shopParams => this.getCachedProducts(
+        () => this.getItems({
+          brandIdSelected: BigNumber.from(shopParams.brandIdSelected),
+          categoryIdSelected: BigNumber.from(shopParams.typeIdSelected),
+          itemsCount: BigNumber.from(shopParams.itemsCount),
+          pageNumber: BigNumber.from(shopParams.pageNumber),
+          pageSize: BigNumber.from(shopParams.pageSize),
+          search: shopParams.search,
+          sortSelected: shopParams.sortSelected
+        }),
+        shopParams,
+        true
+      ))
+    ).subscribe(() => {
+    }, error => {
+      console.log(error);
+    });
+  }
 
   buyItem(product: IProduct): Observable<ContractTransaction> {
     return this.loadDappazonContract(false).pipe(
@@ -48,8 +84,7 @@ export class CryptoService {
 
   getItems(filters: Dappazon.FilterStruct): Observable<IPagination> {
     return this.loadDappazonContract(false).pipe(
-      tap(o => console.log(o)),
-      filter(d => d !== null),
+      filter(d => d !== null && !!filters),
       switchMap(dapp => {
         return from(dapp.dappazon.queryItems(filters)).pipe(
           map((response) => {
@@ -70,7 +105,16 @@ export class CryptoService {
     );
   }
 
-  getItem(itemId: number): Observable<IProduct> {
+  getItem(id: number) {
+    return this.getCachedProduct(
+      (id: number) => {
+        return this.getProduct(id);
+      },
+      id
+    );
+  }
+
+  getProduct(itemId: number): Observable<IProduct> {
     return this.loadDappazonContract(false).pipe(
       filter(dapp => dapp !== null),
       switchMap(dapp => {
