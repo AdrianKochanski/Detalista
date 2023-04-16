@@ -3,7 +3,7 @@ import { Observable, filter } from 'rxjs';
 import { CryptoService } from 'src/app/crypto/crypto.service';
 import { ShopService } from 'src/app/shop/shop.service';
 import { ShopParams } from '../../models/shopParams';
-import { ShopServiceBase } from '../../shop/interfaces/ShopServiceBase';
+import { ShopServiceBase } from '../../helpers/ShopServiceBase';
 
 @Component({
   selector: 'app-paging-header',

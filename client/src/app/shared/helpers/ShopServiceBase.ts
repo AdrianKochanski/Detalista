@@ -1,12 +1,12 @@
 import { BehaviorSubject, Observable, map, of } from "rxjs";
-import { ShopParams, shopParamsKey } from "../../models/shopParams";
-import { IProduct } from "../../models/product";
-import { IPagination } from "../../models/pagination";
-import { IType } from "../../models/productType";
-import { IBrand } from "../../models/brand";
+import { ShopParams, shopParamsKey } from "../models/shopParams";
+import { IProduct } from "../models/product";
+import { IPagination } from "../models/pagination";
+import { IType } from "../models/productType";
+import { IBrand } from "../models/brand";
 
 export class ShopServiceBase {
-  productsCache = new Map();
+  productsCache = new Map<string, IPagination>();
 
   paginationSource = new BehaviorSubject<IPagination | null>(null);
   pagination$ = this.paginationSource.asObservable();
@@ -27,7 +27,6 @@ export class ShopServiceBase {
       || params.typeIdSelected !== undefined && params.typeIdSelected !== this.shopParamsSource.value.typeIdSelected
       || params.search !== undefined && params.search !== this.shopParamsSource.value.search
     ) {
-      //console.log(1);
       params.pageNumber = 1;
       params.filterChanged = true;
     }
@@ -35,15 +34,12 @@ export class ShopServiceBase {
          params.pageNumber !== undefined && params.pageNumber !== this.shopParamsSource.value.pageNumber
       || params.sortSelected !== undefined && params.sortSelected !== this.shopParamsSource.value.sortSelected
     ) {
-      //console.log(2);
       params.filterChanged = true;
     }
     else if (params.filterChanged === undefined) {
-      //console.log(3);
       params.filterChanged = false;
     }
 
-    //console.log(params);
     const nextShopParams = {
       ...this.shopParamsSource.value,
       ...params
@@ -54,8 +50,9 @@ export class ShopServiceBase {
   }
 
   getCachedProduct(getT: (id: number) => Observable<IProduct>, id: number): Observable<IProduct> {
-    if(!!this.paginationSource.value) {
-      const product = this.paginationSource.value.data.find(p => p.id == id);
+    if(this.productsCache.size > 0) {
+      const allCache: IPagination[] = [...this.productsCache.values()];
+      const product = allCache.flatMap(p => p.data).find(p => p.id === id);
       if(product) return of(product);
     }
 

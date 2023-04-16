@@ -5,7 +5,7 @@ import { IBrand } from 'src/app/shared/models/brand';
 import { IType } from 'src/app/shared/models/productType';
 import { ShopService } from 'src/app/shop/shop.service';
 import { ShopParams } from '../../models/shopParams';
-import { ShopServiceBase } from '../interfaces/ShopServiceBase';
+import { ShopServiceBase } from '../../helpers/ShopServiceBase';
 
 @Component({
   selector: 'app-product-filter',

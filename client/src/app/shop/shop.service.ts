@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ShopServiceBase } from '../shared/shop/interfaces/ShopServiceBase';
+import { ShopServiceBase } from '../shared/helpers/ShopServiceBase';
 import configuration from 'src/environments/environment';
 import { IType } from '../shared/models/productType';
 import { IBrand } from '../shared/models/brand';

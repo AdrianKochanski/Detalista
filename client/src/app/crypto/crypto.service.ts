@@ -10,7 +10,7 @@ import { IProduct } from '../shared/models/product';
 import { IPagination } from '../shared/models/pagination';
 import { IBrand } from '../shared/models/brand';
 import { IType } from '../shared/models/productType';
-import { ShopServiceBase } from '../shared/shop/interfaces/ShopServiceBase';
+import { ShopServiceBase } from '../shared/helpers/ShopServiceBase';
 
 declare global {
   interface Window {
