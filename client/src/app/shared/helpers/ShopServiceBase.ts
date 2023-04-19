@@ -102,7 +102,6 @@ export class ShopServiceBase {
         });
 
         const paramsKey = shopParamsKey(updatedParams);
-        console.log(this.productsCache);
 
         if(!this.productsCache.has(paramsKey)) {
           this.productsCache.set(paramsKey, p);

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions
 {
@@ -17,6 +18,9 @@ namespace API.Extensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config) 
         {
+            services.AddDbContext<AppIdentityDbContext>(x =>
+                x.UseNpgsql(config.GetConnectionString("IdentityConnection")));
+
             var builder = services.AddIdentityCore<AppUser>();
             builder.AddEntityFrameworkStores<AppIdentityDbContext>();
             builder.AddSignInManager<SignInManager<AppUser>>();

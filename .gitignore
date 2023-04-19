@@ -3,6 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+
 appsettings.json
 
 # User-specific files
@@ -19,6 +20,8 @@ appsettings.json
 mono_crash.*
 
 # Build results
+wwwroot/
+[Pp]ublish/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/

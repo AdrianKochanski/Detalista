@@ -17,14 +17,14 @@ export class ShopService extends ShopServiceBase {
     super();
 
     this.getCachedBrands(() => {
-      return this.http.get<IBrand[]>(configuration.baseUrl + 'products/brands');
+      return this.http.get<IBrand[]>(configuration.apiUrl + 'products/brands');
     }).subscribe(() => {
     }, error => {
       console.log(error);
     });
 
     this.getCachedTypes(() => {
-      return this.http.get<IType[]>(configuration.baseUrl + 'products/types');
+      return this.http.get<IType[]>(configuration.apiUrl + 'products/types');
     }).subscribe(() => {
     }, error => {
       console.log(error);
@@ -52,7 +52,7 @@ export class ShopService extends ShopServiceBase {
           params = params.append("pageIndex", shopParams.pageNumber.toString());
           params = params.append("pageSize", shopParams.pageSize.toString());
 
-          return this.http.get<IPagination>(configuration.baseUrl + 'products', {observe: 'response', params}).pipe(map(r => r.body));
+          return this.http.get<IPagination>(configuration.apiUrl + 'products', {observe: 'response', params}).pipe(map(r => r.body));
         },
         shopParams,
         true
@@ -66,7 +66,7 @@ export class ShopService extends ShopServiceBase {
   getProduct(id: number) {
     return this.getCachedProduct(
       (id: number) => {
-        return this.http.get<IProduct>(`${configuration.baseUrl}products/${id}`);
+        return this.http.get<IProduct>(`${configuration.apiUrl}products/${id}`);
       },
       id
     );

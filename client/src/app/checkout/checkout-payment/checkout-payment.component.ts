@@ -9,6 +9,7 @@ import { CheckoutService } from '../checkout.service';
 import { Stripe, StripeElements, StripeLinkAuthenticationElement, StripePaymentElement } from '@stripe/stripe-js';
 import { firstValueFrom, map, Subscription } from 'rxjs';
 import { StripeService } from 'src/app/core/services/stripe.service';
+import configuration from 'src/environments/environment';
 
 @Component({
   selector: 'app-checkout-payment',
@@ -60,7 +61,7 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
 
     try {
       const createOrder: IOrder = await this.createOrder(basket);
-      await this.confirmPaymentWithStripe(basket.clientSecret, `https://localhost:4200/orders/${createOrder.id}`);
+      await this.confirmPaymentWithStripe(basket.clientSecret, `${configuration.appUrl}orders/${createOrder.id}`);
       this.basketService.deleteBasket(basket);
       const navigationExtras: NavigationExtras = {state: createOrder};
       this.router.navigate(['checkout/success'], navigationExtras);
@@ -156,7 +157,7 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
     const result = await this.stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: returnUrl ? returnUrl : 'https://localhost:4200/orders',
+        return_url: returnUrl ? returnUrl : `${configuration.appUrl}orders`,
         payment_method_data: {
           billing_details: {
             name: nameOnCard

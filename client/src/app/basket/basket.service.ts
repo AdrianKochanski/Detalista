@@ -18,7 +18,7 @@ export class BasketService {
   constructor(private http: HttpClient) { }
 
   createPaymentIntent() {
-    return this.http.post<Basket>(configuration.baseUrl + 'payments/' + this.getCurrentBasketValue()?.id, {})
+    return this.http.post<Basket>(configuration.apiUrl + 'payments/' + this.getCurrentBasketValue()?.id, {})
       .pipe(
         map((basket: IBasket) => {
           this.basketSource.next(basket);
@@ -37,7 +37,7 @@ export class BasketService {
   }
 
   getBasket(id: string) {
-    return this.http.get(configuration.baseUrl + 'basket?id=' + id).pipe(
+    return this.http.get(configuration.apiUrl + 'basket?id=' + id).pipe(
       map((basket: IBasket) => {
         this.basketSource.next(basket);
         this.calculateTotals();
@@ -46,7 +46,7 @@ export class BasketService {
   }
 
   setBasket(basket: Basket) {
-    return this.http.post(configuration.baseUrl + 'basket', basket).subscribe((response: IBasket) => {
+    return this.http.post(configuration.apiUrl + 'basket', basket).subscribe((response: IBasket) => {
       this.basketSource.next(response);
       this.calculateTotals();
     }, error => {
@@ -109,7 +109,7 @@ export class BasketService {
   }
 
   deleteBasket(basket: IBasket) {
-    return this.http.delete(configuration.baseUrl + 'basket?id=' + basket.id).subscribe(() => {
+    return this.http.delete(configuration.apiUrl + 'basket?id=' + basket.id).subscribe(() => {
       this.deleteLocalBasket(basket.id);
     }, error => {
       console.log(error);

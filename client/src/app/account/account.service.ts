@@ -21,7 +21,7 @@ export class AccountService {
       return of(null);
     }
 
-    return this.http.get(configuration.baseUrl + 'account').pipe(
+    return this.http.get(configuration.apiUrl + 'account').pipe(
       map((user: IUser) => {
         if(user) {
           localStorage.setItem("token", user.token);
@@ -32,7 +32,7 @@ export class AccountService {
   }
 
   login(values: any) {
-    return this.http.post(configuration.baseUrl + "account/login", values).pipe(
+    return this.http.post(configuration.apiUrl + "account/login", values).pipe(
       map((user: IUser) => {
         if(user) {
           localStorage.setItem("token", user.token);
@@ -43,7 +43,7 @@ export class AccountService {
   }
 
   register(values: any) {
-    return this.http.post(configuration.baseUrl + "account/register", values).pipe(
+    return this.http.post(configuration.apiUrl + "account/register", values).pipe(
       map((user: IUser) => {
         if(user) {
           localStorage.setItem("token", user.token);
@@ -60,14 +60,14 @@ export class AccountService {
   }
 
   checkEmailExist(email: string) {
-    return this.http.get(configuration.baseUrl + "account/emailexists?email=" + email);
+    return this.http.get(configuration.apiUrl + "account/emailexists?email=" + email);
   }
 
   getUserAddress() {
-    return this.http.get<IAddress>(configuration.baseUrl + "account/address");
+    return this.http.get<IAddress>(configuration.apiUrl + "account/address");
   }
 
   updateUserAddress(address: IAddress) {
-    return this.http.put<IAddress>(configuration.baseUrl + "account/address", address);
+    return this.http.put<IAddress>(configuration.apiUrl + "account/address", address);
   }
 }

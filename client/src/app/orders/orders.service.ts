@@ -11,10 +11,10 @@ export class OrdersService {
   constructor(private http: HttpClient) { }
 
   getOrdersForUser() : Observable<IOrder[]> {
-    return this.http.get<IOrder[]>(configuration.baseUrl + "orders");
+    return this.http.get<IOrder[]>(configuration.apiUrl + "orders");
   }
 
   getOrderDetails(id: number) : Observable<IOrder> {
-    return this.http.get<IOrder>(configuration.baseUrl + "orders/" + id);
+    return this.http.get<IOrder>(configuration.apiUrl + "orders/" + id);
   }
 }
