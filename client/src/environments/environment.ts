@@ -6,7 +6,7 @@ export default {
     31337: {
       jsonRPC: "http://127.0.0.1:8545/",
       dappazon: {
-        address: "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+        address: "0xb5ae3e2883934457cb593793f034b401867e1372"
       }
     }
   }
