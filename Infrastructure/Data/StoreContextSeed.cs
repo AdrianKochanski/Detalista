@@ -34,19 +34,22 @@ namespace Infrastructure.Data
             }
         }
 
+        private static DataSeed GetDataSeed() {
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var dataSeedFile = File.ReadAllText(path + @"/Data/SeedData/seedData.json");
+            return JsonSerializer.Deserialize<DataSeed>(
+                dataSeedFile, 
+                new JsonSerializerOptions() {
+                    PropertyNameCaseInsensitive = true
+                }
+            );
+        }
+
         private static async Task CryptoSeedProducts(ContractHandler contractHandler, ILoggerFactory loggerFactory)
         {
             try
             {
-                var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var dataSeedFile = File.ReadAllText(path + @"/Data/SeedData/items.json");
-                var dataSeed = JsonSerializer.Deserialize<DataSeed>(
-                    dataSeedFile, 
-                    new JsonSerializerOptions() {
-                        PropertyNameCaseInsensitive = true
-                    }
-                );
-
+                var dataSeed = GetDataSeed();
 
                 List<Brand> brands = new List<Brand>();
                 foreach(var brand in dataSeed.Brands) {
@@ -73,15 +76,15 @@ namespace Infrastructure.Data
 
 
                 List<NewItem> items = new List<NewItem>();
-                foreach(var item in dataSeed.Items) {
+                foreach(var item in dataSeed.Products) {
                     items.Add(new NewItem() {
                         Id = item.Id,
                         Name = item.Name,
-                        BrandId = item.Brand,
-                        CategoryId = item.Category,
-                        Cost = Web3.Convert.ToWei(item.Price.Replace('.', ',')),
+                        BrandId = item.ProductBrandId,
+                        CategoryId = item.ProductTypeId,
+                        Cost = Web3.Convert.ToWei(item.Eth.Replace('.', ',')),
                         Description = item.Description,
-                        Image = item.Image,
+                        Image = item.Ipfs,
                         Rating = item.Rating,
                         Stock = item.Stock
                     });
@@ -120,14 +123,12 @@ namespace Infrastructure.Data
         {
             try
             {
+                var dataSeed = GetDataSeed();
                 var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
                 if (!context.ProductBrands.Any())
                 {
-                    var brandsData = File.ReadAllText(path + @"/Data/SeedData/brands.json");
-                    var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
-
-                    foreach (var item in brands)
+                    foreach (var item in dataSeed.Brands)
                     {
                         context.ProductBrands.Add(item);
                     }
@@ -137,10 +138,7 @@ namespace Infrastructure.Data
 
                 if (!context.ProductTypes.Any())
                 {
-                    var typesData = File.ReadAllText(path + @"/Data/SeedData/types.json");
-                    var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
-
-                    foreach (var item in types)
+                    foreach (var item in dataSeed.Types)
                     {
                         context.ProductTypes.Add(item);
                     }
@@ -150,12 +148,19 @@ namespace Infrastructure.Data
 
                 if (!context.Products.Any())
                 {
-                    var productsData = File.ReadAllText(path + @"/Data/SeedData/products.json");
-                    var products = JsonSerializer.Deserialize<List<Product>>(productsData);
-
-                    foreach (var item in products)
+                    foreach (var item in dataSeed.Products)
                     {
-                        context.Products.Add(item);
+                        context.Products.Add(new Product() {
+                            Id = item.Id,
+                            Description = item.Description,
+                            Name = item.Name,
+                            PictureUrl = item.PictureUrl,
+                            Price = item.Price,
+                            ProductBrandId = item.ProductBrandId,
+                            ProductTypeId = item.ProductTypeId,
+                            Rating = item.Rating,
+                            Stock = item.Stock
+                        });
                     }
 
                     await context.SaveChangesAsync();

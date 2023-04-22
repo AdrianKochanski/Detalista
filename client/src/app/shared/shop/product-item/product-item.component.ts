@@ -30,6 +30,7 @@ export class ProductItemComponent implements OnInit {
     if(this.product.isCrypto) {
       this.cryptoService.buyItem(this.product).subscribe(response => {
         console.log(response);
+        response.wait(2).then(r => console.log(r));
       }, e => this.cryptoService.parseMetamaskError(e));
     }
     else {

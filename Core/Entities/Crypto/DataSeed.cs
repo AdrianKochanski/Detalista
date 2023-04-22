@@ -9,6 +9,6 @@ namespace Core.Entities.Crypto
     {
         public IEnumerable<ProductBrand> Brands { get; set; }
         public IEnumerable<ProductType> Types { get; set; }
-        public IEnumerable<CryptoProductParams> Items { get; set; }
+        public IEnumerable<ProductParams> Products { get; set; }
     }
 }

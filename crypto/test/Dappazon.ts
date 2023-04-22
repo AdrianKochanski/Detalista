@@ -169,7 +169,7 @@ describe("Dappazon", () => {
         itemsCount: 0,
         pageNumber: 2,
         pageSize: 2,
-        search: "search155",
+        search: "search1",
         sortSelected: "name"
       }
       const [items, filterBack] = await dappazon.queryItems(filter);

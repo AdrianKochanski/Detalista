@@ -1,0 +1,282 @@
+{
+  "Brands": [
+    {
+      "Id": 1,
+      "Name": "Angular"
+    },
+    {
+      "Id": 2,
+      "Name": "NetCore"
+    },
+    {
+      "Id": 3,
+      "Name": "VS Code"
+    },
+    {
+      "Id": 4,
+      "Name": "React"
+    },
+    {
+      "Id": 5,
+      "Name": "Typescript"
+    },
+    {
+      "Id": 6,
+      "Name": "Redis"
+    }
+  ],
+  "Types": [
+    {
+      "Id": 1,
+      "Name": "Boards"
+    },
+    {
+      "Id": 2,
+      "Name": "Hats"
+    },
+    {
+      "Id": 3,
+      "Name": "Boots"
+    },
+    {
+      "Id": 4,
+      "Name": "Gloves"
+    }
+  ],
+  "Products": [
+    {
+      "Id": 1,
+      "Name": "Angular Speedster Board 2000",
+      "Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+      "Price": 200,
+      "Eth": "0.99",
+      "PictureUrl": "images/products/sb-ang1.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/robots.jpg",
+      "ProductTypeId": 1,
+      "ProductBrandId": 1,
+      "Stock": 100,
+      "Rating": 3
+    },
+    {
+      "Id": 2,
+      "Name": "Green Angular Board 3000",
+      "Description": "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
+      "Price": 150,
+      "Eth": "0.49",
+      "PictureUrl": "images/products/sb-ang2.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/train.jpg",
+      "ProductTypeId": 1,
+      "ProductBrandId": 1,
+      "Stock": 100,
+      "Rating": 5
+    },
+    {
+      "Id": 3,
+      "Name": "Core Board Speed Rush 3",
+      "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
+      "Price": 180,
+      "Eth": "0.84",
+      "PictureUrl": "images/products/sb-core1.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/cube.jpg",
+      "ProductTypeId": 1,
+      "ProductBrandId": 2,
+      "Stock": 100,
+      "Rating": 4
+    },
+    {
+      "Id": 4,
+      "Name": "Net Core Super Board",
+      "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
+      "Price": 300,
+      "Eth": "0.77",
+      "PictureUrl": "images/products/sb-core2.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/watch.jpg",
+      "ProductTypeId": 1,
+      "ProductBrandId": 2,
+      "Stock": 100,
+      "Rating": 5
+    },
+    {
+      "Id": 5,
+      "Name": "React Board Super Whizzy Fast",
+      "Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+      "Price": 250,
+      "Eth": "0.11",
+      "PictureUrl": "images/products/sb-react1.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/sunglasses.jpg",
+      "ProductTypeId": 1,
+      "ProductBrandId": 4,
+      "Stock": 100,
+      "Rating": 4
+    },
+    {
+      "Id": 6,
+      "Name": "Typescript Entry Board",
+      "Description": "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
+      "Price": 120,
+      "Eth": "0.44",
+      "PictureUrl": "images/products/sb-ts1.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/shoes.jpg",
+      "ProductTypeId": 1,
+      "ProductBrandId": 5,
+      "Stock": 100,
+      "Rating": 3
+    },
+    {
+      "Id": 7,
+      "Name": "Core Blue Hat",
+      "Description": "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+      "Price": 10,
+      "Eth": "0.75",
+      "PictureUrl": "images/products/hat-core1.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/headset.jpg",
+      "ProductTypeId": 2,
+      "ProductBrandId": 2,
+      "Stock": 100,
+      "Rating": 5
+    },
+    {
+      "Id": 8,
+      "Name": "Green React Woolen Hat",
+      "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
+      "Price": 8,
+      "Eth": "0.68",
+      "PictureUrl": "images/products/hat-react1.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/drone.jpg",
+      "ProductTypeId": 2,
+      "ProductBrandId": 4,
+      "Stock": 100,
+      "Rating": 4
+    },
+    {
+      "Id": 9,
+      "Name": "Purple React Woolen Hat",
+      "Description": "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+      "Price": 15,
+      "Eth": "0.23",
+      "PictureUrl": "images/products/hat-react2.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/camera.jpg",
+      "ProductTypeId": 2,
+      "ProductBrandId": 4,
+      "Stock": 100,
+      "Rating": 5
+    },
+    {
+      "Id": 10,
+      "Name": "Blue Code Gloves",
+      "Description": "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
+      "Price": 18,
+      "Eth": "0.51",
+      "PictureUrl": "images/products/glove-code1.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/robots.jpg",
+      "ProductTypeId": 4,
+      "ProductBrandId": 3,
+      "Stock": 100,
+      "Rating": 5
+    },
+    {
+      "Id": 11,
+      "Name": "Green Code Gloves",
+      "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
+      "Price": 15,
+      "Eth": "0.9",
+      "PictureUrl": "images/products/glove-code2.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/train.jpg",
+      "ProductTypeId": 4,
+      "ProductBrandId": 3,
+      "Stock": 100,
+      "Rating": 4
+    },
+    {
+      "Id": 12,
+      "Name": "Purple React Gloves",
+      "Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa.",
+      "Price": 16,
+      "Eth": "1.1",
+      "PictureUrl": "images/products/glove-react1.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/cube.jpg",
+      "ProductTypeId": 4,
+      "ProductBrandId": 4,
+      "Stock": 100,
+      "Rating": 3
+    },
+    {
+      "Id": 13,
+      "Name": "Green React Gloves",
+      "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
+      "Price": 14,
+      "Eth": "0.6",
+      "PictureUrl": "images/products/glove-react2.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/watch.jpg",
+      "ProductTypeId": 4,
+      "ProductBrandId": 4,
+      "Stock": 100,
+      "Rating": 2
+    },
+    {
+      "Id": 14,
+      "Name": "Redis Red Boots",
+      "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
+      "Price": 250,
+      "Eth": "0.15",
+      "PictureUrl": "images/products/boot-redis1.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/sunglasses.jpg",
+      "ProductTypeId": 3,
+      "ProductBrandId": 6,
+      "Stock": 100,
+      "Rating": 4
+    },
+    {
+      "Id": 15,
+      "Name": "Core Red Boots",
+      "Description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
+      "Price": 189.99,
+      "Eth": "0.45",
+      "PictureUrl": "images/products/boot-core2.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/shoes.jpg",
+      "ProductTypeId": 3,
+      "ProductBrandId": 2,
+      "Stock": 100,
+      "Rating": 5
+    },
+    {
+      "Id": 16,
+      "Name": "Core Purple Boots",
+      "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
+      "Price": 199.99,
+      "Eth": "0.33",
+      "PictureUrl": "images/products/boot-core1.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/headset.jpg",
+      "ProductTypeId": 3,
+      "ProductBrandId": 2,
+      "Stock": 100,
+      "Rating": 3
+    },
+    {
+      "Id": 17,
+      "Name": "Angular Purple Boots",
+      "Description": "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
+      "Price": 150,
+      "Eth": "0.25",
+      "PictureUrl": "images/products/boot-ang2.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/drone.jpg",
+      "ProductTypeId": 3,
+      "ProductBrandId": 1,
+      "Stock": 100,
+      "Rating": 5
+    },
+    {
+      "Id": 18,
+      "Name": "Angular Blue Boots",
+      "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
+      "Price": 180,
+      "Eth": "1",
+      "PictureUrl": "images/products/boot-ang1.png",
+      "Ipfs": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/camera.jpg",
+      "ProductTypeId": 3,
+      "ProductBrandId": 1,
+      "Stock": 100,
+      "Rating": 4
+    }
+  ]
+}
