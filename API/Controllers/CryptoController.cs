@@ -63,7 +63,8 @@ namespace API.Controllers
                     ProductBrand = item.Brand.Name,
                     ProductType = item.Category.Name,
                     Rating = ((int)item.Rating),
-                    Stock = ((int)item.Stock)
+                    Stock = ((int)item.Stock),
+                    IsCrypto = true
                 });
             }
 
@@ -101,10 +102,10 @@ namespace API.Controllers
                 ProductBrand = item.Brand.Name,
                 ProductType = item.Category.Name,
                 Rating = ((int)item.Rating),
-                Stock = ((int)item.Stock)
+                Stock = ((int)item.Stock),
+                IsCrypto = true
             };
         }
-
 
         [Cached(600)]
         [HttpGet("brands")]

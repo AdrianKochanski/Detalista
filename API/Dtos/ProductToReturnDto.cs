@@ -11,5 +11,6 @@ namespace API.Dtos
         public string ProductBrand { get; set; }
         public int Stock { get; set; }
         public int Rating { get; set; }
+        public bool IsCrypto { get; set; }
     }
 }
