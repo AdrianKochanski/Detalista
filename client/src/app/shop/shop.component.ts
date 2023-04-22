@@ -17,6 +17,7 @@ export class ShopComponent {
   constructor(private shopService: ShopService) {
     this.pagination$ = shopService.pagination$;
     this.shopParams$ = shopService.shopParams$;
+    shopService.initialize();
   }
 
   onSearch() {

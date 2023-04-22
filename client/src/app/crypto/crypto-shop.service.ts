@@ -28,15 +28,20 @@ type DappazonProvider = {
   providedIn: 'root'
 })
 export class CryptoShopService extends ShopServiceBase {
+  private initialized: boolean = false;
   private dappazon: Dappazon = null;
   private accountSource = new BehaviorSubject<string>("");
   account$ = this.accountSource.asObservable();
 
-  constructor(private http: HttpClient, private toastrService: ToastrService) {
-    super();
+  initialize() {
+    if(this.initialized) {
+      return;
+    }
+    else {
+      this.initialized = true;
+    }
 
     this.getCachedBrands(() => {
-      console.log("getCachedBrands");
       return this.http.get<IBrand[]>(configuration.apiUrl + 'crypto/brands');
     }).subscribe(() => {
     }, error => {
@@ -44,7 +49,6 @@ export class CryptoShopService extends ShopServiceBase {
     });
 
     this.getCachedTypes(() => {
-      console.log("getCachedTypes");
       return this.http.get<IType[]>(configuration.apiUrl + 'crypto/types');
     }).subscribe(() => {
     }, error => {
@@ -82,6 +86,10 @@ export class CryptoShopService extends ShopServiceBase {
     }, error => {
       console.log(error);
     });
+  }
+
+  constructor(private http: HttpClient, private toastrService: ToastrService) {
+    super();
   }
 
   getProduct(id: number) {

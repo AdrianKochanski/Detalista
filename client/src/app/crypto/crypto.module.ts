@@ -5,7 +5,6 @@ import { CryptoRoutingModule } from './crypto-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
 
-
 @NgModule({
   declarations: [
     CryptoComponent

@@ -12,9 +12,15 @@ import { filter, map, switchMap } from 'rxjs';
   providedIn: 'root'
 })
 export class ShopService extends ShopServiceBase {
+  private initialized: boolean = false;
 
-  constructor(private http: HttpClient) {
-    super();
+  initialize() {
+    if(this.initialized) {
+      return;
+    }
+    else {
+      this.initialized = true;
+    }
 
     this.getCachedBrands(() => {
       return this.http.get<IBrand[]>(configuration.apiUrl + 'products/brands');
@@ -61,6 +67,10 @@ export class ShopService extends ShopServiceBase {
     }, error => {
       console.log(error);
     });
+  }
+
+  constructor(private http: HttpClient) {
+    super();
   }
 
   getProduct(id: number) {

@@ -32,9 +32,11 @@ export class ProductFilterComponent implements OnInit {
   ngOnInit(): void {
     if (!this.isCrypto) {
       this.currentService = this.shopService;
+      this.shopService.initialize();
     }
     else {
       this.currentService = this.cryptoService;
+      this.cryptoService.initialize();
     }
 
     this.shopParams$ = this.currentService.shopParams$.pipe(

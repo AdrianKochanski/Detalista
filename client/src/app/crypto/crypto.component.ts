@@ -26,6 +26,7 @@ export class CryptoComponent implements OnInit, OnDestroy {
     this.pagination$ = cryptoService.pagination$;
     this.shopParams$ = cryptoService.shopParams$;
     this.breadcrumbService.set('@crypto', 'Address: 0x000...0000');
+    this.cryptoService.initialize();
   }
 
   async ngOnInit(): Promise<void> {
