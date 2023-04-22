@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BasketService } from 'src/app/basket/basket.service';
-import { CryptoService } from 'src/app/crypto/crypto.service';
+import { CryptoShopService } from 'src/app/crypto/crypto-shop.service';
 import { IProduct } from 'src/app/shared/models/product';
 
 @Component({
@@ -12,7 +12,7 @@ import { IProduct } from 'src/app/shared/models/product';
 export class ProductItemComponent implements OnInit {
   @Input() product: IProduct;
 
-  constructor(private router: Router, private basketService: BasketService, private cryptoService: CryptoService){}
+  constructor(private router: Router, private basketService: BasketService, private cryptoService: CryptoShopService){}
 
   ngOnInit(): void {
   }

@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BasketService } from 'src/app/basket/basket.service';
-import { CryptoService } from 'src/app/crypto/crypto.service';
-import { IBasketItem } from 'src/app/shared/models/basket';
+import { CryptoShopService } from 'src/app/crypto/crypto-shop.service';
 import { IProduct } from 'src/app/shared/models/product';
-import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'app-product-details',
@@ -18,7 +16,7 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private activateRoute: ActivatedRoute,
     private basketService: BasketService,
-    private cryptoService: CryptoService
+    private cryptoService: CryptoShopService
   ) {
   }
 

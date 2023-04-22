@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "E:\\Users\\adria\\Angular\\Skinet\\crypto\\contracts\\Dappazon.sol": {
-      "lastModificationDate": 1679160707250,
-      "contentHash": "2a8bebee2120935846f405197cd8161a",
+      "lastModificationDate": 1682109928642,
+      "contentHash": "459a049ddf90c9dabac566a78e0cb630",
       "sourceName": "contracts/Dappazon.sol",
       "solcConfig": {
         "version": "0.8.18",

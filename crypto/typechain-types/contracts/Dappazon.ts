@@ -438,12 +438,20 @@ export interface Dappazon extends BaseContract {
     getLimitBrands(
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[Dappazon.BrandStructOutput[]]>;
+    ): Promise<
+      [Dappazon.BrandStructOutput[]] & {
+        brandsArray: Dappazon.BrandStructOutput[];
+      }
+    >;
 
     getLimitCategories(
       limit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[Dappazon.CategoryStructOutput[]]>;
+    ): Promise<
+      [Dappazon.CategoryStructOutput[]] & {
+        categoriesArray: Dappazon.CategoryStructOutput[];
+      }
+    >;
 
     isListed(
       itemId: PromiseOrValue<BigNumberish>,
@@ -505,7 +513,12 @@ export interface Dappazon extends BaseContract {
     queryItems(
       filter: Dappazon.FilterStruct,
       overrides?: CallOverrides
-    ): Promise<[Dappazon.ItemStructOutput[], Dappazon.FilterStructOutput]>;
+    ): Promise<
+      [Dappazon.ItemStructOutput[], Dappazon.FilterStructOutput] & {
+        itemsArray: Dappazon.ItemStructOutput[];
+        filterBack: Dappazon.FilterStructOutput;
+      }
+    >;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -636,7 +649,12 @@ export interface Dappazon extends BaseContract {
   queryItems(
     filter: Dappazon.FilterStruct,
     overrides?: CallOverrides
-  ): Promise<[Dappazon.ItemStructOutput[], Dappazon.FilterStructOutput]>;
+  ): Promise<
+    [Dappazon.ItemStructOutput[], Dappazon.FilterStructOutput] & {
+      itemsArray: Dappazon.ItemStructOutput[];
+      filterBack: Dappazon.FilterStructOutput;
+    }
+  >;
 
   renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -767,7 +785,12 @@ export interface Dappazon extends BaseContract {
     queryItems(
       filter: Dappazon.FilterStruct,
       overrides?: CallOverrides
-    ): Promise<[Dappazon.ItemStructOutput[], Dappazon.FilterStructOutput]>;
+    ): Promise<
+      [Dappazon.ItemStructOutput[], Dappazon.FilterStructOutput] & {
+        itemsArray: Dappazon.ItemStructOutput[];
+        filterBack: Dappazon.FilterStructOutput;
+      }
+    >;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 

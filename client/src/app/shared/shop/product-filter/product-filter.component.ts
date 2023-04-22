@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, filter } from 'rxjs';
-import { CryptoService } from 'src/app/crypto/crypto.service';
 import { IBrand } from 'src/app/shared/models/brand';
 import { IType } from 'src/app/shared/models/productType';
 import { ShopService } from 'src/app/shop/shop.service';
 import { ShopParams } from '../../models/shopParams';
 import { ShopServiceBase } from '../../helpers/ShopServiceBase';
+import { CryptoShopService } from 'src/app/crypto/crypto-shop.service';
 
 @Component({
   selector: 'app-product-filter',
@@ -26,7 +26,7 @@ export class ProductFilterComponent implements OnInit {
     {name: 'Price: High to Low', value: 'priceDesc'}
   ];
 
-  constructor(private shopService: ShopService, private cryptoService: CryptoService) {
+  constructor(private shopService: ShopService, private cryptoService: CryptoShopService) {
   }
 
   ngOnInit(): void {

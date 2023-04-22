@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ShopParams } from '../../models/shopParams';
 import { Observable, filter } from 'rxjs';
 import { ShopService } from 'src/app/shop/shop.service';
-import { CryptoService } from 'src/app/crypto/crypto.service';
 import { ShopServiceBase } from '../../helpers/ShopServiceBase';
+import { CryptoShopService } from 'src/app/crypto/crypto-shop.service';
 
 @Component({
   selector: 'app-pager',
@@ -16,7 +16,7 @@ export class PagerComponent implements OnInit {
   firstValue: boolean = false;
   private currentService: ShopServiceBase = null;
 
-  constructor(private shopService: ShopService, private cryptoService: CryptoService) {
+  constructor(private shopService: ShopService, private cryptoService: CryptoShopService) {
   }
 
   ngOnInit(): void {

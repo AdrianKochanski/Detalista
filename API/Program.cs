@@ -6,6 +6,7 @@ using Infrastructure.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -24,7 +25,13 @@ namespace API
             {
                 var context = services.GetRequiredService<StoreContext>();
                 await context.Database.MigrateAsync();
+
+                var config = new ConfigurationBuilder()
+                    .AddJsonFile("appsettings.json", optional: false)
+                    .Build();
+
                 await StoreContextSeed.SeedAsync(context, loggerFactory);
+                await StoreContextSeed.CryptoSeedAsync(config, loggerFactory);
 
                 UserManager<AppUser> userManager = services.GetRequiredService<UserManager<AppUser>>();
                 AppIdentityDbContext identityContext = services.GetRequiredService<AppIdentityDbContext>();

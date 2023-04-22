@@ -5,7 +5,7 @@ import { Subscription, map, Observable, retry, tap} from 'rxjs';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { IPagination } from '../shared/models/pagination';
 import { ShopParams } from '../shared/models/shopParams';
-import { CryptoService } from './crypto.service';
+import { CryptoShopService } from './crypto-shop.service';
 
 @Component({
   selector: 'app-crypto',
@@ -20,7 +20,7 @@ export class CryptoComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(
-    private cryptoService: CryptoService,
+    private cryptoService: CryptoShopService,
     private breadcrumbService: BreadcrumbService,
   ){
     this.pagination$ = cryptoService.pagination$;

@@ -33,10 +33,7 @@ services:
     image: gluwa/hardhat-dev
     ports:
       - 8545:8545
-    volumes:
-      - hardhat-data:/data
 
 volumes:
   redis-data:
   postgres-data:
-  hardhat-data:

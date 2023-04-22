@@ -120,7 +120,7 @@ contract Dappazon is Ownable {
   }
 
   // Getters 
-  function queryItems(Filter memory filter) public view returns(Item[] memory, Filter memory) {
+  function queryItems(Filter memory filter) public view returns(Item[] memory itemsArray, Filter memory filterBack) {
     uint256 arrayIdx = 0;
 
     // 0. Default filter
@@ -195,7 +195,7 @@ contract Dappazon is Ownable {
       return items[itemsIdx[itemId]-1];
   }
 
-  function getLimitBrands(uint256 limit) public view returns(Brand[] memory) {
+  function getLimitBrands(uint256 limit) public view returns(Brand[] memory brandsArray) {
     Brand[] memory brandsFound = new Brand[](limit);
     uint256 arrayIdx = 0;
     
@@ -210,7 +210,7 @@ contract Dappazon is Ownable {
     return brandsFound;
   }
 
-  function getLimitCategories(uint256 limit) public view returns(Category[] memory) {
+  function getLimitCategories(uint256 limit) public view returns(Category[] memory categoriesArray) {
     Category[] memory categoriesFound = new Category[](limit);
     uint256 arrayIdx = 0;
 
