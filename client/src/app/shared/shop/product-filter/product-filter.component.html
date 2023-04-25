@@ -1,5 +1,5 @@
 <ng-container *ngIf="(shopParams$ | async) as shopParams">
-  <h5 class="text-warning ml-3 mt-4 mb-3">Sort</h5>
+  <h3 class="text-warning ml-3 mt-4 mb-3">Sort</h3>
   <select
     name="sort" id="sort"
     class="custom-select mb-4"
@@ -9,12 +9,13 @@
       [value]="sortOption.value"
       [id]="sortOption.value"
       [selected]="sortOption.value == shopParams.sortSelected"
+      class="list-group-item"
     >
       {{sortOption.name}}
     </option>
   </select>
 
-  <h5 class="text-warning ml-3">Brands</h5>
+  <h3 class="text-warning ml-3">Brands</h3>
 
   <ul class="list-group my-3" *ngIf="(brands$ | async) as brands">
     <li class="list-group-item"
@@ -28,7 +29,7 @@
     </li>
   </ul>
 
-  <h5 class="text-warning ml-3">Types</h5>
+  <h3 class="text-warning ml-3">Types</h3>
 
   <ul class="list-group my-3" *ngIf="(types$ | async) as types">
     <li class="list-group-item"
