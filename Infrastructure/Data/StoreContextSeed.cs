@@ -89,9 +89,17 @@ namespace Infrastructure.Data
                         Stock = item.Stock
                     });
                 }
-                var listItemsFunction = new ListItemsFunction();
-                listItemsFunction.Items = items;
-                var listItemsFunctionTxnReceipt = await contractHandler.SendRequestAndWaitForReceiptAsync(listItemsFunction);
+
+                int batchSize = 5;
+                for(int i=0; i< items.Count / batchSize; i++) 
+                {
+                    var listItemsFunction = new ListItemsFunction();
+                    listItemsFunction.Items = items.Skip(batchSize * i).Take(batchSize).ToList();
+
+                    if(listItemsFunction.Items.Count > 0) {
+                        var listItemsFunctionTxnReceipt = await contractHandler.SendRequestAndWaitForReceiptAsync(listItemsFunction);
+                    }
+                }
             }
             catch (Exception ex)
             {
