@@ -1,31 +1,12 @@
 using Core.Entities.Identity;
-using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure services
-builder.Services.AddAutoMapper(typeof(MappingProfiles));
 builder.Services.AddControllers();
-
-builder.Services.AddSingleton<IConnectionMultiplexer>(c => {
-    return ConnectionMultiplexer.Connect(
-        ConfigurationOptions.Parse(
-            builder.Configuration.GetConnectionString("Redis"),
-            true
-        )
-    );
-});
-
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddSwaggerDocumentation();
-builder.Services.AddCors(opt =>
-{
-    opt.AddPolicy("CorsPolicy", policy =>
-    {
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
-    });
-});
 
 
 // Configure http request pipeline

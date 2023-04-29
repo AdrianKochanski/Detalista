@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 
 namespace API.Extensions
 {
@@ -15,11 +16,29 @@ namespace API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddSingleton<IResponseCacheService, ResponseCacheService>();
+            services.AddAutoMapper(typeof(MappingProfiles));
             
             services.AddDbContext<StoreContext>(x =>
                 x.UseNpgsql(config.GetConnectionString("DefaultConnection")));
 
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                });
+            });
+            
+            services.AddSingleton<IConnectionMultiplexer>(c => {
+                return ConnectionMultiplexer.Connect(
+                    ConfigurationOptions.Parse(
+                        config.GetConnectionString("Redis"),
+                        true
+                    )
+                );
+            });
+
+            services.AddSingleton<IResponseCacheService, ResponseCacheService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IProductRepository, ProductRepository>();

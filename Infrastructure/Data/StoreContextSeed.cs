@@ -136,29 +136,20 @@ namespace Infrastructure.Data
 
                 if (!context.ProductBrands.Any())
                 {
-                    foreach (var item in dataSeed.Brands)
-                    {
-                        context.ProductBrands.Add(item);
-                    }
-
-                    await context.SaveChangesAsync();
+                    context.ProductBrands.AddRange(dataSeed.Brands);
                 }
 
                 if (!context.ProductTypes.Any())
                 {
-                    foreach (var item in dataSeed.Types)
-                    {
-                        context.ProductTypes.Add(item);
-                    }
-
-                    await context.SaveChangesAsync();
+                    context.ProductTypes.AddRange(dataSeed.Types);
                 }
 
                 if (!context.Products.Any())
                 {
+                    List<Product> newProducts = new List<Product>();
                     foreach (var item in dataSeed.Products)
                     {
-                        context.Products.Add(new Product() {
+                        newProducts.Add(new Product() {
                             Id = item.Id,
                             Description = item.Description,
                             Name = item.Name,
@@ -170,20 +161,17 @@ namespace Infrastructure.Data
                             Stock = item.Stock
                         });
                     }
-
-                    await context.SaveChangesAsync();
+                    context.Products.AddRange(newProducts);
                 }
 
                 if (!context.DeliveryMethods.Any())
                 {
                     var deliveryData = File.ReadAllText(path + @"/Data/SeedData/delivery.json");
                     var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryData);
+                    context.DeliveryMethods.AddRange(deliveryMethods);
+                }
 
-                    foreach (var item in deliveryMethods)
-                    {
-                        context.DeliveryMethods.Add(item);
-                    }
-
+                if(context.ChangeTracker.HasChanges()) {
                     await context.SaveChangesAsync();
                 }
             }
