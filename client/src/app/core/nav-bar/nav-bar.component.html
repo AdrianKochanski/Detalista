@@ -4,7 +4,7 @@
   <div class="d-flex flex-column flex-wrap flex-md-row align-items-center justify-content-between">
     <img src="/assets/images/logo.png" alt="logo" routerLink="/" class="logo">
 
-    <nav class="my-2 my-md-0 mr-md-3 text-uppercase" style="font-size: larger;">
+    <nav class="my-2 my-md-0 me-md-3 text-uppercase" style="font-size: larger;">
       <a class="p-2 link-light" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
       <a class="p-2 link-light" [routerLink]="['/shop']" routerLinkActive="active">Shop</a>
       <a class="p-2 link-light" [routerLink]="['/crypto']" routerLinkActive="active">Crypto</a>
@@ -15,16 +15,16 @@
 
   <div class="d-flex align-items-center">
     <a class="position-relative" [routerLink]="['/basket']">
-      <i class="fa fa-shopping-cart fa-2x mr-5 text-white"></i>
+      <i class="fa fa-shopping-cart fa-2x me-5 text-white"></i>
       <div *ngIf="(basket$ | async) as basket" class="cart-no">{{basket.items.length}}</div>
     </a>
     <ng-container *ngIf="(currentUser$ | async) === null">
-      <a routerLink="account/login" class="link-light btn btn-outline-secondary mr-2">Login</a>
-      <a routerLink="account/register" class="link-light btn btn-outline-secondary mr-3">Sign up</a>
+      <a routerLink="account/login" class="link-light btn btn-outline-secondary me-2">Login</a>
+      <a routerLink="account/register" class="link-light btn btn-outline-secondary me-3">Sign up</a>
     </ng-container>
 
     <ng-container *ngIf="(currentUser$ | async) as user">
-      <div class="dropdown pl-3 pr-3" dropdown>
+      <div class="dropdown ps-3 pe-3" dropdown>
         <a
           id="button-basic"
           dropdownToggle
@@ -45,14 +45,14 @@
           style="cursor: pointer;"
         >
           <a class="dropdown-item d-flex align-items-center py-2" routerLink="basket">
-            <i class="fa fa-shopping-cart mr-3"></i>View Basket
+            <i class="fa fa-shopping-cart me-3"></i>View Basket
           </a>
           <a class="dropdown-item d-flex align-items-center py-2" routerLink="orders">
-            <i class="fa fa-history mr-3"></i>View Orders
+            <i class="fa fa-history me-3"></i>View Orders
           </a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item d-flex align-items-center py-2" (click)="logout()">
-            <i class="fa fa-sign-out mr-3"></i>Logout
+            <i class="fa fa-sign-out me-3"></i>Logout
           </a>
         </div>
       </div>

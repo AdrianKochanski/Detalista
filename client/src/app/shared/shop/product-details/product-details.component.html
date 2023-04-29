@@ -7,13 +7,13 @@
     >
   </div>
 
-  <div class="col-12 col-sm-5 col-md-6 mb-3 pl-sm-5">
+  <div class="col-12 col-sm-5 col-md-6 mb-3 ps-sm-5">
     <div class="d-flex justify-content-start align-items-start" style="gap: 10px;">
       <h3>{{product.name}}</h3>
     </div>
 
     <div class="d-flex justify-content-start align-items-start" style="gap: 3px;">
-      <h4 class="mr-2">Rating:</h4>
+      <h4 class="me-2">Rating:</h4>
       <div class="ratings">
         <i class="fa fa-star" [class.rating-color] = "product.rating > 0"></i>
         <i class="fa fa-star" [class.rating-color] = "product.rating > 1"></i>
@@ -24,29 +24,29 @@
     </div>
 
     <div class="d-flex justify-content-start align-items-start">
-      <h4 class="mr-2">Category:</h4>
+      <h4 class="me-2">Category:</h4>
       {{product.productType}}
     </div>
 
     <div class="d-flex justify-content-start align-items-start">
-      <h4 class="mr-2">Brand:</h4>
+      <h4 class="me-2">Brand:</h4>
       {{product.productBrand}}
     </div>
 
     <div class="d-flex justify-content-start align-items-start">
-      <h4 class="mr-2">Price:</h4>
+      <h4 class="me-2">Price:</h4>
       {{product | productPrice}}
     </div>
 
     <div class="d-flex justify-content-start align-items-start"  *ngIf="!!product.stock">
-      <h4 class="mr-2">Stock:</h4>
+      <h4 class="me-2">Stock:</h4>
       {{product.stock}}
     </div>
 
     <h4>Increment:</h4>
 
     <div class="d-flex justify-content-start align-items-start mb-2" style="gap: 10px;" *ngIf="!!product.stock">
-      <i (click)="decrement()" class="fa fa-minus-circle text-warning mr-1" style="cursor: pointer; font-size: 2em"></i>
+      <i (click)="decrement()" class="fa fa-minus-circle text-warning me-1" style="cursor: pointer; font-size: 2em"></i>
       <span class="font-weight-bold" style="font-size: 1.5em;">{{quantity}}</span>
       <i (click)="increment()" class="fa fa-plus-circle text-warning" style="cursor: pointer; font-size: 2em"></i>
     </div>

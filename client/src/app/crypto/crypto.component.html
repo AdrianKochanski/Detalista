@@ -9,9 +9,9 @@
     <section class="col-12 col-sm-7 col-md-9">
       <div class="d-flex flex-column justify-content-between align-items-left pb-2">
 
-        <app-paging-header [isCrypto]="true" class="mr-3"></app-paging-header>
+        <app-paging-header [isCrypto]="true" class="me-3"></app-paging-header>
 
-        <div class="form-inline">
+        <div class="d-flex">
           <input
             (keyup.enter)="onSearch()"
             type="text"
@@ -19,13 +19,8 @@
             style="max-width: 300px; width: 100%;"
             [(value)]="shopParams.search"
             placeholder="Search" #search>
-          <button
-            (click)="onSearch()"
-            class="btn btn-outline-primary my-2"
-          >
-            Search
-          </button>
-          <button (click)="onReset()" class="btn btn-outline-success my-2">Reset</button>
+          <button (click)="onSearch()" class="btn btn-outline-primary mx-2">Search</button>
+          <button (click)="onReset()" class="btn btn-outline-success">Reset</button>
         </div>
       </div>
 

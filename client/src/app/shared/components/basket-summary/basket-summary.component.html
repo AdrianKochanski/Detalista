@@ -30,9 +30,9 @@
                 class="img-fluid"
                 style="max-height: 50px;"
               >
-              <div class="ml-3 d-inline-block align-middle">
+              <div class="ms-3 d-inline-block align-middle">
                 <h5 class="mb-0">
-                  <a routerLink="/shop/{{item.id}}" class="text-dark">{{item.productName}}</a>
+                  <a routerLink="/shop/{{item.id}}" class="text-dark text-decoration-none">{{item.productName}} ({{item.brand}})</a>
                 </h5>
                 <span *ngIf="item.type" class="text-muted font-weight-normal font-italic d-block">
                   Type: {{item.type}}
@@ -49,7 +49,7 @@
               class="d-flex align-items-center">
               <i
                 *ngIf="actionsActive"
-                class="fa fa-minus-circle text-warning mr-2"
+                class="fa fa-minus-circle text-warning me-2"
                 style="cursor: pointer; font-size: 2em"
                 (click)="decrementItemQuantity(item)"
               ></i>
