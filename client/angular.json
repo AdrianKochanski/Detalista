@@ -39,7 +39,15 @@
               "./node_modules/ngx-spinner/animations/ball-spin-clockwise-fade.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "bn.js",
+              "aes-js",
+              "scrypt-js",
+              "js-sha3",
+              "bech32",
+              "hash.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -59,7 +67,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1mb",
+                  "maximumWarning": "1.2mb",
                   "maximumError": "2mb"
                 },
                 {

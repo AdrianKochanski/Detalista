@@ -1,17 +1,19 @@
+import configuration from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ShopServiceBase } from '../shared/helpers/ShopServiceBase';
-import configuration from 'src/environments/environment';
 import { IType } from '../shared/models/productType';
 import { IBrand } from '../shared/models/brand';
 import { IPagination } from '../shared/models/pagination';
 import { IProduct } from '../shared/models/product';
 import { filter, switchMap, from, map, Observable, of, tap, BehaviorSubject } from 'rxjs';
-import { BigNumber, ContractTransaction, ethers } from 'ethers';
+import { ToastrService } from 'ngx-toastr';
+
 import DappazonAbi from "../../../../crypto/artifacts/contracts/Dappazon.sol/Dappazon.json";
 import { Dappazon } from "../../../../crypto/typechain-types";
-import { ToastrService } from 'ngx-toastr';
+
 import { ExternalProvider } from '@ethersproject/providers';
+import { BigNumber, ContractTransaction, ethers } from 'ethers';
 
 declare global {
   interface Window {

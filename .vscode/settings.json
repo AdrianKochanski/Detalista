@@ -1,0 +1,33 @@
+{
+    "deploy.reloaded": {
+        "packages": [
+            {
+                "name": "Version 1.0.0",
+                "description": "Package version 1.0.0",
+
+                "files": [
+                    "publish/**"
+                ]
+            }
+        ],
+
+        "targets": [
+            {
+                "type": "sftp",
+                "name": "Linux",
+                "description": "SFTP folder",
+
+                "host": "20.108.188.208", "port": 22,
+
+                "privateKey": "C:/Users/adria/Desktop/Detalista AKWeb3/Azure/DetalistaSSH.pem",
+                "privateKeyPassphrase": "Detalista",
+                "user": "Detalista",
+
+                "dir": "/var/detalista",
+                "mappings": {
+                    "publish/**": "/"
+                }
+            }
+        ]
+    }
+}
