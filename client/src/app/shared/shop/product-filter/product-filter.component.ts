@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, filter } from 'rxjs';
-import { IBrand } from 'src/app/shared/models/brand';
-import { IType } from 'src/app/shared/models/productType';
+import { ProductBrand } from 'src/app/shared/models/brand';
+import { ProductType } from 'src/app/shared/models/productType';
 import { ShopService } from 'src/app/shop/shop.service';
 import { ShopParams } from '../../models/shopParams';
 import { ShopServiceBase } from '../../helpers/ShopServiceBase';
@@ -15,8 +15,8 @@ import { CryptoShopService } from 'src/app/crypto/crypto-shop.service';
 export class ProductFilterComponent implements OnInit {
   @Input() isCrypto: boolean = false;
   shopParams$: Observable<ShopParams>;
-  brands$: Observable<IBrand[]>;
-  types$: Observable<IType[]>;
+  brands$: Observable<ProductBrand[]>;
+  types$: Observable<ProductType[]>;
   firstValue: boolean = false;
   private currentService: ShopServiceBase = null;
 

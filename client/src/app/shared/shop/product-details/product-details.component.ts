@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BasketService } from 'src/app/basket/basket.service';
 import { CryptoShopService } from 'src/app/crypto/crypto-shop.service';
-import { IProduct } from 'src/app/shared/models/product';
+import { Product } from 'src/app/shared/models/product';
 
 @Component({
   selector: 'app-product-details',
@@ -10,7 +10,7 @@ import { IProduct } from 'src/app/shared/models/product';
   styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent implements OnInit {
-  product: IProduct;
+  product: Product;
   quantity = 1;
 
   constructor(
@@ -25,7 +25,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   loadProduct() {
-    this.activateRoute.data.subscribe((data: {product: IProduct}) => {
+    this.activateRoute.data.subscribe((data: {product: Product}) => {
       this.product = data.product;
     }, error => {
       console.log(error);

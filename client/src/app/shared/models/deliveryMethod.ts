@@ -1,4 +1,4 @@
-export interface IDeliveryMethod {
+export interface DeliveryMethod {
   shortName: string;
   deliveryTime: string;
   description: string;

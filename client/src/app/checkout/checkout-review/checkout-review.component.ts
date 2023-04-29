@@ -2,7 +2,7 @@ import { CdkStepper } from '@angular/cdk/stepper';
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BasketService } from 'src/app/basket/basket.service';
-import { IBasket } from 'src/app/shared/models/basket';
+import { Basket } from 'src/app/shared/models/basket';
 
 @Component({
   selector: 'app-checkout-review',
@@ -11,7 +11,7 @@ import { IBasket } from 'src/app/shared/models/basket';
 })
 export class CheckoutReviewComponent implements OnInit {
   @Input() afterCheckoutHeaderClick: Function;
-  basket$: Observable<IBasket>;
+  basket$: Observable<Basket>;
 
   constructor(private basketService: BasketService) {}
 

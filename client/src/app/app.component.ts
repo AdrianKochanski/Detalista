@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AccountService } from './account/account.service';
 import { BasketService } from './basket/basket.service';
-import { IBasket } from './shared/models/basket';
+import { Basket } from './shared/models/basket';
 
 @Component({
   selector: 'app-root',

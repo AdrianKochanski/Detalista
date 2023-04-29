@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { AccountService } from '../account/account.service';
 import { BasketService } from '../basket/basket.service';
-import { IBasketTotals } from '../shared/models/basket';
+import { BasketTotals } from '../shared/models/basket';
 
 @Component({
   selector: 'app-checkout',
@@ -13,7 +13,7 @@ import { IBasketTotals } from '../shared/models/basket';
 })
 export class CheckoutComponent implements OnInit {
   checkoutForm: FormGroup;
-  basketTotals$: Observable<IBasketTotals>;
+  basketTotals$: Observable<BasketTotals>;
 
   constructor(private fb: FormBuilder, private accountService: AccountService,
     private basketService: BasketService, private toastr: ToastrService) {

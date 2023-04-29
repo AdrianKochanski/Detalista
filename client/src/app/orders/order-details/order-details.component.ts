@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { StripeService } from 'src/app/core/services/stripe.service';
-import { IBasket, IBasketTotals } from 'src/app/shared/models/basket';
-import { IOrder, IOrderItem } from 'src/app/shared/models/order';
+import { Basket, BasketTotals } from 'src/app/shared/models/basket';
+import { Order, OrderItem } from 'src/app/shared/models/order';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { OrdersService } from '../orders.service';
 
@@ -14,9 +14,9 @@ import { OrdersService } from '../orders.service';
   styleUrls: ['./order-details.component.scss']
 })
 export class OrderDetailsComponent implements OnInit {
-  private basketHistorySource: BehaviorSubject<IBasket> = new BehaviorSubject<IBasket>(null);
+  private basketHistorySource: BehaviorSubject<Basket> = new BehaviorSubject<Basket>(null);
   public basketHistory$ = this.basketHistorySource.asObservable();
-  private basketTotalsHistorySource: BehaviorSubject<IBasketTotals> = new BehaviorSubject<IBasketTotals>(null);
+  private basketTotalsHistorySource: BehaviorSubject<BasketTotals> = new BehaviorSubject<BasketTotals>(null);
   public basketTotalsHistory$ = this.basketTotalsHistorySource.asObservable();
 
   constructor(
@@ -34,16 +34,16 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   getOrderDetails(): void {
-    this.ordersService.getOrderDetails(+this.route.snapshot.paramMap.get("id")).subscribe((order: IOrder) => {
+    this.ordersService.getOrderDetails(+this.route.snapshot.paramMap.get("id")).subscribe((order: Order) => {
       this.breadcrumbService.set('@orderDetails', "#" + order.id + " " + order.status + " - " + order.total + "$");
 
-      const basketHistory: IBasket = {
+      const basketHistory: Basket = {
         id: "",
         items: [],
         shippingPrice: order.shippingPrice
       };
 
-      order.orderItems.forEach((orderItem: IOrderItem) => {
+      order.orderItems.forEach((orderItem: OrderItem) => {
         basketHistory.items.push(
           {
             id: orderItem.productId,
@@ -57,7 +57,7 @@ export class OrderDetailsComponent implements OnInit {
         );
       });
 
-      const basketTotals: IBasketTotals = {
+      const basketTotals: BasketTotals = {
         shipping: order.shippingPrice,
         subtotal: order.subtotal,
         total: order.total

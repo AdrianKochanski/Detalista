@@ -2,10 +2,10 @@ import configuration from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, filter, from, map, Observable, of, switchMap, tap } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { IProduct } from '../shared/models/product';
+import { Product } from '../shared/models/product';
 import { IPagination } from '../shared/models/pagination';
-import { IBrand } from '../shared/models/brand';
-import { IType } from '../shared/models/productType';
+import { ProductBrand } from '../shared/models/brand';
+import { ProductType } from '../shared/models/productType';
 import { ShopServiceBase } from '../shared/helpers/ShopServiceBase';
 
 import DappazonAbi from "../../../../crypto/artifacts/contracts/Dappazon.sol/Dappazon.json";
@@ -71,7 +71,7 @@ export class CryptoService extends ShopServiceBase {
     });
   }
 
-  buyItem(product: IProduct): Observable<ContractTransaction> {
+  buyItem(product: Product): Observable<ContractTransaction> {
     return this.loadDappazonContract(false).pipe(
       filter(d => d.dappazon !== null),
       switchMap(dapp =>
@@ -116,7 +116,7 @@ export class CryptoService extends ShopServiceBase {
     );
   }
 
-  getProduct(itemId: number): Observable<IProduct> {
+  getProduct(itemId: number): Observable<Product> {
     return this.loadDappazonContract(false).pipe(
       filter(dapp => dapp !== null),
       switchMap(dapp => {
@@ -129,13 +129,13 @@ export class CryptoService extends ShopServiceBase {
     );
   }
 
-  getBrands(): Observable<IBrand[]> {
+  getBrands(): Observable<ProductBrand[]> {
     return this.loadDappazonContract(false).pipe(
       filter(dapp => dapp !== null),
       switchMap(dapp => {
         return from(dapp.dappazon.getLimitBrands(BigNumber.from(10))).pipe(
           map((resp: Dappazon.BrandStructOutput[]) => {
-            const brands: IBrand[] = [];
+            const brands: ProductBrand[] = [];
             resp.forEach(i => {
               if(i.id.toNumber() != 0 && i.name != "") {
                 brands.push(this.formatBrand(i));
@@ -148,13 +148,13 @@ export class CryptoService extends ShopServiceBase {
     );
   }
 
-  getCategories(): Observable<IType[]> {
+  getCategories(): Observable<ProductType[]> {
     return this.loadDappazonContract(false).pipe(
       filter(dapp => dapp !== null),
       switchMap(dapp => {
         return from(dapp.dappazon.getLimitCategories(BigNumber.from(10))).pipe(
           map((resp: Dappazon.CategoryStructOutput[]) => {
-            const categories: IType[] = [];
+            const categories: ProductType[] = [];
             resp.forEach(i => {
               if(i.id.toNumber() != 0 && i.name != "") {
                 categories.push(this.formatCategory(i));
@@ -237,7 +237,7 @@ export class CryptoService extends ShopServiceBase {
     }
   }
 
-  private formatItemToProduct(i: Dappazon.ItemStructOutput): IProduct {
+  private formatItemToProduct(i: Dappazon.ItemStructOutput): Product {
     const price = ethers.utils.formatEther(i.cost);
 
       return {
@@ -254,14 +254,14 @@ export class CryptoService extends ShopServiceBase {
     };
   }
 
-  private formatBrand(i: Dappazon.BrandStructOutput): IBrand {
+  private formatBrand(i: Dappazon.BrandStructOutput): ProductBrand {
       return {
       id: i.id.toNumber(),
       name: i.name
     };
   }
 
-  private formatCategory(i: Dappazon.CategoryStructOutput): IType {
+  private formatCategory(i: Dappazon.CategoryStructOutput): ProductType {
     return {
     id: i.id.toNumber(),
     name: i.name

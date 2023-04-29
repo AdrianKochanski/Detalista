@@ -2,10 +2,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ShopServiceBase } from '../shared/helpers/ShopServiceBase';
 import configuration from 'src/environments/environment';
-import { IType } from '../shared/models/productType';
-import { IBrand } from '../shared/models/brand';
+import { ProductType } from '../shared/models/productType';
+import { ProductBrand } from '../shared/models/brand';
 import { IPagination } from '../shared/models/pagination';
-import { IProduct } from '../shared/models/product';
+import { Product } from '../shared/models/product';
 import { filter, map, switchMap } from 'rxjs';
 
 @Injectable({
@@ -23,14 +23,14 @@ export class ShopService extends ShopServiceBase {
     }
 
     this.getCachedBrands(() => {
-      return this.http.get<IBrand[]>(configuration.apiUrl + 'products/brands');
+      return this.http.get<ProductBrand[]>(configuration.apiUrl + 'products/brands');
     }).subscribe(() => {
     }, error => {
       console.log(error);
     });
 
     this.getCachedTypes(() => {
-      return this.http.get<IType[]>(configuration.apiUrl + 'products/types');
+      return this.http.get<ProductType[]>(configuration.apiUrl + 'products/types');
     }).subscribe(() => {
     }, error => {
       console.log(error);
@@ -76,7 +76,7 @@ export class ShopService extends ShopServiceBase {
   getProduct(id: number) {
     return this.getCachedProduct(
       (id: number) => {
-        return this.http.get<IProduct>(`${configuration.apiUrl}products/${id}`);
+        return this.http.get<Product>(`${configuration.apiUrl}products/${id}`);
       },
       id
     );

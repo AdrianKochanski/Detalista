@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
 import { BasketService } from 'src/app/basket/basket.service';
-import { IBasket } from 'src/app/shared/models/basket';
-import { IUser } from 'src/app/shared/models/user';
+import { Basket } from 'src/app/shared/models/basket';
+import { User } from 'src/app/shared/models/user';
 
 @Component({
   selector: 'app-nav-bar',
@@ -11,8 +11,8 @@ import { IUser } from 'src/app/shared/models/user';
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
-  basket$: Observable<IBasket>;
-  currentUser$: Observable<IUser>;
+  basket$: Observable<Basket>;
+  currentUser$: Observable<User>;
 
   constructor(private basketService: BasketService, private accountService: AccountService){}
 

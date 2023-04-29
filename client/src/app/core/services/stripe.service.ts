@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { StripeElements, loadStripe, StripeElementsOptions, Stripe, PaymentIntent } from '@stripe/stripe-js';
 import { BasketService } from 'src/app/basket/basket.service';
-import { IBasket } from 'src/app/shared/models/basket';
+import { Basket } from 'src/app/shared/models/basket';
 import { BusyService } from './busy.service';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class StripeService {
   constructor(private busyService: BusyService, private basketService: BasketService) { }
 
   public async removeBasketWhenPaymentSuccessfull() {
-    const basket: IBasket = this.basketService.getCurrentBasketValue();
+    const basket: Basket = this.basketService.getCurrentBasketValue();
     const payment: PaymentIntent = await this.retrievePaymentIntent(basket);
 
     if (payment && payment.status === 'succeeded') {
@@ -22,7 +22,7 @@ export class StripeService {
     }
   }
 
-  public async retrievePaymentIntent(basket: IBasket): Promise<PaymentIntent | null> {
+  public async retrievePaymentIntent(basket: Basket): Promise<PaymentIntent | null> {
     await this.loadStripe();
 
     if(!this.stripe || !basket || !basket.clientSecret) return null;

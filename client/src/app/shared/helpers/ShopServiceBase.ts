@@ -1,9 +1,9 @@
 import { BehaviorSubject, Observable, map, of } from "rxjs";
 import { ShopParams, shopParamsKey } from "../models/shopParams";
-import { IProduct } from "../models/product";
+import { Product } from "../models/product";
 import { IPagination } from "../models/pagination";
-import { IType } from "../models/productType";
-import { IBrand } from "../models/brand";
+import { ProductType } from "../models/productType";
+import { ProductBrand } from "../models/brand";
 
 export class ShopServiceBase {
   productsCache = new Map<string, IPagination>();
@@ -14,10 +14,10 @@ export class ShopServiceBase {
   private shopParamsSource = new BehaviorSubject<ShopParams>(new ShopParams());
   shopParams$ = this.shopParamsSource.asObservable();
 
-  private typesSource = new BehaviorSubject<IType[]>([]);
+  private typesSource = new BehaviorSubject<ProductType[]>([]);
   types$ = this.typesSource.asObservable();
 
-  private brandsSource = new BehaviorSubject<IBrand[]>([]);
+  private brandsSource = new BehaviorSubject<ProductBrand[]>([]);
   brands$ = this.brandsSource.asObservable();
 
   constructor(){}
@@ -49,7 +49,7 @@ export class ShopServiceBase {
     return nextShopParams;
   }
 
-  getCachedProduct(getT: (id: number) => Observable<IProduct>, id: number): Observable<IProduct> {
+  getCachedProduct(getT: (id: number) => Observable<Product>, id: number): Observable<Product> {
     if(this.productsCache.size > 0) {
       const allCache: IPagination[] = [...this.productsCache.values()];
       const product = allCache.flatMap(p => p.data).find(p => p.id === id);
@@ -59,7 +59,7 @@ export class ShopServiceBase {
     return getT(id);
   }
 
-  getCachedBrands(getT: () => Observable<IBrand[]>): Observable<void> {
+  getCachedBrands(getT: () => Observable<ProductBrand[]>): Observable<void> {
     return getT().pipe(
       map(b => {
         b.unshift({id: 0, name: 'All'});
@@ -68,7 +68,7 @@ export class ShopServiceBase {
     );
   }
 
-  getCachedTypes(getT: () => Observable<IType[]>): Observable<void> {
+  getCachedTypes(getT: () => Observable<ProductType[]>): Observable<void> {
     return getT().pipe(
       map(t => {
         t.unshift({id: 0, name: 'All'});

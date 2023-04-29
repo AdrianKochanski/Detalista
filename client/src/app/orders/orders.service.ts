@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import configuration from 'src/environments/environment';
-import { IOrder } from '../shared/models/order';
+import { Order } from '../shared/models/order';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +10,11 @@ import { IOrder } from '../shared/models/order';
 export class OrdersService {
   constructor(private http: HttpClient) { }
 
-  getOrdersForUser() : Observable<IOrder[]> {
-    return this.http.get<IOrder[]>(configuration.apiUrl + "orders");
+  getOrdersForUser() : Observable<Order[]> {
+    return this.http.get<Order[]>(configuration.apiUrl + "orders");
   }
 
-  getOrderDetails(id: number) : Observable<IOrder> {
-    return this.http.get<IOrder>(configuration.apiUrl + "orders/" + id);
+  getOrderDetails(id: number) : Observable<Order> {
+    return this.http.get<Order>(configuration.apiUrl + "orders/" + id);
   }
 }

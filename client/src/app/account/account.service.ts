@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { map, of, ReplaySubject } from 'rxjs';
 import configuration from 'src/environments/environment';
-import { IAddress } from '../shared/models/address';
-import { IUser } from '../shared/models/user';
+import { Address } from '../shared/models/address';
+import { User } from '../shared/models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  private currentUserSource = new ReplaySubject<IUser>(1);
+  private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -22,7 +22,7 @@ export class AccountService {
     }
 
     return this.http.get(configuration.apiUrl + 'account').pipe(
-      map((user: IUser) => {
+      map((user: User) => {
         if(user) {
           localStorage.setItem("token", user.token);
           this.currentUserSource.next(user);
@@ -33,7 +33,7 @@ export class AccountService {
 
   login(values: any) {
     return this.http.post(configuration.apiUrl + "account/login", values).pipe(
-      map((user: IUser) => {
+      map((user: User) => {
         if(user) {
           localStorage.setItem("token", user.token);
           this.currentUserSource.next(user);
@@ -44,7 +44,7 @@ export class AccountService {
 
   register(values: any) {
     return this.http.post(configuration.apiUrl + "account/register", values).pipe(
-      map((user: IUser) => {
+      map((user: User) => {
         if(user) {
           localStorage.setItem("token", user.token);
           this.currentUserSource.next(user);
@@ -64,10 +64,10 @@ export class AccountService {
   }
 
   getUserAddress() {
-    return this.http.get<IAddress>(configuration.apiUrl + "account/address");
+    return this.http.get<Address>(configuration.apiUrl + "account/address");
   }
 
-  updateUserAddress(address: IAddress) {
-    return this.http.put<IAddress>(configuration.apiUrl + "account/address", address);
+  updateUserAddress(address: Address) {
+    return this.http.put<Address>(configuration.apiUrl + "account/address", address);
   }
 }

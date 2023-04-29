@@ -3,8 +3,8 @@ import { FormGroup } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BasketService } from 'src/app/basket/basket.service';
-import { IBasket } from 'src/app/shared/models/basket';
-import { IOrder, IOrderToCreate } from 'src/app/shared/models/order';
+import { Basket } from 'src/app/shared/models/basket';
+import { Order, OrderToCreate } from 'src/app/shared/models/order';
 import { CheckoutService } from '../checkout.service';
 import { Stripe, StripeElements, StripeLinkAuthenticationElement, StripePaymentElement } from '@stripe/stripe-js';
 import { firstValueFrom, map, Subscription } from 'rxjs';
@@ -48,7 +48,7 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
     this.stripe = await this.stripeService.loadStripe();
 
     this.basketService.basket$.pipe(
-    map(async (basket: IBasket) => {
+    map(async (basket: Basket) => {
         await this.loadStripeElements(basket);
       }
     )).subscribe();
@@ -60,7 +60,7 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
     if(!basket || !basket.clientSecret) throw new Error("Cannot get basket");
 
     try {
-      const createOrder: IOrder = await this.createOrder(basket);
+      const createOrder: Order = await this.createOrder(basket);
       await this.confirmPaymentWithStripe(basket.clientSecret, `${configuration.appUrl}orders/${createOrder.id}`);
       this.basketService.deleteBasket(basket);
       const navigationExtras: NavigationExtras = {state: createOrder};
@@ -83,7 +83,7 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
     )
   }
 
-  private async loadStripeElements(basket: IBasket): Promise<void> {
+  private async loadStripeElements(basket: Basket): Promise<void> {
     if(basket === null || basket.clientSecret === null) return;
     const elements: StripeElements = await this.stripeService.loadStripeElements(basket.clientSecret);
 
@@ -171,13 +171,13 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
     if(result.error) throw new Error(result.error.message);
   }
 
-  private async createOrder(basket: IBasket | null): Promise<IOrder> {
+  private async createOrder(basket: Basket | null): Promise<Order> {
     if (!basket) throw new Error("Basket is null");
     const orderToCreate = this.getOrderToCreate(basket);
     return firstValueFrom(this.checkoutService.createOrder(orderToCreate));
   }
 
-  private getOrderToCreate(basket: IBasket): IOrderToCreate {
+  private getOrderToCreate(basket: Basket): OrderToCreate {
     const deliveryMethodId = this.checkoutForm.get("deliveryForm").get("deliveryMethod").value;
     const shipToAddress = this.checkoutForm.get("addressForm").value;
 

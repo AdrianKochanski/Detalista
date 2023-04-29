@@ -2,10 +2,10 @@ import configuration from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ShopServiceBase } from '../shared/helpers/ShopServiceBase';
-import { IType } from '../shared/models/productType';
-import { IBrand } from '../shared/models/brand';
+import { ProductType } from '../shared/models/productType';
+import { ProductBrand } from '../shared/models/brand';
 import { IPagination } from '../shared/models/pagination';
-import { IProduct } from '../shared/models/product';
+import { Product } from '../shared/models/product';
 import { filter, switchMap, from, map, Observable, of, tap, BehaviorSubject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
@@ -44,14 +44,14 @@ export class CryptoShopService extends ShopServiceBase {
     }
 
     this.getCachedBrands(() => {
-      return this.http.get<IBrand[]>(configuration.apiUrl + 'crypto/brands');
+      return this.http.get<ProductBrand[]>(configuration.apiUrl + 'crypto/brands');
     }).subscribe(() => {
     }, error => {
       console.log(error);
     });
 
     this.getCachedTypes(() => {
-      return this.http.get<IType[]>(configuration.apiUrl + 'crypto/types');
+      return this.http.get<ProductType[]>(configuration.apiUrl + 'crypto/types');
     }).subscribe(() => {
     }, error => {
       console.log(error);
@@ -97,7 +97,7 @@ export class CryptoShopService extends ShopServiceBase {
   getProduct(id: number) {
     return this.getCachedProduct(
       (id: number) => {
-        return this.http.get<IProduct>(`${configuration.apiUrl}crypto/${id}`);
+        return this.http.get<Product>(`${configuration.apiUrl}crypto/${id}`);
       },
       id
     );
@@ -105,7 +105,7 @@ export class CryptoShopService extends ShopServiceBase {
 
 
 
-  buyItem(product: IProduct): Observable<ContractTransaction> {
+  buyItem(product: Product): Observable<ContractTransaction> {
     return this.loadDappazonContract(false).pipe(
       filter(d => d.dappazon !== null),
       switchMap(dapp =>
