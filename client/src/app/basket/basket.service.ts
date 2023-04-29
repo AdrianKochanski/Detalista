@@ -58,40 +58,29 @@ export class BasketService {
     return this.basketSource.value;
   }
 
-  addItemToBasket(item: Product, quantity = 1) {
-    const itemToAdd: BasketItem = this.mapProductItemToBasketItem(item, quantity);
+  addItemToBasket(item: Product | BasketItem, quantity = 1) {
+
+    if(this.isProduct(item)) {
+      item = this.mapProductItemToBasketItem(item);
+    }
+
     const basket: Basket= this.getCurrentBasketValue() ?? this.createBasket();
-    basket.items = this.addOrUpdateItem(basket.items, itemToAdd, quantity);
+    basket.items = this.addOrUpdateItem(basket.items, item, quantity);
     this.setBasket(basket);
   }
 
-  incrementItemQuantity(item: BasketItem) {
+  removeItemFromBasket(id: number, quantity = 1) {
     const basket = this.getCurrentBasketValue();
-    const foundItemIndex = basket.items.findIndex(x => x.id === item.id);
-    basket.items[foundItemIndex].quantity++;
-    this.setBasket(basket);
-  }
+    if(!basket) return;
 
-  decrementItemQuantity(item: BasketItem) {
-    const basket = this.getCurrentBasketValue();
-    const foundItemIndex = basket.items.findIndex(x => x.id === item.id);
+    const item = basket.items.find(x => x.id == id);
 
-    if(basket.items[foundItemIndex].quantity > 1) {
-      basket.items[foundItemIndex].quantity--;
-      this.setBasket(basket);
-    }
-    else {
-      this.removeItemFromBasket(item);
-    }
+    if(item) {
+      item.quantity -= quantity;
 
-    this.setBasket(basket);
-  }
-
-  removeItemFromBasket(item: BasketItem) {
-    const basket = this.getCurrentBasketValue();
-
-    if(basket.items.some(x => x.id === item.id)){
-      basket.items = basket.items.filter(x => x.id !== item.id);
+      if(item.quantity <= 0) {
+        basket.items = basket.items.filter(i => i.id !== item.id);
+      }
 
       if(basket.items.length > 0) {
         this.setBasket(basket);
@@ -143,7 +132,7 @@ export class BasketService {
     return basket;
   }
 
-  private mapProductItemToBasketItem(item: Product, quantity: number): BasketItem {
+  private mapProductItemToBasketItem(item: Product): BasketItem {
     return {
       id: item.id,
       productName: item.name,
@@ -151,7 +140,11 @@ export class BasketService {
       brand: item.productBrand,
       pictureUrl: item.pictureUrl,
       type: item.productType,
-      quantity
+      quantity: 0
     };
+  }
+
+  private isProduct(item: Product | BasketItem): item is Product {
+    return (item as Product).productBrand !== undefined;
   }
 }

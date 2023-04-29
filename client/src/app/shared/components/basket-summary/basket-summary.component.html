@@ -51,14 +51,14 @@
                 *ngIf="actionsActive"
                 class="fa fa-minus-circle text-warning me-2"
                 style="cursor: pointer; font-size: 2em"
-                (click)="decrementItemQuantity(item)"
+                (click)="removeItem(item.id, 1)"
               ></i>
               <span class="font-weight-bold" style="font-size: 1.5em;">{{item.quantity}}</span>
               <i
                 *ngIf="actionsActive"
                 class="fa fa-plus-circle text-warning mx-2"
                 style="cursor: pointer; font-size: 2em"
-                (click)="incrementItemQuantity(item)"
+                (click)="incrementQuantity(item)"
               ></i>
             </div>
           </td>
@@ -72,7 +72,7 @@
               <i
                 class="fa fa-trash"
                 style="font-size: 2em;"
-                (click)="removeBasketItem(item)"
+                (click)="removeItem(item.id, item.quantity)"
               ></i>
             </a>
           </td>

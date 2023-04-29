@@ -8,9 +8,8 @@ import { Basket, BasketItem } from '../../models/basket';
   styleUrls: ['./basket-summary.component.scss']
 })
 export class BasketSummaryComponent implements OnInit {
-  @Output() decrement: EventEmitter<BasketItem> = new EventEmitter<BasketItem>();
   @Output() increment: EventEmitter<BasketItem> = new EventEmitter<BasketItem>();
-  @Output() remove: EventEmitter<BasketItem> = new EventEmitter<BasketItem>();
+  @Output() remove: EventEmitter<[number, number]> = new EventEmitter<[number, number]>();
   @Input() basket$: Observable<Basket> ;
   @Input() actionsActive: boolean = false;
 
@@ -18,15 +17,11 @@ export class BasketSummaryComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  removeBasketItem(item: BasketItem) {
-    this.remove.emit(item);
+  removeItem(id: number, quantity: number) {
+    this.remove.emit([id, quantity]);
   }
 
-  incrementItemQuantity(item: BasketItem) {
+  incrementQuantity(item: BasketItem) {
     this.increment.emit(item);
-  }
-
-  decrementItemQuantity(item: BasketItem) {
-    this.decrement.emit(item);
   }
 }

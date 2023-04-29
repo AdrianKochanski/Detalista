@@ -9,25 +9,16 @@ import { BasketService } from './basket.service';
   styleUrls: ['./basket.component.scss']
 })
 export class BasketComponent implements OnInit {
-  basket$: Observable<Basket>;
-  basketTotals$: Observable<BasketTotals>;
-
-  constructor(private basketService: BasketService){}
+  constructor(public basketService: BasketService){}
 
   ngOnInit(): void {
-    this.basket$ = this.basketService.basket$;
-    this.basketTotals$ = this.basketService.basketTotal$;
   }
 
-  removeBasketItem(item: BasketItem) {
-    this.basketService.removeItemFromBasket(item);
+  removeItem(args: [id: number, quantity: number]) {
+    this.basketService.removeItemFromBasket(args[0], args[1]);
   }
 
-  incrementItemQuantity(item: BasketItem) {
-    this.basketService.incrementItemQuantity(item);
-  }
-
-  decrementItemQuantity(item: BasketItem) {
-    this.basketService.decrementItemQuantity(item);
+  incrementQuantity(item: BasketItem) {
+    this.basketService.addItemToBasket(item);
   }
 }

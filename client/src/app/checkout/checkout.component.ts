@@ -13,10 +13,9 @@ import { BasketTotals } from '../shared/models/basket';
 })
 export class CheckoutComponent implements OnInit {
   checkoutForm: FormGroup;
-  basketTotals$: Observable<BasketTotals>;
 
   constructor(private fb: FormBuilder, private accountService: AccountService,
-    private basketService: BasketService, private toastr: ToastrService) {
+    public basketService: BasketService, private toastr: ToastrService) {
       this.createPaymentIntent = this.createPaymentIntent.bind(this);
     }
 
@@ -24,7 +23,6 @@ export class CheckoutComponent implements OnInit {
     this.createCheckoutForm();
     this.getAddressFormValues();
     this.getDeliveryMethodValue();
-    this.basketTotals$ = this.basketService.basketTotal$;
   }
 
   createCheckoutForm() {

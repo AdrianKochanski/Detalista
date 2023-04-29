@@ -16,14 +16,14 @@
   <div class="d-flex align-items-center">
     <a class="position-relative" [routerLink]="['/basket']">
       <i class="fa fa-shopping-cart fa-2x me-5 text-white"></i>
-      <div *ngIf="(basket$ | async) as basket" class="cart-no">{{basket.items.length}}</div>
+      <div *ngIf="(basketService.basket$ | async) as basket" class="cart-no">{{getCount(basket.items)}}</div>
     </a>
-    <ng-container *ngIf="(currentUser$ | async) === null">
+    <ng-container *ngIf="(accountService.currentUser$ | async) === null">
       <a routerLink="account/login" class="link-light btn btn-outline-secondary me-2">Login</a>
       <a routerLink="account/register" class="link-light btn btn-outline-secondary me-3">Sign up</a>
     </ng-container>
 
-    <ng-container *ngIf="(currentUser$ | async) as user">
+    <ng-container *ngIf="(accountService.currentUser$ | async) as user">
       <div class="dropdown ps-3 pe-3" dropdown>
         <a
           id="button-basic"
