@@ -108,12 +108,17 @@ export class CryptoShopService extends ShopServiceBase {
   buyItem(product: Product): Observable<ContractTransaction> {
     return this.loadDappazonContract(false).pipe(
       filter(d => d.dappazon !== null),
-      switchMap(dapp =>
-        dapp.dappazon
+      switchMap(dapp => {
+        console.log("Product");
+        console.log(product);
+        console.log("Buy item action at: ");
+        console.log(dapp);
+        return dapp.dappazon
         .connect(dapp.provider.getSigner())
         .buy(BigNumber.from(product.id), {
           value: ethers.utils.parseEther(product.price.toString(10))
         })
+      }
       )
     );
   }
@@ -149,6 +154,13 @@ export class CryptoShopService extends ShopServiceBase {
           const provider = new ethers.providers.Web3Provider(window.ethereum!);
           return from(provider.getNetwork()).pipe(
             map((network: ethers.providers.Network) => {
+
+              if(this.accountSource.value != "") {
+                provider.getBalance(this.accountSource.value).then(balance => {
+                  console.log(balance);
+                });
+              }
+
               const dapp: Dappazon = new ethers.Contract(
                 configuration.crypto[network.chainId].dappazon.address,
                 DappazonAbi.abi,

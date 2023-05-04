@@ -12,23 +12,31 @@ namespace Core.Helpers
     {
         public static ContractHandler ContractHandler { get; private set; }
 
-        public static async Task<Tuple<Web3, ContractHandler>> GetContractHandler(IConfiguration config) {
-            BigInteger chainId =  Convert.ToInt32(config.GetSection("Hardhat:ChainId").Value);
-            string deployerPrivateKey = config.GetSection("Hardhat:Account1_PK").Value;
+        public static async Task<Tuple<Web3, ContractHandler>> GetContractHandler(IConfiguration config, string contractId = "") {
             string dappazonAddress = config.GetSection("Hardhat:DappazonAddress").Value;
 
-            var account = new Account(deployerPrivateKey, chainId);
-            var web3 = new Web3(account);
+            if(!string.IsNullOrWhiteSpace(contractId)) {
+                dappazonAddress = contractId;
+            }
+            
+            var url = config.GetSection("Hardhat:ChainUrl").Value;
+            var privateKey = config.GetSection("Hardhat:Account1_PK").Value;
+            var account = new Account(privateKey);
+            var web3 = new Web3(account, url);
+
             web3.TransactionManager.UseLegacyAsDefault = true;
 
             var code = await web3.Eth.GetCode.SendRequestAsync(dappazonAddress);
 
             if(code != null && code != "0x") {
+                Console.WriteLine("Contract found at: " + dappazonAddress);
                 ContractHandler = web3.Eth.GetContractHandler(dappazonAddress);
                 return new Tuple<Web3, ContractHandler>(web3, ContractHandler);
             }
-
-            return new Tuple<Web3, ContractHandler>(web3, null);
+            else {
+                Console.WriteLine("Contract doesn't exist at: " + dappazonAddress);
+                return new Tuple<Web3, ContractHandler>(web3, null);
+            }
         }
 
         public static async Task<bool> ContractInitialized(IConfiguration config) {

@@ -22,10 +22,10 @@ namespace Infrastructure.Data
             var connector = await CryptoConnector.GetContractHandler(config);
 
             if(connector.Item1 != null && connector.Item2 == null) {
-                bool deploySuccess = await DeployContract(connector.Item1, loggerFactory);
-                connector = await CryptoConnector.GetContractHandler(config);
+                string contractAddress = await DeployContract(connector.Item1, loggerFactory);
+                connector = await CryptoConnector.GetContractHandler(config, contractAddress);
                 
-                if(deploySuccess) {
+                if(!string.IsNullOrWhiteSpace(contractAddress)) {
                     await CryptoSeedProducts(
                         connector.Item2, 
                         loggerFactory
@@ -61,6 +61,7 @@ namespace Infrastructure.Data
                 var updateBrandsFunction = new UpdateBrandsFunction();
                 updateBrandsFunction.Brands = brands;
                 var updateBrandsFunctionTxnReceipt = await contractHandler.SendRequestAndWaitForReceiptAsync(updateBrandsFunction);
+                Console.WriteLine("Brands seed at: " + contractHandler.ContractAddress);
 
 
                 List<Category> types = new List<Category>();
@@ -73,6 +74,7 @@ namespace Infrastructure.Data
                 var updateCategoriesFunction = new UpdateCategoriesFunction();
                 updateCategoriesFunction.Category = types;
                 var updateCategoriesFunctionTxnReceipt = await contractHandler.SendRequestAndWaitForReceiptAsync(updateCategoriesFunction);
+                Console.WriteLine("Categories seed at: " + contractHandler.ContractAddress);
 
 
                 List<NewItem> items = new List<NewItem>();
@@ -100,6 +102,7 @@ namespace Infrastructure.Data
                         var listItemsFunctionTxnReceipt = await contractHandler.SendRequestAndWaitForReceiptAsync(listItemsFunction);
                     }
                 }
+                Console.WriteLine("Products seed at: " + contractHandler.ContractAddress);
             }
             catch (Exception ex)
             {
@@ -108,7 +111,7 @@ namespace Infrastructure.Data
             }
         }
 
-        private static async Task<bool> DeployContract(Web3 web3, ILoggerFactory loggerFactory) {
+        private static async Task<string> DeployContract(Web3 web3, ILoggerFactory loggerFactory) {
             try
             {
                 var dappazonDeployment = new DappazonDeployment();
@@ -117,13 +120,14 @@ namespace Infrastructure.Data
                     .GetContractDeploymentHandler<DappazonDeployment>()
                     .SendRequestAndWaitForReceiptAsync(dappazonDeployment);
 
-                return true;
+                Console.WriteLine("Contract deployed at: " + transactionReceiptDeployment.ContractAddress);
+                return transactionReceiptDeployment.ContractAddress;
             }
             catch (Exception ex)
             {
                 var logger = loggerFactory.CreateLogger<StoreContextSeed>();
                 logger.LogError(ex.Message);
-                return false;
+                return "";
             }
         }
 
