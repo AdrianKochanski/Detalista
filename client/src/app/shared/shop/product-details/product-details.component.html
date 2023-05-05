@@ -7,13 +7,13 @@
     >
   </div>
 
-  <div class="col-12 col-sm-5 col-md-6 mb-3 ps-sm-5">
-    <div class="d-flex justify-content-start align-items-start" style="gap: 10px;">
-      <h3>{{product.name}}</h3>
+  <div class="col-12 col-sm-5 col-md-6 ps-sm-5">
+    <div class="d-flex justify-content-start align-items-center mb-2" style="gap: 10px;">
+      <h3 class="mb-0">{{product.name}}</h3>
     </div>
 
-    <div class="d-flex justify-content-start align-items-start" style="gap: 3px;">
-      <h4 class="me-2">Rating:</h4>
+    <div class="d-flex justify-content-start align-items-center mb-2" style="gap: 3px;">
+      <h4 class="me-2 mb-0">Rating:</h4>
       <div class="ratings">
         <i class="fa fa-star" [class.rating-color] = "product.rating > 0"></i>
         <i class="fa fa-star" [class.rating-color] = "product.rating > 1"></i>
@@ -23,41 +23,50 @@
       </div>
     </div>
 
-    <div class="d-flex justify-content-start align-items-start">
-      <h4 class="me-2">Category:</h4>
+    <div class="d-flex justify-content-start align-items-center mb-2">
+      <h4 class="me-2 mb-0">Category:</h4>
       {{product.productType}}
     </div>
 
-    <div class="d-flex justify-content-start align-items-start">
-      <h4 class="me-2">Brand:</h4>
+    <div class="d-flex justify-content-start align-items-center mb-2">
+      <h4 class="me-2 mb-0">Brand:</h4>
       {{product.productBrand}}
     </div>
 
-    <div class="d-flex justify-content-start align-items-start">
-      <h4 class="me-2">Price:</h4>
+    <div class="d-flex justify-content-start align-items-center mb-2">
+      <h4 class="me-2 mb-0">Price:</h4>
       {{product | productPrice}}
     </div>
 
-    <div class="d-flex justify-content-start align-items-start"  *ngIf="!!product.stock">
-      <h4 class="me-2">Stock:</h4>
+    <div class="d-flex justify-content-start align-items-center mb-2"  *ngIf="!!product.stock">
+      <h4 class="me-2 mb-0">Stock:</h4>
       {{product.stock}}
     </div>
 
-    <h4>Increment:</h4>
-
-    <div class="d-flex justify-content-start align-items-start mb-2" style="gap: 10px;" *ngIf="!!product.stock">
-      <i (click)="decrement()" class="fa fa-minus-circle text-warning me-1" style="cursor: pointer; font-size: 2em"></i>
-      <span class="font-weight-bold" style="font-size: 1.5em;">{{quantity}}</span>
-      <i (click)="increment()" class="fa fa-plus-circle text-warning" style="cursor: pointer; font-size: 2em"></i>
+    <div class="d-flex justify-content-start align-items-center mb-1 text-warning"  *ngIf="quantityInBasket > 0">
+      <h4 class="me-2 mb-0">You have <strong class="text-primary">{{quantityInBasket}}</strong> of this item in your basket</h4>
     </div>
 
-    <button [disabled]="product.stock <= 0" (click)="addItemToBasket()" class="btn btn-outline-secondary btn-lg mb-2"  *ngIf="!!product.stock">
-      {{
-        product.isCrypto
-        ? 'Buy: ' + (product | productPrice: quantity)
-        : 'Add: ' + (product | productPrice: quantity)
-      }}
-    </button>
+
+    <div class="d-flex flex-wrap justify-content-start align-items-center mb-3" style="gap: 10px;" *ngIf="!!product.stock">
+      <h4 class="align-self-center mb-0">Increment:</h4>
+
+      <div class="d-flex justify-content-start align-items-center" style="gap: 5px;">
+        <i (click)="decrement()" class="fa fa-minus-circle align-self-center text-warning me-1" style="cursor: pointer; font-size: 2em"></i>
+        <span class="align-self-center font-weight-bold" style="font-size: 1.5em;">{{quantity}}</span>
+        <i (click)="increment()" class="fa fa-plus-circle align-self-center text-warning" style="cursor: pointer; font-size: 2em"></i>
+      </div>
+
+      <button [disabled]="product.stock <= 0" (click)="updateBasket()" class="btn btn-outline-secondary btn-lg mb-0"  *ngIf="!!product.stock">
+        {{
+          product.isCrypto
+          ? 'Buy: ' + (product | productPrice: quantity)
+          : quantityInBasket === 0
+          ? 'Add: ' + (product | productPrice: quantity)
+          : 'Update: ' + (product | productPrice: quantity)
+        }}
+      </button>
+    </div>
 
     <div class="alert alert-warning" *ngIf="!product.stock">
       Product out of stock
