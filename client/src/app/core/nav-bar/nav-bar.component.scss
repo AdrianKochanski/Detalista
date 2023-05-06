@@ -27,4 +27,7 @@ a {
   &:focus {
     outline: none;
   }
+
+  background: rgb(var(--bs-secondary-rgb));
+  background: linear-gradient(5deg, rgba(var(--bs-primary-rgb),1) 30%, rgba(var(--bs-secondary-rgb),1) 60%, rgba(var(--bs-primary-rgb),1) 85%);
 }
