@@ -93,16 +93,16 @@ namespace Infrastructure.Data
                 }
 
                 int batchSize = 5;
-                for(int i=0; i< items.Count / batchSize; i++) 
+                for(int i=0; i <= items.Count / batchSize; i++) 
                 {
                     var listItemsFunction = new ListItemsFunction();
                     listItemsFunction.Items = items.Skip(batchSize * i).Take(batchSize).ToList();
 
                     if(listItemsFunction.Items.Count > 0) {
                         var listItemsFunctionTxnReceipt = await contractHandler.SendRequestAndWaitForReceiptAsync(listItemsFunction);
+                        Console.WriteLine($"Products count { i * batchSize + listItemsFunction.Items.Count} seed at: {contractHandler.ContractAddress}");
                     }
                 }
-                Console.WriteLine("Products seed at: " + contractHandler.ContractAddress);
             }
             catch (Exception ex)
             {
