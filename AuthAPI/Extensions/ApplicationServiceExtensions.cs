@@ -1,10 +1,4 @@
-using Core.Errors;
-using Core.Interfaces;
-using Infrastructure.Services;
-using Microsoft.AspNetCore.Mvc;
-using StackExchange.Redis;
-
-namespace API.Extensions
+namespace AuthAPI.Extensions
 {
     public static class ApplicationServiceExtensions
     {
@@ -12,9 +6,6 @@ namespace API.Extensions
         {
             services.AddAutoMapper(typeof(MappingProfiles));
             
-            services.AddDbContext<StoreContext>(x =>
-                x.UseNpgsql(config.GetConnectionString("DefaultConnection")));
-
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>
@@ -23,22 +14,9 @@ namespace API.Extensions
                 });
             });
             
-            services.AddSingleton<IConnectionMultiplexer>(c => {
-                return ConnectionMultiplexer.Connect(
-                    ConfigurationOptions.Parse(
-                        config.GetConnectionString("Redis"),
-                        true
-                    )
-                );
-            });
-
-            services.AddSingleton<IResponseCacheService, ResponseCacheService>();
-            services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IPaymentService, PaymentService>();
-            services.AddScoped<IBasketRepository, BasketRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
+            services.Configure<JwtOptions>(config.GetSection("Token"));
+            
+            services.AddScoped<ITokenProvider, TokenProvider>();
             services.Configure<ApiBehaviorOptions>(options => 
             {
                 options.InvalidModelStateResponseFactory = actionContext => 

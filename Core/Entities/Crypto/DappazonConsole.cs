@@ -14,7 +14,7 @@ namespace Core.Entities.Crypto
 {
     public class DappazonConsole
     {
-        public static async Task Main()
+        public static void Main()
         {
             var url = "http://testchain.nethereum.com:8545";
             //var url = "https://mainnet.infura.io";

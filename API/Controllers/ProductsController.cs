@@ -9,7 +9,7 @@ using Core.Interfaces;
 using Core.Specifications;
 using API.Dtos;
 using AutoMapper;
-using API.Errors;
+using Core.Errors;
 using Microsoft.AspNetCore.Http;
 using API.Helpers;
 

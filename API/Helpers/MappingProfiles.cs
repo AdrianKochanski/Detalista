@@ -15,7 +15,6 @@ namespace API.Helpers
                 .ForMember(d => d.IsCrypto, o => o.MapFrom(s => false))
                 .ForMember(d => d.PictureUrl, o => o.MapFrom<ProductUrlResolver>());
 
-            CreateMap<Core.Entities.Identity.Address, AddressDto>().ReverseMap();
             CreateMap<CustomerBasket, CustomerBasketDto>().ReverseMap();
             CreateMap<BasketItem, BasketItemDto>().ReverseMap();
             CreateMap<Core.Entities.OrderAggregate.Address, AddressDto>().ReverseMap();

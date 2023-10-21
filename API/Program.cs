@@ -1,5 +1,3 @@
-using Core.Entities.Identity;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure services
@@ -13,7 +11,7 @@ builder.Services.AddSwaggerDocumentation();
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 
-app.UseSwaggerDocumentation();
+app.UseSwaggerDocumentation(builder.Environment.IsDevelopment());
 
 app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
@@ -52,10 +50,10 @@ try
     await StoreContextSeed.SeedAsync(context, loggerFactory);
     await StoreContextSeed.CryptoSeedAsync(config, loggerFactory);
 
-    UserManager<AppUser> userManager = services.GetRequiredService<UserManager<AppUser>>();
-    AppIdentityDbContext identityContext = services.GetRequiredService<AppIdentityDbContext>();
-    await identityContext.Database.MigrateAsync();
-    await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
+    // UserManager<AppUser> userManager = services.GetRequiredService<UserManager<AppUser>>();
+    // AppIdentityDbContext identityContext = services.GetRequiredService<AppIdentityDbContext>();
+    // await identityContext.Database.MigrateAsync();
+    // await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
 }
 catch (Exception ex)
 {

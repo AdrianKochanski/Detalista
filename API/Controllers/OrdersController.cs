@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Dtos;
-using API.Errors;
+using Core.Errors;
 using API.Helpers;
 using AutoMapper;
 using Core.Entities.OrderAggregate;
