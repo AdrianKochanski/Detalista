@@ -5,39 +5,26 @@ namespace AuthAPI.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly ITokenProvider _tokenProvider;
         private readonly IMapper _mapper;
 
         public AccountController(
             UserManager<AppUser> userManager, 
             SignInManager<AppUser> signInManager,
             RoleManager<IdentityRole> roleManager,
-            ITokenProvider tokenProvider,
             IMapper mapper
         ){
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
-            _tokenProvider = tokenProvider;
             _mapper = mapper;
         }
 
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<UserDto>> GetCurrentUser() {
+        public async Task<ActionResult<UserWithTokenDto>> GetCurrentUser() {
             var user = await _userManager.FindByClaimsPrincipleAsync(User);
-
-            return new UserDto() {
-                Email = user.Email,
-                Token = _tokenProvider.CreateToken(user, await _userManager.GetRolesAsync(user)),
-                DisplayName = user.DisplayName
-            };
-        }
-
-        [HttpGet("emailexists")]
-        public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email) 
-        {
-            return await _userManager.FindByEmailAsync(email) != null;
+            var roles = await _userManager.GetRolesAsync(user);
+            return _mapper.Map<UserWithTokenDto>(user);
         }
 
         [Authorize]
@@ -50,7 +37,6 @@ namespace AuthAPI.Controllers
 
         [Authorize]
         [HttpPut("address")]
-        [Authorize(Roles = "User")]
         public async Task<ActionResult<AddressDto>> UpdateUserAddress(AddressDto address) {
             AppUser user = await _userManager.FindByClaimsPrincipleWithAddressAsync(User);
             user.Address = _mapper.Map<AddressDto, Address>(address);
@@ -60,28 +46,62 @@ namespace AuthAPI.Controllers
             return BadRequest("Problem updating the user");
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpPost("AssignRole")]
-        public async Task<ActionResult<UserDto>> AssignRole(AssignRoleDto assignRoleDto)
+        [Authorize]
+        [HttpPost("getUser")]
+        public async Task<ActionResult<UserWithRolesDto>> GetUser(string email)
         {
-            var user = await _userManager.FindByEmailAsync(assignRoleDto.Email);
-            if (user == null) return NotFound(new ApiResponse(404));
-            if(!await _roleManager.RoleExistsAsync(assignRoleDto.Role)) return NotFound(new ApiResponse(404));
-            var userRoles = await _userManager.GetRolesAsync(user);
-
-            if(userRoles.Contains(assignRoleDto.Role)) return NotFound(new ApiResponse(404));
-            var result = await _userManager.AddToRoleAsync(user, assignRoleDto.Role);
-            if(!result.Succeeded) return NotFound(new ApiResponse(404));
-
-            return new UserDto() {
-                Email = user.Email,
-                //Token = _tokenProvider.CreateToken(user, await _userManager.GetRolesAsync(user)),
-                DisplayName = user.DisplayName
-            };
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null) return NotFound(new ApiResponse(405));
+            return _mapper.Map<UserWithRolesDto>(user);
         }
 
+        [Authorize]
+        [HttpPost("getUserInRole")]
+        public async Task<ActionResult<IEnumerable<UserWithRolesDto>>> UsersInRole(string role)
+        {
+            if(! await _roleManager.RoleExistsAsync(role)) return NotFound(new ApiResponse(404));
+            IEnumerable<AppUser> users = await _userManager.GetUsersInRoleAsync(role);
+            return _mapper.Map<IEnumerable<UserWithRolesDto>>(users).ToList();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("assignRole")]
+        public async Task<ActionResult<UserWithRolesDto>> AssignRole(UpdateRoleDto updateRoleDto)
+        {
+            var user = await _userManager.FindByEmailAsync(updateRoleDto.Email);
+            if (user == null) return NotFound(new ApiResponse(404));
+            if(!await _roleManager.RoleExistsAsync(updateRoleDto.Role)) return NotFound(new ApiResponse(404));
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            if(userRoles.Contains(updateRoleDto.Role)) return NotFound(new ApiResponse(404));
+            var result = await _userManager.AddToRoleAsync(user, updateRoleDto.Role);
+            if(!result.Succeeded) return NotFound(new ApiResponse(404));
+            return _mapper.Map<UserWithRolesDto>(user);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("removeRole")]
+        public async Task<ActionResult<UserWithRolesDto>> RemoveRole(UpdateRoleDto updateRoleDto)
+        {
+            var user = await _userManager.FindByEmailAsync(updateRoleDto.Email);
+            if (user == null) return NotFound(new ApiResponse(404));
+            if(!await _roleManager.RoleExistsAsync(updateRoleDto.Role)) return NotFound(new ApiResponse(404));
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            if(!userRoles.Contains(updateRoleDto.Role)) return NotFound(new ApiResponse(404));
+            var result = await _userManager.RemoveFromRoleAsync(user, updateRoleDto.Role);
+            if(!result.Succeeded) return NotFound(new ApiResponse(404));
+            return _mapper.Map<UserWithRolesDto>(user);
+        }
+
+        [HttpGet("emailExists")]
+        public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email) 
+        {
+            return await _userManager.FindByEmailAsync(email) != null;
+        }
+        
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto) 
+        public async Task<ActionResult<UserWithTokenDto>> Login(LoginDto loginDto) 
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
             if (user == null) return Unauthorized(new ApiResponse(401));
@@ -89,15 +109,11 @@ namespace AuthAPI.Controllers
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
             if(!result.Succeeded) return Unauthorized(new ApiResponse(401));
 
-            return new UserDto() {
-                Email = user.Email,
-                Token = _tokenProvider.CreateToken(user, await _userManager.GetRolesAsync(user)),
-                DisplayName = user.DisplayName
-            };
+            return _mapper.Map<UserWithTokenDto>(user);
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto) 
+        public async Task<ActionResult<UserWithTokenDto>> Register(RegisterDto registerDto)
         {
             if(CheckEmailExistsAsync(registerDto.Email).Result.Value) {
                 return new BadRequestObjectResult(new ApiValidationErrorResponse{
@@ -125,12 +141,8 @@ namespace AuthAPI.Controllers
             else {
                 return BadRequest(new ApiResponse(400));
             }
-
-            return new UserDto {
-                DisplayName = user.DisplayName,
-                Token = _tokenProvider.CreateToken(user, await _userManager.GetRolesAsync(user)),
-                Email = user.Email
-            };
+            
+            return _mapper.Map<UserWithTokenDto>(user);
         }
     }
 }

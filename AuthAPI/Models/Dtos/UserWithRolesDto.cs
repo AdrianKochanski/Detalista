@@ -1,9 +1,9 @@
 namespace AuthAPI.Models.Dtos
 {
-    public class UserDto
+    public class UserWithRolesDto
     {
         public string Email { get; set; }
         public string DisplayName { get; set; }
-        public string Token { get; set; }
+        public string[] Roles { get; set; }
     }
 }

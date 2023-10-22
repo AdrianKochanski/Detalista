@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AuthAPI.Models.Dtos
 {
-    public class AssignRoleDto
+    public class UpdateRoleDto
     {
         public string Email { get; set; }
         public string Role { get; set; }

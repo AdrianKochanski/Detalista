@@ -6,13 +6,15 @@ namespace AuthAPI.Authentication
     {
         private readonly SymmetricSecurityKey _key;
         private readonly JwtOptions _jwtOptions;
+        private readonly UserManager<AppUser> _userManager;
 
-        public TokenProvider(IOptions<JwtOptions> jwtOptions) {
+        public TokenProvider(IOptions<JwtOptions> jwtOptions, UserManager<AppUser> userManager) {
             _jwtOptions = jwtOptions.Value;
+            _userManager = userManager;
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key));
         }
 
-        public string CreateToken(AppUser user, IEnumerable<string> roles)
+        public async Task<string> CreateToken(AppUser user)
         {
             var claims = new List<Claim> {
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
@@ -21,6 +23,7 @@ namespace AuthAPI.Authentication
                 new Claim(JwtRegisteredClaimNames.GivenName, user.DisplayName)
             };
 
+            var roles = await _userManager.GetRolesAsync(user);
             claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
