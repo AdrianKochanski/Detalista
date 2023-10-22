@@ -23,14 +23,14 @@ export class ShopService extends ShopServiceBase {
     }
 
     this.getCachedBrands(() => {
-      return this.http.get<ProductBrand[]>(configuration.apiUrl + 'products/brands');
+      return this.http.get<ProductBrand[]>(configuration.serviceUrls.apiUrl + 'api/products/brands');
     }).subscribe(() => {
     }, error => {
       console.log(error);
     });
 
     this.getCachedTypes(() => {
-      return this.http.get<ProductType[]>(configuration.apiUrl + 'products/types');
+      return this.http.get<ProductType[]>(configuration.serviceUrls.apiUrl + 'api/products/types');
     }).subscribe(() => {
     }, error => {
       console.log(error);
@@ -58,7 +58,7 @@ export class ShopService extends ShopServiceBase {
           params = params.append("pageIndex", shopParams.pageNumber.toString());
           params = params.append("pageSize", shopParams.pageSize.toString());
 
-          return this.http.get<IPagination>(configuration.apiUrl + 'products', {observe: 'response', params}).pipe(map(r => r.body));
+          return this.http.get<IPagination>(configuration.serviceUrls.apiUrl + 'api/products', {observe: 'response', params}).pipe(map(r => r.body));
         },
         shopParams,
         true
@@ -76,7 +76,7 @@ export class ShopService extends ShopServiceBase {
   getProduct(id: number) {
     return this.getCachedProduct(
       (id: number) => {
-        return this.http.get<Product>(`${configuration.apiUrl}products/${id}`);
+        return this.http.get<Product>(`${configuration.serviceUrls.apiUrl}api/products/${id}`);
       },
       id
     );

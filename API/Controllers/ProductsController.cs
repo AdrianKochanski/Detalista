@@ -12,6 +12,7 @@ using AutoMapper;
 using Core.Errors;
 using Microsoft.AspNetCore.Http;
 using API.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {

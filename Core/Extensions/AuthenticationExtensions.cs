@@ -1,20 +1,15 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace API.Extensions
+namespace Core.Extensions
 {
-    public static class IdentityServiceExtensions
+    public static class AuthenticationExtensions
     {
-        public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config) 
+        public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration config)
         {
-            // services.AddDbContext<AppIdentityDbContext>(x =>
-            //     x.UseNpgsql(config.GetConnectionString("IdentityConnection")));
-
-            // var builder = services.AddIdentityCore<AppUser>();
-            // builder.AddEntityFrameworkStores<AppIdentityDbContext>();
-            // builder.AddSignInManager<SignInManager<AppUser>>();
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = 
@@ -30,7 +25,6 @@ namespace API.Extensions
                         ValidateAudience = true
                     };
                 });
-
             return services;
         }
     }

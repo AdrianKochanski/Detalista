@@ -1,7 +1,9 @@
 export default {
   production: false,
-  appUrl: 'https://localhost:5001/',
-  apiUrl:'https://localhost:5001/api/',
+  serviceUrls: {
+    apiUrl: 'https://localhost:7000/',
+    authApiUrl: 'https://localhost:7002/',
+  },
   crypto: {
     31337: {
       jsonRPC: "http://127.0.0.1:8545/",

@@ -21,7 +21,7 @@ export class AccountService {
       return of(null);
     }
 
-    return this.http.get(configuration.apiUrl + 'account').pipe(
+    return this.http.get(configuration.serviceUrls.authApiUrl + 'api/account').pipe(
       map((user: User) => {
         if(user) {
           localStorage.setItem("token", user.token);
@@ -32,7 +32,7 @@ export class AccountService {
   }
 
   login(values: any) {
-    return this.http.post(configuration.apiUrl + "account/login", values).pipe(
+    return this.http.post(configuration.serviceUrls.authApiUrl + "api/account/login", values).pipe(
       map((user: User) => {
         if(user) {
           localStorage.setItem("token", user.token);
@@ -43,7 +43,7 @@ export class AccountService {
   }
 
   register(values: any) {
-    return this.http.post(configuration.apiUrl + "account/register", values).pipe(
+    return this.http.post(configuration.serviceUrls.authApiUrl + "api/account/register", values).pipe(
       map((user: User) => {
         if(user) {
           localStorage.setItem("token", user.token);
@@ -60,14 +60,14 @@ export class AccountService {
   }
 
   checkEmailExist(email: string) {
-    return this.http.get(configuration.apiUrl + "account/emailexists?email=" + email);
+    return this.http.get(configuration.serviceUrls.authApiUrl + "api/account/emailexists?email=" + email);
   }
 
   getUserAddress() {
-    return this.http.get<Address>(configuration.apiUrl + "account/address");
+    return this.http.get<Address>(configuration.serviceUrls.authApiUrl + "api/account/address");
   }
 
   updateUserAddress(address: Address) {
-    return this.http.put<Address>(configuration.apiUrl + "account/address", address);
+    return this.http.put<Address>(configuration.serviceUrls.authApiUrl + "api/account/address", address);
   }
 }

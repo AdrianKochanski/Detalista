@@ -1,7 +1,9 @@
 export default {
   production: true,
-  appUrl: 'https://20.108.188.208/',
-  apiUrl:'/api/',
+  serviceUrls: {
+    apiUrl: 'https://20.108.188.208/', //for fallback controller should be only '/'
+    authApiUrl: 'https://localhost:7502/',
+  },
   crypto: {
     31337: {
       jsonRPC: "http://127.0.0.1:8545/",

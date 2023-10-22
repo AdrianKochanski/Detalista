@@ -3,7 +3,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Configure services
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddSwaggerDocumentation();
 
 
@@ -49,11 +49,6 @@ try
 
     await StoreContextSeed.SeedAsync(context, loggerFactory);
     await StoreContextSeed.CryptoSeedAsync(config, loggerFactory);
-
-    // UserManager<AppUser> userManager = services.GetRequiredService<UserManager<AppUser>>();
-    // AppIdentityDbContext identityContext = services.GetRequiredService<AppIdentityDbContext>();
-    // await identityContext.Database.MigrateAsync();
-    // await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
 }
 catch (Exception ex)
 {

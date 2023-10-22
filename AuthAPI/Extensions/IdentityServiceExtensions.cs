@@ -14,22 +14,6 @@ namespace AuthAPI.Extensions
             builder.AddRoles<IdentityRole>();
             builder.AddRoleManager<RoleManager<IdentityRole>>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => {
-                    options.TokenValidationParameters = 
-                    new TokenValidationParameters 
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                            config["Token:Key"]
-                        )),
-                        ValidIssuer = config["Token:Issuer"],
-                        ValidateIssuer = true,
-                        ValidAudience = config["Token:Audience"],
-                        ValidateAudience = true
-                    };
-                });
-
             return services;
         }
     }
