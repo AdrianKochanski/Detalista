@@ -1,17 +1,16 @@
-using System;
 using System.Collections;
-using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork<T> : IUnitOfWork where T : DbContext
     {
-        private readonly StoreContext _context;
+        private readonly T _context;
         private Hashtable _repositories;
 
-        public UnitOfWork(StoreContext context)
+        public UnitOfWork(T context)
         {
             _context = context;
         }
@@ -37,8 +36,8 @@ namespace Infrastructure.Data
 
             if(!_repositories.ContainsKey(type)) 
             {
-                var repositoryType = typeof(GenericRepository<>);
-                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _context);
+                var repositoryType = typeof(GenericRepository<,>);
+                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T), typeof(TEntity)), _context);
                 _repositories.Add(type, repositoryInstance);
             }
 

@@ -1,9 +1,11 @@
 using System.Text;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace API.Helpers
+namespace Core.Helpers
 {
     public class CachedAttribute : Attribute, IAsyncActionFilter
     {

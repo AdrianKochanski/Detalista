@@ -1,8 +1,8 @@
 namespace AuthAPI.Extensions
 {
-    public static class IdentityWebApplicationExtension
+    public static class WebApplicationExtension
     {
-        public static async void SeedUserWithRole(this WebApplication app, bool isDevelopment) 
+        public static async Task SeedUserWithRole(this WebApplication app, bool isDevelopment) 
         {
             if(isDevelopment) {
                 using var scope = app.Services.CreateScope();

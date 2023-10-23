@@ -1,22 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Core.Entities;
-using Core.Entities.OrderAggregate;
 using Microsoft.Extensions.Logging;
 using Nethereum.Web3;
 using Microsoft.Extensions.Configuration;
 using Core.Entities.Crypto;
 using Nethereum.Contracts.ContractHandlers;
 using Core.Helpers;
+using Core.Entities.Seed;
 
 namespace Infrastructure.Data
 {
-    public class StoreContextSeed
+    public class CryptoContextSeed
     {
         public static async Task CryptoSeedAsync(IConfiguration config, ILoggerFactory loggerFactory) {
             var connector = await CryptoConnector.GetContractHandler(config);
@@ -106,7 +101,7 @@ namespace Infrastructure.Data
             }
             catch (Exception ex)
             {
-                var logger = loggerFactory.CreateLogger<StoreContextSeed>();
+                var logger = loggerFactory.CreateLogger<CryptoContextSeed>();
                 logger.LogError(ex.Message);
             }
         }
@@ -125,64 +120,9 @@ namespace Infrastructure.Data
             }
             catch (Exception ex)
             {
-                var logger = loggerFactory.CreateLogger<StoreContextSeed>();
+                var logger = loggerFactory.CreateLogger<CryptoContextSeed>();
                 logger.LogError(ex.Message);
                 return "";
-            }
-        }
-
-        public static async Task SeedAsync(StoreContext context, ILoggerFactory loggerFactory)
-        {
-            try
-            {
-                var dataSeed = GetDataSeed();
-                var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-                if (!context.ProductBrands.Any())
-                {
-                    context.ProductBrands.AddRange(dataSeed.Brands);
-                }
-
-                if (!context.ProductTypes.Any())
-                {
-                    context.ProductTypes.AddRange(dataSeed.Types);
-                }
-
-                if (!context.Products.Any())
-                {
-                    List<Product> newProducts = new List<Product>();
-                    foreach (var item in dataSeed.Products)
-                    {
-                        newProducts.Add(new Product() {
-                            Id = item.Id,
-                            Description = item.Description,
-                            Name = item.Name,
-                            PictureUrl = item.PictureUrl,
-                            Price = item.Price,
-                            ProductBrandId = item.ProductBrandId,
-                            ProductTypeId = item.ProductTypeId,
-                            Rating = item.Rating,
-                            Stock = item.Stock
-                        });
-                    }
-                    context.Products.AddRange(newProducts);
-                }
-
-                if (!context.DeliveryMethods.Any())
-                {
-                    var deliveryData = File.ReadAllText(path + @"/Data/SeedData/delivery.json");
-                    var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryData);
-                    context.DeliveryMethods.AddRange(deliveryMethods);
-                }
-
-                if(context.ChangeTracker.HasChanges()) {
-                    await context.SaveChangesAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                var logger = loggerFactory.CreateLogger<StoreContextSeed>();
-                logger.LogError(ex.Message);
             }
         }
     }

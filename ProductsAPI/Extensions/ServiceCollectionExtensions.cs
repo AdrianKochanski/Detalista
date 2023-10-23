@@ -1,18 +1,12 @@
-using Core.Errors;
-using Core.Interfaces;
-using Infrastructure.Services;
-using Microsoft.AspNetCore.Mvc;
-using StackExchange.Redis;
-
-namespace API.Extensions
+namespace ProductsAPI.Extensions
 {
-    public static class ApplicationServiceExtensions
+    public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddAutoMapper(typeof(MappingProfiles));
             
-            services.AddDbContext<StoreContext>(x =>
+            services.AddDbContext<ProductsContext>(x =>
                 x.UseNpgsql(config.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<DbContext>(x =>
@@ -36,11 +30,9 @@ namespace API.Extensions
             });
 
             services.AddSingleton<IResponseCacheService, ResponseCacheService>();
-            services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<IPaymentService, PaymentService>();
-            services.AddScoped<IBasketRepository, BasketRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork<StoreContext>>();
-            services.AddScoped<IGenericRepositoryFactory, GenericRepositoryFactory<StoreContext>>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork<ProductsContext>>();
+            services.AddScoped<IGenericRepositoryFactory, GenericRepositoryFactory<ProductsContext>>();
             services.Configure<ApiBehaviorOptions>(options => 
             {
                 options.InvalidModelStateResponseFactory = actionContext => 

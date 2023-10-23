@@ -1,4 +1,4 @@
-namespace API.Dtos
+namespace Core.Dtos
 {
     public class ProductToReturnDto
     {

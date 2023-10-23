@@ -2,6 +2,7 @@ export default {
   production: true,
   serviceUrls: {
     apiUrl: 'https://20.108.188.208/', //for fallback controller should be only '/'
+    productsApiUrl: 'https://localhost:7001/',
     authApiUrl: 'https://localhost:7502/',
   },
   crypto: {

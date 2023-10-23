@@ -1,8 +1,4 @@
-using System;
-using System.Linq.Expressions;
-using Core.Entities;
-
-namespace Core.Specifications
+namespace ProductsAPI.Data.Specifications
 {
     public class ProductsWithTypesAndBrandsSpecification : BaseSpecifcation<Product>
     {

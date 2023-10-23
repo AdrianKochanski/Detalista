@@ -2,6 +2,7 @@ export default {
   production: false,
   serviceUrls: {
     apiUrl: 'https://localhost:7000/',
+    productsApiUrl: 'https://localhost:7001/',
     authApiUrl: 'https://localhost:7002/',
   },
   crypto: {

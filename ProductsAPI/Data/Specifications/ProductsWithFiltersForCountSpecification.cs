@@ -1,6 +1,4 @@
-using Core.Entities;
-
-namespace Core.Specifications
+namespace ProductsAPI.Data.Specifications
 {
     public class ProductsWithFiltersForCountSpecification : BaseSpecifcation<Product>
     {

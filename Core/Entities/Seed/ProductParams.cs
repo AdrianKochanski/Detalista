@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Nethereum.Hex.HexTypes;
 
-namespace Core.Entities.Crypto
+namespace Core.Entities.Seed
 {
     public class ProductParams
     {

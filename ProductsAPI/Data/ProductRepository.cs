@@ -1,15 +1,9 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Core.Entities;
-using Core.Interfaces;
-using Microsoft.EntityFrameworkCore;
-
-namespace Infrastructure.Data
+namespace ProductsAPI.Data
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly StoreContext _context;
-        public ProductRepository(StoreContext context)
+        private readonly ProductsContext _context;
+        public ProductRepository(ProductsContext context)
         {
             _context = context;
         }

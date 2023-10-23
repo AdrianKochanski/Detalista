@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Core.Entities.OrderAggregate
+namespace Core.Entities
 {
     public class DeliveryMethod : BaseEntity
     {

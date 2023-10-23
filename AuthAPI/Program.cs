@@ -3,7 +3,6 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 // Configure services
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddSwaggerDocumentation();
 
@@ -33,6 +32,5 @@ app.MapControllers();
 //app.MapFallbackToController("Index", "Fallback");
 
 // On app start
-app.SeedUserWithRole(builder.Environment.IsDevelopment());
-
+await app.SeedUserWithRole(builder.Environment.IsDevelopment());
 await app.RunAsync();

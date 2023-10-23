@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
+    public class GenericRepository<C, T> : IGenericRepository<T> where C: DbContext where T : BaseEntity
     {
-        private readonly StoreContext _context;
-        public GenericRepository(StoreContext context)
+        private readonly C _context;
+        public GenericRepository(C context)
         {
             _context = context;
         }
