@@ -1,6 +1,4 @@
-using System;
-using System.Linq.Expressions;
-using Core.Entities.OrderAggregate;
+using Core.Entities.Orders;
 
 namespace Core.Specifications
 {

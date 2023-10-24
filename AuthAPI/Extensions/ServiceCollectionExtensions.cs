@@ -15,25 +15,7 @@ namespace AuthAPI.Extensions
             });
             
             services.Configure<JwtOptions>(config.GetSection("Token"));
-            
             services.AddScoped<ITokenProvider, TokenProvider>();
-            services.Configure<ApiBehaviorOptions>(options => 
-            {
-                options.InvalidModelStateResponseFactory = actionContext => 
-                {
-                    var errors = actionContext.ModelState
-                        .Where(e => e.Value.Errors.Count > 0)
-                        .SelectMany(x => x.Value.Errors)
-                        .Select(x => x.ErrorMessage).ToArray();
-
-                    var errorResponse = new ApiValidationErrorResponse
-                    {
-                        Errors = errors
-                    };
-
-                    return new BadRequestObjectResult(errorResponse);
-                };
-            });
 
             services.AddDbContext<AppIdentityDbContext>(x =>
                 x.UseNpgsql(config.GetConnectionString("IdentityConnection")));

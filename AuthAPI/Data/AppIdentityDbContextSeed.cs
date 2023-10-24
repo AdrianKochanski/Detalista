@@ -2,7 +2,18 @@ namespace AuthAPI.Identity
 {
     public class AppIdentityDbContextSeed
     {
-        public static async Task SeedUsersAsync(UserManager<AppUser> userManager)
+        public static async Task SeedUserWithRoleAsync(AppIdentityDbContext context, IServiceProvider services, bool isDevelopment, ILoggerFactory loggerFactory)
+        {
+            if (!isDevelopment) return;
+            
+            RoleManager<IdentityRole> roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+            await SeedRolesAsync(roleManager);
+
+            UserManager<AppUser> userManager = services.GetRequiredService<UserManager<AppUser>>();
+            await SeedUsersAsync(userManager);
+        }
+
+        private static async Task SeedUsersAsync(UserManager<AppUser> userManager)
         {
             if(!userManager.Users.Any()){
                 AppUser user = new AppUser{
@@ -28,7 +39,7 @@ namespace AuthAPI.Identity
             }
         }
 
-        public static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
+        private static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
         {
             foreach (Role role in Enum.GetValues(typeof(Role)))
             {

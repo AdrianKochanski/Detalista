@@ -1,7 +1,3 @@
-using Core.Entities.OrderAggregate;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-
 namespace Infrastructure.Data
 {
     public class ProductsContext : ContextBase
@@ -14,5 +10,11 @@ namespace Infrastructure.Data
         public DbSet<ProductBrand> ProductBrands { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<DeliveryMethod> DeliveryMethods {get; set;}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            SetAssembly(Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

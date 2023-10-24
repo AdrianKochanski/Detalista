@@ -3,6 +3,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Configure services
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddApiModelStateValidation();
 builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddSwaggerDocumentation();
 
@@ -10,11 +11,8 @@ builder.Services.AddSwaggerDocumentation();
 // Configure http request pipeline
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
-
 app.UseSwaggerDocumentation(builder.Environment.IsDevelopment());
-
 app.UseStatusCodePagesWithReExecute("/errors/{0}");
-
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
@@ -40,9 +38,6 @@ var services = scope.ServiceProvider;
 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
 try
 {
-    var context = services.GetRequiredService<StoreContext>();
-    await context.Database.MigrateAsync();
-
     var config = new ConfigurationBuilder()
         .AddJsonFile("appsettings.Development.json", optional: false)
         .Build();

@@ -13,8 +13,10 @@ namespace ProductsAPI.Data
             );
         }
 
-        public static async Task SeedAsync(ProductsContext context, ILoggerFactory loggerFactory)
+        public static async Task SeedAsync(ProductsContext context, IServiceProvider services, bool isDevelopment, ILoggerFactory loggerFactory)
         {
+            if (!isDevelopment) return;
+
             try
             {
                 var dataSeed = GetDataSeed();

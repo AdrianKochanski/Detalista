@@ -1,10 +1,4 @@
-using Core.Errors;
-using Core.Interfaces;
-using Infrastructure.Services;
-using Microsoft.AspNetCore.Mvc;
-using StackExchange.Redis;
-
-namespace API.Extensions
+namespace OrdersAPI.Extensions
 {
     public static class ApplicationServiceExtensions
     {
@@ -12,6 +6,12 @@ namespace API.Extensions
         {
             services.AddAutoMapper(typeof(MappingProfiles));
             
+            services.AddDbContext<OrdersContext>(x =>
+                x.UseNpgsql(config.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<DbContext>(x =>
+                x.UseNpgsql(config.GetConnectionString("DefaultConnection")));
+
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>
@@ -30,9 +30,10 @@ namespace API.Extensions
             });
 
             services.AddSingleton<IResponseCacheService, ResponseCacheService>();
-            services.AddScoped<IPaymentService, PaymentService>();
-            services.AddScoped<IBasketRepository, BasketRepository>();
-            
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork<OrdersContext>>();
+            services.AddScoped<IGenericRepositoryFactory, GenericRepositoryFactory<OrdersContext>>();
+
             return services;
         }
     }
