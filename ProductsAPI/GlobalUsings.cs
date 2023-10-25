@@ -13,9 +13,7 @@ global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.Extensions.FileProviders;
 
 global using AutoMapper;
-global using StackExchange.Redis;
 
-global using ProductsAPI.Extensions;
 global using ProductsAPI.Helpers;
 global using ProductsAPI.Data;
 global using ProductsAPI.Interfaces;
@@ -31,6 +29,4 @@ global using Core.Extensions;
 global using Core.Middleware;
 global using Core.Dtos;
 global using Core.Helpers;
-
-global using Infrastructure.Services;
-global using Infrastructure.Data;
+global using Core.Data;

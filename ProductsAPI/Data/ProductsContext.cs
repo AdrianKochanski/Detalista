@@ -1,4 +1,4 @@
-namespace Infrastructure.Data
+namespace ProductsAPI.Data
 {
     public class ProductsContext : ContextBase
     {

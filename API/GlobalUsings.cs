@@ -8,12 +8,6 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.FileProviders;
 global using Microsoft.Extensions.Logging;
 
-global using API.Extensions;
-global using API.Helpers;
-
 global using Core.Controllers;
-global using Core.Dtos;
 global using Core.Extensions;
 global using Core.Middleware;
-
-global using Infrastructure.Data;

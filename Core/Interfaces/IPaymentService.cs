@@ -1,4 +1,4 @@
-using Core.Entities;
+using Core.Entities.Basket;
 using Core.Entities.Orders;
 
 namespace Core.Interfaces

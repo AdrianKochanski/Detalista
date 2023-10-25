@@ -61,7 +61,7 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
 
     try {
       const createOrder: Order = await this.createOrder(basket);
-      await this.confirmPaymentWithStripe(basket.clientSecret, `${configuration.serviceUrls.apiUrl}orders/${createOrder.id}`);
+      await this.confirmPaymentWithStripe(basket.clientSecret, `${configuration.serviceUrls.clientUrl}orders/${createOrder.id}`);
       this.basketService.deleteBasket(basket);
       const navigationExtras: NavigationExtras = {state: createOrder};
       this.router.navigate(['checkout/success'], navigationExtras);
@@ -157,7 +157,7 @@ export class CheckoutPaymentComponent implements OnInit, OnDestroy {
     const result = await this.stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: returnUrl ? returnUrl : `${configuration.serviceUrls.apiUrl}orders`,
+        return_url: returnUrl ? returnUrl : `${configuration.serviceUrls.clientUrl}orders`,
         payment_method_data: {
           billing_details: {
             name: nameOnCard

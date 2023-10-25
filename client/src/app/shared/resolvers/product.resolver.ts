@@ -35,6 +35,7 @@ export class ProductResolver implements Resolve<{product: Product, quantityInBas
         map(basket => {
           if(basket && basket.items) {
             const item = basket.items.find(x => x.id == id);
+            console.log(p);
 
             if(item && !isCrypto) {
               return {

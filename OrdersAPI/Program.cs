@@ -2,8 +2,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Configure services
 builder.Services.AddControllers();
-builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.AddApiModelStateValidation();
+
+builder.Services.AddAutoMapper(typeof(MappingProfiles));
+builder.Services.AddDbContext<OrdersContext>(x => x.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<DbContext>(x => x.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork<OrdersContext>>();
+builder.Services.AddScoped<IGenericRepositoryFactory, GenericRepositoryFactory<OrdersContext>>();
+
+builder.Services.AddCorsWithOrigin("CorsPolicy", "https://localhost:4200");
+builder.Services.ConnectToRedis(builder.Configuration.GetConnectionString("Redis")).WithRedisCache();
+builder.Services.AddExceptionHandling();
 builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddSwaggerDocumentation();
 

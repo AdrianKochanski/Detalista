@@ -13,11 +13,11 @@ export class CheckoutService {
   constructor(private http: HttpClient) { }
 
   createOrder(order: OrderToCreate) : Observable<Order>{
-    return this.http.post<Order>(configuration.serviceUrls.apiUrl + 'api/orders', order);
+    return this.http.post<Order>(configuration.serviceUrls.ordersApiUrl + 'api/orders', order);
   }
 
   getDeliveryMethods() {
-    return this.http.get(configuration.serviceUrls.apiUrl + 'api/orders/deliveryMethods').pipe(
+    return this.http.get(configuration.serviceUrls.ordersApiUrl + 'api/orders/deliveryMethods').pipe(
       map((dm: DeliveryMethod[]) => {
         return dm.sort((a, b) => b.price - a.price);
       })

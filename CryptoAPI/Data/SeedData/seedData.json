@@ -1,0 +1,282 @@
+{
+  "Brands": [
+    {
+      "Id": 1,
+      "Name": "NVIDIA"
+    },
+    {
+      "Id": 2,
+      "Name": "Dynalite"
+    },
+    {
+      "Id": 3,
+      "Name": "Viewsonic"
+    },
+    {
+      "Id": 4,
+      "Name": "Neurotech"
+    },
+    {
+      "Id": 5,
+      "Name": "Apple"
+    },
+    {
+      "Id": 6,
+      "Name": "Hatchimals"
+    }
+  ],
+  "Types": [
+    {
+      "Id": 1,
+      "Name": "Electronics"
+    },
+    {
+      "Id": 2,
+      "Name": "Wearable"
+    },
+    {
+      "Id": 3,
+      "Name": "Entertainment"
+    },
+    {
+      "Id": 4,
+      "Name": "Useful"
+    }
+  ],
+  "Products": [
+    {
+      "Id": 1,
+      "Name": "Screwdriver",
+      "Description": "The impact drill is very comfortable and easy to use thanks to its low weight and compact, ergonomic design. Enables comfortable, accurate drilling in masonry, wood, soft concrete and metal.\r\nThe double-sleeve keyless chuck enables quick and easy bit changes with a simple twist of the drill shank.\r\nThe ergonomically designed machine is lightweight at just 1.7 kg, and its compactness allows trouble-free overhead drilling.\r\nThe powerful 1370W motor guarantees reliable results in a variety of materials, allowing drilling depths of up to 16 mm in masonry and up to 25 mm in wood.",
+      "Price": 200,
+      "Eth": "0.99",
+      "PictureUrl": "images/products/screwdriver.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmPC96TUuCRZthBo3U3subAZtxBsyZAaKWfYL1JX9ZbqaD",
+      "ProductTypeId": 4,
+      "ProductBrandId": 4,
+      "Stock": 100,
+      "Rating": 3
+    },
+    {
+      "Id": 2,
+      "Name": "Laptop",
+      "Description": "The Lenovo ThinkPad T440 is a professional notebook designed for everyday work both in and out of the office. The laptop is equipped with a 14.1-inch screen, it also has a trackpoint and an optical drive. The biggest advantages of the computer include: subdued, business style, solid construction, comfortable keyboard, good quality matrix.",
+      "Price": 150,
+      "Eth": "0.49",
+      "PictureUrl": "images/products/laptop.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmWuSYW6fK2M7GrEy6ftNMazwpC34F8srJQrfU3HUi8WRW",
+      "ProductTypeId": 1,
+      "ProductBrandId": 1,
+      "Stock": 100,
+      "Rating": 5
+    },
+    {
+      "Id": 3,
+      "Name": "Shoes",
+      "Description": "Elegant shoes in a classic color. The insole is made of natural leather. The classic model, made of the highest quality materials, will ensure comfort during everyday walking. The best materials combine to give a practical shoe for every day. Shoes catch the eye with an interesting and fashionable cut.",
+      "Price": 180,
+      "Eth": "0.84",
+      "PictureUrl": "images/products/shoes.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmbyR9MBCFXSDpNMmxVKWZJkoGqhEuFG9wGhpLWUStKvRm",
+      "ProductTypeId": 2,
+      "ProductBrandId": 2,
+      "Stock": 100,
+      "Rating": 4
+    },
+    {
+      "Id": 4,
+      "Name": "Watch",
+      "Description": "Wristband for those who want to control the most important heart measurements, such as blood pressure and heart rate, and at the same time want to have a fashionable wristband with watch functions such as date, time, etc. In addition, there are modern functions such as sleep monitoring, pedometer, SMS and incoming call notifications. These are just some of the features of the smartband, the rest are listed below in the offer. It is a men's watch, also a good choice for athletes and people who want to control their daily activities. The band has e.g. functions measuring heart rate, number of steps, distance traveled or measuring calories burned, which will help us achieve our daily goals. The band is extremely comfortable to wear, the profiled rubber band fits perfectly on the wrist.",
+      "Price": 300,
+      "Eth": "0.77",
+      "PictureUrl": "images/products/watch.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmfA27FWqHnX1WuCPpmm89dW9fsgtkfo9b6DeuGjLhsesw",
+      "ProductTypeId": 1,
+      "ProductBrandId": 5,
+      "Stock": 100,
+      "Rating": 5
+    },
+    {
+      "Id": 5,
+      "Name": "Phone",
+      "Description": "Apple iPhone 12 64 GB is an excellent smartphone that, despite the passage of years from its premiere, still stands out with its performance and functionality. Equally important, it impresses with its design. Before being put up for sale, it has been subjected to stringent tests, which means that its technical condition remains excellent.",
+      "Price": 250,
+      "Eth": "0.11",
+      "PictureUrl": "images/products/phone.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmTeHQ9oyXSZVeJdkFXm2zXz6XpTGJn6hgxCBdG4su1zHL",
+      "ProductTypeId": 1,
+      "ProductBrandId": 5,
+      "Stock": 100,
+      "Rating": 4
+    },
+    {
+      "Id": 6,
+      "Name": "Toy",
+      "Description": "Who wouldn't want a car like this in the garage? Sports cars evoke emotions, and the group of lovers of such vehicles is still growing. By the way, it is also an encouragement to learn about the history of the automotive industry and develop passion among our children. The Lamborghini Sian is a beautiful car. This model was produced under license with the dedication of details and characteristic elements of the vehicle. Model made in 1:40 scale.",
+      "Price": 120,
+      "Eth": "0.44",
+      "PictureUrl": "images/products/carToy.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmUVde6GTwJLGRgFzRoppNs5ghCrSZiN3sab7Q2K4YHJZU",
+      "ProductTypeId": 3,
+      "ProductBrandId": 6,
+      "Stock": 100,
+      "Rating": 3
+    },
+    {
+      "Id": 7,
+      "Name": "Necklace",
+      "Description": "Wolf school medallion from the popular Netflix series The Witcher. The perfect gift for fans of Geralt of Rivia. The medallion is made of stainless steel. Solid and heavy. Perfectly reproduced, it will please every admirer of Andrzej Sapkowski's prose. Each necklace is shipped in a beautiful leather pouch. The medallion looks great, so I encourage you to buy it!",
+      "Price": 10,
+      "Eth": "0.75",
+      "PictureUrl": "images/products/wolfNecklace.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmVQX3H2PbabeskX4rpCGbBdyGtfGdUcuanpf4Bh8nmm8Q",
+      "ProductTypeId": 2,
+      "ProductBrandId": 3,
+      "Stock": 100,
+      "Rating": 5
+    },
+    {
+      "Id": 8,
+      "Name": "Medieval armor",
+      "Description": "This unique replica is modeled on the 16th century knight's armour. The armor was made of high-carbon Toledan steel (polished and engraved). Individual elements are disconnected. The whole is mounted on a wooden base and looks very impressive. The replica of the copy and the shield is part of the set. The armor is made entirely by hand by first-class armorers from Toledo.",
+      "Price": 8,
+      "Eth": "0.68",
+      "PictureUrl": "images/products/armor.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmYABTJtvyijbRxHw584YWujd5oexsRfTkkJkEXmvwqoSw",
+      "ProductTypeId": 2,
+      "ProductBrandId": 4,
+      "Stock": 100,
+      "Rating": 4
+    },
+    {
+      "Id": 9,
+      "Name": "Gloves",
+      "Description": "Wear-resistant and enhanced grip - the gloves are made of high-quality goatskin. The goat leather on the surface of the palm retains good abrasion resistance and grip, ideal for a motorcycle, bicycle. Stable and protective - Motorcycle gloves are very stable and have good protectors that protect your hands well. They line the joints of the fingers very well. The TPR pad provides additional wrist protection, reduces hand vibrations. Good mobility - Thanks to the Velcro fastening, you can adjust the size to your own comfort. This greatly improves the comfort of the glove and is ideal for motorcycles, snowmobiles and other winter sports.",
+      "Price": 15,
+      "Eth": "0.23",
+      "PictureUrl": "images/products/gloves.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmV9JSyZKbUDQ6dgGVqqashVvWZuTRXYW6xFezxJYSFhaZ",
+      "ProductTypeId": 2,
+      "ProductBrandId": 2,
+      "Stock": 100,
+      "Rating": 5
+    },
+    {
+      "Id": 10,
+      "Name": "Winter glasses",
+      "Description": "The glasses are designed with an adjustable elastic band, which can softly fit your head and increase flexibility, so it is not easy to deform or break. The length of the strap can be adjusted according to your needs, which prevents the glasses from falling off and is comfortable to wear. The glasses are versatile and can be used as winter outdoor accessories for motorcycling, road racing, skiing, hiking and other activities, so you can enjoy the fun of sports.",
+      "Price": 18,
+      "Eth": "0.51",
+      "PictureUrl": "images/products/glasses.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmcQdC3TfrLfmswymSxqesuhk6BDNkbommoFaawUEhroh7",
+      "ProductTypeId": 4,
+      "ProductBrandId": 3,
+      "Stock": 100,
+      "Rating": 5
+    },
+    {
+      "Id": 11,
+      "Name": "Damascus knife",
+      "Description": "Made from premium Damascus steel, these knives are durable, sharp and perfect for slicing and chopping. In addition, they come in different sizes, so you can find the perfect one for you. Introducing our Japanese Knife Set! These knives are perfect for any kitchen and will certainly make your cooking easier. They are comfortable to hold and sharp, making them easy to use. The blade has undergone multiple hardening, making it hard and much more resistant to dulling than standard knives. The multi-layer steel from which the knives are made makes the structure of the different layers of each knife very durable and flexible. The blade is engraved with a Damascus style pattern.",
+      "Price": 15,
+      "Eth": "0.9",
+      "PictureUrl": "images/products/knife.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmUWexxa7CvDMxqv3ihmBoAaW5HYD8jbepztt9R2Ba5UVx",
+      "ProductTypeId": 4,
+      "ProductBrandId": 2,
+      "Stock": 100,
+      "Rating": 4
+    },
+    {
+      "Id": 12,
+      "Name": "Play station",
+      "Description": "Be amazed by the amazing graphics and discover the new PS5 features. Simulation of individual light rays creates realistic shadows and reflections in PS5-enabled games, further immersing players in the virtual world. With support for 120Hz refresh rates on 4K displays in select games, you can experience smooth gameplay at up to 120 frames per second.",
+      "Price": 16,
+      "Eth": "1.1",
+      "PictureUrl": "images/products/playStation.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmSytrgoWmMCgpZ8MJqcVRCQjS1tbPMNsQpiTyRD13mq61",
+      "ProductTypeId": 3,
+      "ProductBrandId": 6,
+      "Stock": 100,
+      "Rating": 3
+    },
+    {
+      "Id": 13,
+      "Name": "Lighter",
+      "Description": "USB lighter \"Smart fire 707\" with 2 Arches Touch Control is a modern solution in a classic form. It is a new generation lighter with double closed plasma arcs. All metal lighter. The system automatically turns off when the case is closed. The LED light on the side lights up during operation and creates a breathtaking visual effect. The lighter can be used even in very difficult weather conditions in the wind and rain.",
+      "Price": 14,
+      "Eth": "0.6",
+      "PictureUrl": "images/products/lighter.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmZ9SRxgVk2rUoQBzRimMKmLAPapDocEiBgw3o2frHaH7g",
+      "ProductTypeId": 4,
+      "ProductBrandId": 3,
+      "Stock": 100,
+      "Rating": 2
+    },
+    {
+      "Id": 14,
+      "Name": "Electric scooter",
+      "Description": "Equipped with a 700W electric motor, the XI-700pro accelerates to 30 km/h in seconds. The high-quality 36V/7.8Ah battery has a range of up to 30 kilometers. Thanks to the intelligent fast charging system, the scooter is already 80% charged after 30 minutes. Increased range through energy recovery. The integrated recuperation system uses braking or downhill energy to recharge the battery. Using the app, you can change the scooter settings (such as maximum speed, anti-theft, energy saving mode). The scooter also has an LED headlight, brake light, turn signal, phone holder and bell.",
+      "Price": 250,
+      "Eth": "0.15",
+      "PictureUrl": "images/products/scooter.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmcymQUVY5DHs2fnPSb9Y689pcwSovyxW5wUp6umt4RNTt",
+      "ProductTypeId": 1,
+      "ProductBrandId": 2,
+      "Stock": 100,
+      "Rating": 4
+    },
+    {
+      "Id": 15,
+      "Name": "Mattress",
+      "Description": "Anti-allergic with a membrane structure, it was made of the highest quality hypoallergenic materials of the first grade, ensuring exceptional softness, freshness and extraordinary comfort and satisfaction from its use. The cover has a sewn-in zipper that allows it to be easily removed for washing. Fluffy, soft, resilient and durable synthetic non-woven fabric has anti-allergic properties, is airy and does not absorb moisture.",
+      "Price": 189.99,
+      "Eth": "0.45",
+      "PictureUrl": "images/products/mattress.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmYiGVKtDzEyKVEHpRaLNTmx4cSHzLKuaCucHFY5uqS4WP",
+      "ProductTypeId": 4,
+      "ProductBrandId": 4,
+      "Stock": 100,
+      "Rating": 5
+    },
+    {
+      "Id": 16,
+      "Name": "Motor helmet",
+      "Description": "Ergonomic, modern helmet with homologation. Size \"XS\" (53-54cm) - Colour: Black Mat, Weight: 1100g (±) 50g. It has ECE R22-05 approval. Execution standard E13 meeting ECE-EUROPE and DOT/SNELL-USA. Equipped with sunglasses (blenda) - a perfect solution on sunny days. Convenient jaw lifting system with a visible button on the front of the jaw. Air intakes in the jaw as well as the front part of the helmet.",
+      "Price": 199.99,
+      "Eth": "0.33",
+      "PictureUrl": "images/products/helmet.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmdEzqFFYtv6YgffqVckpybSEus1cccFKeb2VBkEhF85Le",
+      "ProductTypeId": 2,
+      "ProductBrandId": 3,
+      "Stock": 100,
+      "Rating": 3
+    },
+    {
+      "Id": 17,
+      "Name": "Bike",
+      "Description": "Rift Zone is our most speed-oriented MultiTrac Suspension bike, built for riders looking for speed and rolling capability with 29er wheels for fast trail riding. The long, low and progressive geometry is more aggressive than an XC race bike, giving you more control at top speed and more fun breaking seconds.",
+      "Price": 150,
+      "Eth": "0.25",
+      "PictureUrl": "images/products/bike.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmZboFjxFSY6Xuu8SgGo7TL6YjMTWCcwJvystwUCfvdLmW",
+      "ProductTypeId": 3,
+      "ProductBrandId": 3,
+      "Stock": 100,
+      "Rating": 5
+    },
+    {
+      "Id": 18,
+      "Name": "RTX 3090 Ti",
+      "Description": "The Gigabyte GeForce RTX 3090 Ti Gaming OC 24G is a card that is a dream come true for all gamers. It offers the absolute highest performance available to keep every game and every demanding program running perfectly smooth. This is the most powerful card in the Ampere family from NVIDIA. The Gigabyte GeForce RTX 3090 Ti Gaming OC 24G graphics card allows you to play even the most demanding games with maximum details and very high resolution. The computing power of this system has been selected in such a way as to offer the ability to play in 8K resolution while maintaining a refresh rate above 60 frames per second. This is the graphics card of the future.",
+      "Price": 180,
+      "Eth": "1",
+      "PictureUrl": "images/products/rtx3090ti.jpeg",
+      "Ipfs": "http://ipfs.io/ipfs/QmTrqR7DYLkQobS2HM2zMHEsmGnC8dq5AxpbbUBaNCJ1oe",
+      "ProductTypeId": 1,
+      "ProductBrandId": 1,
+      "Stock": 100,
+      "Rating": 4
+    }
+  ]
+}

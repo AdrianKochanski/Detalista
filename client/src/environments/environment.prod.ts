@@ -1,9 +1,13 @@
 export default {
   production: true,
   serviceUrls: {
-    apiUrl: 'https://20.108.188.208/', //for fallback controller should be only '/'
-    productsApiUrl: 'https://localhost:7001/',
-    authApiUrl: 'https://localhost:7502/',
+    clientUrl: 'https://20.108.188.208/', //for fallback controller should be only '/' ???
+    paymentsApiUrl: 'https://localhost:7000/', //for fallback controller should be only '/'
+    productsApiUrl: 'https://localhost:7001/', //for fallback controller should be only '/'
+    authApiUrl: 'https://localhost:7002/', //for fallback controller should be only '/'
+    ordersApiUrl: 'https://localhost:7003/', //for fallback controller should be only '/'
+    cryptoApiUrl: 'https://localhost:7004/', //for fallback controller should be only '/'
+    basketApiUrl: 'https://localhost:7005/' //for fallback controller should be only '/'
   },
   crypto: {
     31337: {

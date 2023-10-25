@@ -1,9 +1,13 @@
 export default {
   production: false,
   serviceUrls: {
-    apiUrl: 'https://localhost:7000/',
+    clientUrl: 'https://localhost:4200/',
+    paymentsApiUrl: 'https://localhost:7000/',
     productsApiUrl: 'https://localhost:7001/',
     authApiUrl: 'https://localhost:7002/',
+    ordersApiUrl: 'https://localhost:7003/',
+    cryptoApiUrl: 'https://localhost:7004/',
+    basketApiUrl: 'https://localhost:7005/'
   },
   crypto: {
     31337: {

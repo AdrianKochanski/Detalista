@@ -1,5 +1,7 @@
 using System.Text;
 using Core.Errors;
+using Core.Interfaces;
+using Core.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
 
 namespace Core.Extensions
 {
@@ -35,7 +38,40 @@ namespace Core.Extensions
             return services;
         }
 
-        public static IServiceCollection AddApiModelStateValidation(this IServiceCollection services)
+        public static IServiceCollection ConnectToRedis(this IServiceCollection services, string connectionString)
+        {
+            services.AddSingleton<IConnectionMultiplexer>(c => {
+                return ConnectionMultiplexer.Connect(
+                    ConfigurationOptions.Parse(
+                        connectionString,
+                        true
+                    )
+                );
+            });
+
+            return services;
+        }
+
+        public static IServiceCollection WithRedisCache(this IServiceCollection services)
+        {
+            services.AddSingleton<IResponseCacheService, ResponseCacheService>();
+            return services;
+        }
+
+        public static IServiceCollection AddCorsWithOrigin(this IServiceCollection services, string policyName, string origin)
+        {
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy(policyName, policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(origin);
+                });
+            });
+
+            return services;
+        }
+
+        public static IServiceCollection AddExceptionHandling(this IServiceCollection services)
         {
             services.Configure<ApiBehaviorOptions>(options => 
             {

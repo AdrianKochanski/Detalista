@@ -44,14 +44,14 @@ export class CryptoShopService extends ShopServiceBase {
     }
 
     this.getCachedBrands(() => {
-      return this.http.get<ProductBrand[]>(configuration.serviceUrls.apiUrl + 'api/crypto/brands');
+      return this.http.get<ProductBrand[]>(configuration.serviceUrls.cryptoApiUrl + 'api/crypto/brands');
     }).subscribe(() => {
     }, error => {
       console.log(error);
     });
 
     this.getCachedTypes(() => {
-      return this.http.get<ProductType[]>(configuration.serviceUrls.apiUrl + 'api/crypto/types');
+      return this.http.get<ProductType[]>(configuration.serviceUrls.cryptoApiUrl + 'api/crypto/types');
     }).subscribe(() => {
     }, error => {
       console.log(error);
@@ -79,7 +79,7 @@ export class CryptoShopService extends ShopServiceBase {
           params = params.append("pageIndex", shopParams.pageNumber.toString());
           params = params.append("pageSize", shopParams.pageSize.toString());
 
-          return this.http.get<IPagination>(configuration.serviceUrls.apiUrl + 'api/crypto', {observe: 'response', params}).pipe(map(r => r.body));
+          return this.http.get<IPagination>(configuration.serviceUrls.cryptoApiUrl + 'api/crypto', {observe: 'response', params}).pipe(map(r => r.body));
         },
         shopParams,
         true
@@ -97,13 +97,11 @@ export class CryptoShopService extends ShopServiceBase {
   getProduct(id: number) {
     return this.getCachedProduct(
       (id: number) => {
-        return this.http.get<Product>(`${configuration.serviceUrls.apiUrl}api/crypto/${id}`);
+        return this.http.get<Product>(`${configuration.serviceUrls.cryptoApiUrl}api/crypto/${id}`);
       },
       id
     );
   }
-
-
 
   buyItem(product: Product): Observable<ContractTransaction> {
     return this.loadDappazonContract(false).pipe(
