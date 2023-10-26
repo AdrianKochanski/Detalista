@@ -1,91 +1,86 @@
+using Core.Models.Orders.Dtos;
+
 namespace PaymentsAPI.Services
 {
     public class PaymentService : IPaymentService
     {
-        //private readonly IBasketRepository _basketRepository;
-        //private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _config;
 
-        public PaymentService(/*IBasketRepository basketRepository, IUnitOfWork unitOfWork, */IConfiguration config)
+        private readonly IBasketAPIService _basketAPIService;
+        private readonly IProductsAPIService _productsAPIService;
+        private readonly IOrdersAPIService _ordersAPIService;
+
+        public PaymentService(IBasketAPIService basketAPIService, IProductsAPIService productsAPIService, IOrdersAPIService ordersAPIService)
         {
-            _config = config;
-            //_basketRepository = basketRepository;
-            //_unitOfWork = unitOfWork;
+            _basketAPIService = basketAPIService;
+            _productsAPIService = productsAPIService;
+            _ordersAPIService = ordersAPIService;
         }
 
-        public async Task<CustomerBasket> CreateOrUpdatePaymentIntent(string basketId)
+        public async Task<CustomerBasketDto> CreateOrUpdatePaymentIntent(string basketId)
         {
-            // StripeConfiguration.ApiKey = _config["StripeSettings:SecretKey"];
+            StripeConfiguration.ApiKey = _config["StripeSettings:SecretKey"];
 
-            // CustomerBasket basket = await _basketRepository.GetBasketAsync(basketId);
-            // if(basket == null) return null;
+            // Basket Service
+            CustomerBasketDto basket = await _basketAPIService.GetBasketAsync(basketId);
+            if(basket == null) return null;
 
-            // decimal shippingPrice = 0m;
+            decimal shippingPrice = 0m;
 
-            // if(basket.DeliveryMethodId.HasValue) 
-            // {
-            //     var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(basket.DeliveryMethodId.Value);
-            //     shippingPrice = deliveryMethod.Price;
-            // }
+            if(basket.DeliveryMethodId.HasValue)
+            {
+                // Order Service
+                var deliveryMethod = await _ordersAPIService.GetDeliveryMethod(basket.DeliveryMethodId.Value);
+                shippingPrice = deliveryMethod.Price;
+            }
 
-            // foreach(var item in basket.Items)
-            // {
-            //     var product = await _unitOfWork.Repository<Product>().GetByIdAsync(item.Id);
+            foreach(var item in basket.Items)
+            {
+                // Product Service
+                var product = await _productsAPIService.GetProduct(item.Id);
 
-            //     if(item.Price != product.Price)
-            //     {
-            //         item.Price = product.Price;
-            //     }
-            // }
+                if(item.Price != product.Price)
+                {
+                    item.Price = product.Price;
+                }
+            }
 
-            // var service = new PaymentIntentService();
-            // PaymentIntent intent;
+            var service = new PaymentIntentService();
+            PaymentIntent intent;
 
-            // if(string.IsNullOrEmpty(basket.PaymentIntentId))
-            // {
-            //     var options = new PaymentIntentCreateOptions()
-            //     {
-            //         Amount = (long)basket.Items.Sum(i => i.Quantity * (i.Price * 100)) + (long)shippingPrice * 100,
-            //         Currency = "pln",
-            //         AutomaticPaymentMethods = new PaymentIntentAutomaticPaymentMethodsOptions {
-            //             Enabled = true,
-            //         }
-            //     };
-            //     intent = await service.CreateAsync(options);
-            //     basket.PaymentIntentId = intent.Id;
-            //     basket.ClientSecret = intent.ClientSecret;
-            // }
-            // else 
-            // {
-            //     var options = new PaymentIntentUpdateOptions()
-            //     {
-            //         Amount = (long)basket.Items.Sum(i => i.Quantity * (i.Price * 100)) + (long)shippingPrice * 100
-            //     };
-            //     await service.UpdateAsync(basket.PaymentIntentId, options);
-            // }
+            if(string.IsNullOrEmpty(basket.PaymentIntentId))
+            {
+                var options = new PaymentIntentCreateOptions()
+                {
+                    Amount = (long)basket.Items.Sum(i => i.Quantity * (i.Price * 100)) + (long)shippingPrice * 100,
+                    Currency = "pln",
+                    AutomaticPaymentMethods = new PaymentIntentAutomaticPaymentMethodsOptions {
+                        Enabled = true,
+                    }
+                };
+                intent = await service.CreateAsync(options);
+                basket.PaymentIntentId = intent.Id;
+                basket.ClientSecret = intent.ClientSecret;
+            }
+            else 
+            {
+                var options = new PaymentIntentUpdateOptions()
+                {
+                    Amount = (long)basket.Items.Sum(i => i.Quantity * (i.Price * 100)) + (long)shippingPrice * 100
+                };
+                await service.UpdateAsync(basket.PaymentIntentId, options);
+            }
 
-            // await _basketRepository.UpdateBasketAsync(basket);
+            // Basket Service
+            await _basketAPIService.UpdateBasket(basket);
 
-            // return basket;
-            return await Task.FromResult(new CustomerBasket());
+            return basket;
         }
 
-        public async Task<Order> UpdateOrderPaymentStatus(string paymentIntentId, OrderStatus newPaymentStatus)
+        public async Task<OrderToReturnDto> UpdateOrderPaymentStatus(string paymentIntentId, OrderStatus newPaymentStatus)
         {
-            // var spec = new OrderByPaymentIntentIdSpecification(paymentIntentId);
-            // Order order = await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
-
-            // if(order == null)
-            // {
-            //     return null;
-            // }
-
-            // order.Status = newPaymentStatus;
-            // await _unitOfWork.Complete();
-
-            // return order;
-
-            return await Task.FromResult(new Order());
+            OrderToReturnDto order = await _ordersAPIService.UpdateOrderPaymentStatus(paymentIntentId, newPaymentStatus);
+            return order;
         }
     }
 }

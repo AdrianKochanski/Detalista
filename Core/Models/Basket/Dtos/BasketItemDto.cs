@@ -1,4 +1,6 @@
-namespace BasketAPI.Models.Dtos
+using System.ComponentModel.DataAnnotations;
+
+namespace Core.Models.Basket.Dtos
 {
     public class BasketItemDto
     {

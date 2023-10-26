@@ -1,7 +1,7 @@
 using Core.Data.Specifications;
 using Core.Models;
 
-namespace Core.Interfaces
+namespace Core.Data.Interfaces
 {
     public interface IGenericRepository<T> where T : BaseEntity
     {

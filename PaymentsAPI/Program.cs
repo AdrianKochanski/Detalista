@@ -2,7 +2,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Configure services
 builder.Services.AddControllers();
-builder.Services.AddCorsWithOrigin("CorsPolicy", "https://localhost:4200");
+
+builder.Services.AddHttpApiClient<IBasketAPIService, BasketAPIService>(builder.Configuration);
+builder.Services.AddHttpApiClient<IProductsAPIService, ProductsAPIService>(builder.Configuration);
+builder.Services.AddHttpApiClient<IOrdersAPIService, OrdersAPIService>(builder.Configuration);
+
+builder.Services.AddCorsWithOrigin("CorsPolicy", builder.Configuration[$"ServiceUrls:ClientUrl"]);
 builder.Services.ConnectToRedis(builder.Configuration.GetConnectionString("Redis")).WithRedisCache();
 builder.Services.AddExceptionHandling();
 builder.Services.AddAuthentication(builder.Configuration);

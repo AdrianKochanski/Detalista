@@ -1,4 +1,4 @@
-namespace OrdersAPI.Models.Dtos
+namespace Core.Models.Orders.Dtos
 {
     public class OrderItemDto
     {

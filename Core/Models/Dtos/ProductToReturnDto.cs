@@ -1,8 +1,7 @@
 namespace Core.Models.Dtos
 {
-    public class ProductToReturnDto
+    public class ProductToReturnDto : BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }

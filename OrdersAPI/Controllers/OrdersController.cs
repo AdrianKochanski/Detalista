@@ -32,6 +32,14 @@ namespace OrdersAPI.Controllers
             return Ok(_mapper.Map<OrderToReturnDto>(order));
         }
 
+        [Authorize(Roles="OrderPaymentService")]
+        [HttpPatch("updateOrderPaymentStatus/{paymentIntentId}")]
+        public async Task<ActionResult<OrderToReturnDto>> UpdateOrderPaymentStatus(string paymentIntentId, [FromBody] OrderStatus newPaymentStatus)
+        {
+            Order order = await _orderService.UpdateOrderPaymentStatus(paymentIntentId, newPaymentStatus);
+            return Ok(_mapper.Map<OrderToReturnDto>(order));
+        }
+
         [Cached(600)]
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrdersForUser() 
@@ -62,6 +70,13 @@ namespace OrdersAPI.Controllers
         public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethods()
         {
             return Ok(await _orderService.GetDeliveryMethodsAsync());
+        }
+
+        [Cached(600)]
+        [HttpGet("deliveryMethod/{id}")]
+        public async Task<ActionResult<DeliveryMethod>> GetDeliveryMethod(int id)
+        {
+            return Ok(await _orderService.GetDeliveryMethodByIdAsync(id));
         }
     }
 }

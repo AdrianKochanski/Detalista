@@ -1,6 +1,6 @@
 using System.Text;
 using Core.Models.Errors;
-using Core.Interfaces;
+using Core.Data.Interfaces;
 using Core.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
+using Core.Services.Interfaces;
 
 namespace Core.Extensions
 {
@@ -35,6 +36,18 @@ namespace Core.Extensions
                     };
                 });
 
+            return services;
+        }
+
+        public static IServiceCollection AddHttpApiClient<TService, TImplementation>(this IServiceCollection services, IConfiguration config)
+        where TService : class
+        where TImplementation : class, TService
+        {
+            services.AddScoped<TService, TImplementation>();
+
+            string uriPath = $"ServiceUrls:{nameof(TImplementation)}";
+            string uri = config[uriPath];
+            services.AddHttpClient<TImplementation>(u => u.BaseAddress = new Uri(uri));
             return services;
         }
 

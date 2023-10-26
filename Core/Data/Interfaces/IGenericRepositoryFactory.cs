@@ -1,6 +1,6 @@
 using Core.Models;
 
-namespace Core.Interfaces
+namespace Core.Data.Interfaces
 {
     public interface IGenericRepositoryFactory
     {

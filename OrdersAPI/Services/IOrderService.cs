@@ -6,5 +6,7 @@ namespace OrdersAPI.Services
         Task<IReadOnlyList<Order>> GetOrdersForUserAsync(string buyerEmail);
         Task<Order> GetOrderByIdAsync(int id, string buyerEmail);
         Task<IReadOnlyList<DeliveryMethod>> GetDeliveryMethodsAsync();
+        Task<DeliveryMethod> GetDeliveryMethodByIdAsync(int id);
+        Task<Order> UpdateOrderPaymentStatus(string paymentIntentId, OrderStatus newPaymentStatus);
     }
 }

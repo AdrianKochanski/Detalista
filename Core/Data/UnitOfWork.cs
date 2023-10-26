@@ -1,6 +1,6 @@
 using System.Collections;
 using Core.Models;
-using Core.Interfaces;
+using Core.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Data

@@ -45,9 +45,9 @@ namespace PaymentsAPI.Controllers
 
         [Authorize]
         [HttpPost("{basketId}")]
-        public async Task<ActionResult<CustomerBasket>> CreateOrUpdatePaymentIntent(string basketId)
+        public async Task<ActionResult<CustomerBasketDto>> CreateOrUpdatePaymentIntent(string basketId)
         {
-            CustomerBasket basket = await _paymentService.CreateOrUpdatePaymentIntent(basketId);
+            CustomerBasketDto basket = await _paymentService.CreateOrUpdatePaymentIntent(basketId);
 
             if(basket == null) 
             {
@@ -66,7 +66,7 @@ namespace PaymentsAPI.Controllers
             var stripeEvent = EventUtility.ConstructEvent(json, signatureHeader, _whSecret);
 
             PaymentIntent intent;
-            Order order;
+            OrderToReturnDto order;
 
             switch(stripeEvent.Type)
             {

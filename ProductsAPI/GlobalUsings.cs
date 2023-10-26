@@ -22,7 +22,7 @@ global using ProductsAPI.Data.Specifications;
 global using Core.Controllers;
 global using Core.Models.Errors;
 global using Core.Data.Specifications;
-global using Core.Interfaces;
+global using Core.Data.Interfaces;
 global using Core.Models;
 global using Core.Models.Seed;
 global using Core.Extensions;

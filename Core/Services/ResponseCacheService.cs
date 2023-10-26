@@ -1,5 +1,5 @@
 using System.Text.Json;
-using Core.Interfaces;
+using Core.Services.Interfaces;
 using StackExchange.Redis;
 
 namespace Core.Services

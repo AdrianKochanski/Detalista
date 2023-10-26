@@ -1,8 +1,7 @@
-namespace OrdersAPI.Models.Dtos
+namespace Core.Models.Orders.Dtos
 {
-    public class OrderToReturnDto
+    public class OrderToReturnDto : BaseEntity
     {
-        public int Id {get; set;}
         public string BuyerEmail {get; set;}
         public DateTimeOffset OrderDate {get; set;}
         public Address ShipToAddress {get; set;}

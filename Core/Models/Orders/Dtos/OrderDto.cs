@@ -1,5 +1,7 @@
 
-namespace OrdersAPI.Models.Dtos
+using Core.Models.Dtos;
+
+namespace Core.Models.Orders.Dtos
 {
     public class OrderDto
     {

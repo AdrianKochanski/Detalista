@@ -11,7 +11,7 @@ global using Core.Controllers;
 global using Core.Extensions;
 global using Core.Middleware;
 global using Core.Models.Basket;
+global using Core.Models.Basket.Dtos;
 
-global using BasketAPI.Models.Dtos;
 global using BasketAPI.Data;
 global using BasketAPI.Helpers;
