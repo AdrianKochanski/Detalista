@@ -20,7 +20,7 @@ namespace ProductsAPI.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Core.Entities.DeliveryMethod", b =>
+            modelBuilder.Entity("Core.Models.DeliveryMethod", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,7 +45,7 @@ namespace ProductsAPI.Data.Migrations
                     b.ToTable("DeliveryMethods");
                 });
 
-            modelBuilder.Entity("Core.Entities.Product", b =>
+            modelBuilder.Entity("Core.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -90,7 +90,7 @@ namespace ProductsAPI.Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Core.Entities.ProductBrand", b =>
+            modelBuilder.Entity("Core.Models.ProductBrand", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -106,7 +106,7 @@ namespace ProductsAPI.Data.Migrations
                     b.ToTable("ProductBrands");
                 });
 
-            modelBuilder.Entity("Core.Entities.ProductType", b =>
+            modelBuilder.Entity("Core.Models.ProductType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -122,15 +122,15 @@ namespace ProductsAPI.Data.Migrations
                     b.ToTable("ProductTypes");
                 });
 
-            modelBuilder.Entity("Core.Entities.Product", b =>
+            modelBuilder.Entity("Core.Models.Product", b =>
                 {
-                    b.HasOne("Core.Entities.ProductBrand", "ProductBrand")
+                    b.HasOne("Core.Models.ProductBrand", "ProductBrand")
                         .WithMany()
                         .HasForeignKey("ProductBrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.ProductType", "ProductType")
+                    b.HasOne("Core.Models.ProductType", "ProductType")
                         .WithMany()
                         .HasForeignKey("ProductTypeId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -22,7 +22,7 @@ namespace OrdersAPI.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Core.Entities.DeliveryMethod", b =>
+            modelBuilder.Entity("Core.Models.DeliveryMethod", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,7 +47,7 @@ namespace OrdersAPI.Data.Migrations
                     b.ToTable("DeliveryMethod");
                 });
 
-            modelBuilder.Entity("Core.Entities.Orders.Order", b =>
+            modelBuilder.Entity("Core.Models.Orders.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -81,7 +81,7 @@ namespace OrdersAPI.Data.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Core.Entities.Orders.OrderItem", b =>
+            modelBuilder.Entity("Core.Models.Orders.OrderItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -105,13 +105,13 @@ namespace OrdersAPI.Data.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("Core.Entities.Orders.Order", b =>
+            modelBuilder.Entity("Core.Models.Orders.Order", b =>
                 {
-                    b.HasOne("Core.Entities.DeliveryMethod", "DeliveryMethod")
+                    b.HasOne("Core.Models.DeliveryMethod", "DeliveryMethod")
                         .WithMany()
                         .HasForeignKey("DeliveryMethodId");
 
-                    b.OwnsOne("Core.Entities.Orders.Address", "ShipToAddress", b1 =>
+                    b.OwnsOne("Core.Models.Orders.Address", "ShipToAddress", b1 =>
                         {
                             b1.Property<int>("OrderId")
                                 .HasColumnType("integer");
@@ -148,14 +148,14 @@ namespace OrdersAPI.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Core.Entities.Orders.OrderItem", b =>
+            modelBuilder.Entity("Core.Models.Orders.OrderItem", b =>
                 {
-                    b.HasOne("Core.Entities.Orders.Order", null)
+                    b.HasOne("Core.Models.Orders.Order", null)
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.OwnsOne("Core.Entities.Orders.ProductItemOrdered", "ItemOrdered", b1 =>
+                    b.OwnsOne("Core.Models.Orders.ProductItemOrdered", "ItemOrdered", b1 =>
                         {
                             b1.Property<int>("OrderItemId")
                                 .HasColumnType("integer");
@@ -180,7 +180,7 @@ namespace OrdersAPI.Data.Migrations
                     b.Navigation("ItemOrdered");
                 });
 
-            modelBuilder.Entity("Core.Entities.Orders.Order", b =>
+            modelBuilder.Entity("Core.Models.Orders.Order", b =>
                 {
                     b.Navigation("OrderItems");
                 });

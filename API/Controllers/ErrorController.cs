@@ -1,4 +1,4 @@
-using Core.Errors;
+using Core.Models.Errors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

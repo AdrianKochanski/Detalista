@@ -1,6 +1,5 @@
-using System.Linq;
-using Core.Entities;
-using Core.Specifications;
+using Core.Data.Specifications;
+using Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Data

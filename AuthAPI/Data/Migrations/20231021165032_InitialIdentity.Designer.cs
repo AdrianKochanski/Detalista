@@ -25,7 +25,7 @@ namespace AuthAPI.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Core.Entities.Identity.Address", b =>
+            modelBuilder.Entity("Core.Models.Identity.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +63,7 @@ namespace AuthAPI.Data.Migrations
                     b.ToTable("Address");
                 });
 
-            modelBuilder.Entity("Core.Entities.Identity.AppUser", b =>
+            modelBuilder.Entity("Core.Models.Identity.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -262,11 +262,11 @@ namespace AuthAPI.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Core.Entities.Identity.Address", b =>
+            modelBuilder.Entity("Core.Models.Identity.Address", b =>
                 {
-                    b.HasOne("Core.Entities.Identity.AppUser", "AppUser")
+                    b.HasOne("Core.Models.Identity.AppUser", "AppUser")
                         .WithOne("Address")
-                        .HasForeignKey("Core.Entities.Identity.Address", "AppUserId")
+                        .HasForeignKey("Core.Models.Identity.Address", "AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -284,7 +284,7 @@ namespace AuthAPI.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Core.Entities.Identity.AppUser", null)
+                    b.HasOne("Core.Models.Identity.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -293,7 +293,7 @@ namespace AuthAPI.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Core.Entities.Identity.AppUser", null)
+                    b.HasOne("Core.Models.Identity.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -308,7 +308,7 @@ namespace AuthAPI.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.Identity.AppUser", null)
+                    b.HasOne("Core.Models.Identity.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -317,14 +317,14 @@ namespace AuthAPI.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Core.Entities.Identity.AppUser", null)
+                    b.HasOne("Core.Models.Identity.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Core.Entities.Identity.AppUser", b =>
+            modelBuilder.Entity("Core.Models.Identity.AppUser", b =>
                 {
                     b.Navigation("Address");
                 });

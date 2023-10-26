@@ -1,5 +1,5 @@
 using System.Text;
-using Core.Errors;
+using Core.Models.Errors;
 using Core.Interfaces;
 using Core.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

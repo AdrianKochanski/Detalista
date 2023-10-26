@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Core.Entities;
+using Core.Data.Specifications;
+using Core.Models;
 using Core.Interfaces;
-using Core.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Data

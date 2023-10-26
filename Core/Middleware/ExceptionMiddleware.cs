@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 using System.Text.Json;
-using Core.Errors;
+using Core.Models.Errors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

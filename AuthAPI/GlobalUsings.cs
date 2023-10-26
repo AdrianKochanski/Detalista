@@ -19,9 +19,9 @@ global using AuthAPI.Extensions;
 
 global using AutoMapper;
 
-global using Core.Dtos;
-global using Core.Errors;
+global using Core.Models.Dtos;
+global using Core.Models.Errors;
 global using Core.Controllers;
-global using Core.Entities.Identity;
+global using Core.Models.Identity;
 global using Core.Extensions;
 global using Core.Middleware;
