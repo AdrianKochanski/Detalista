@@ -55,7 +55,7 @@ namespace PaymentsAPI.Controllers
             }
 
             return basket;
-        }   
+        }
 
         [HttpPost("webhook")]
         public async Task<ActionResult> StripeWebHook()

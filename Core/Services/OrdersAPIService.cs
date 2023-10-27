@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using Core.Models;
 using Core.Models.Orders;
 using Core.Models.Orders.Dtos;
@@ -17,7 +18,7 @@ namespace Core.Services
         {
             try
             {
-                HttpClient client = CreateClient(GetType());
+                HttpClient client = CreateClient<OrdersAPIService>();
                 HttpResponseMessage response = await client.GetAsync($"/api/deliveryMethod/{id}");
                 return await DeserializeResponse<DeliveryMethod>(response);
             }
@@ -28,13 +29,14 @@ namespace Core.Services
             }
         }
 
-        public async Task<OrderToReturnDto> UpdateOrderPaymentStatusAsync(string paymentIntentId, OrderStatus newPaymentStatus)
+        public async Task<OrderToReturnDto> UpdateOrderPaymentStatusAsync(string paymentIntentId, OrderStatus newPaymentStatus, string bearerToken)
         {
             try
             {
-                HttpClient client = CreateClient(GetType());
-                StringContent content = new StringContent(JsonConvert.SerializeObject(newPaymentStatus), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PatchAsync($"/api/updateOrderPaymentStatus/{paymentIntentId}", content);
+                HttpClient client = CreateClient<OrdersAPIService>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
+                StringContent content = new StringContent(JsonConvert.SerializeObject(1), System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PatchAsync($"/api/Orders/updateOrderPaymentStatus/{paymentIntentId}", content);
                 return await DeserializeResponse<OrderToReturnDto>(response);
             }
             catch (Exception ex)

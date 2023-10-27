@@ -1,6 +1,5 @@
 using System.Text;
 using Core.Models.Errors;
-using Core.Data.Interfaces;
 using Core.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -45,7 +44,7 @@ namespace Core.Extensions
         {
             services.AddScoped<TService, TImplementation>();
 
-            string uriPath = $"ServiceUrls:{nameof(TImplementation)}";
+            string uriPath = $"ServiceUrls:{typeof(TImplementation).Name}";
             string uri = config[uriPath];
             services.AddHttpClient<TImplementation>(u => u.BaseAddress = new Uri(uri));
             return services;

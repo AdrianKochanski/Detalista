@@ -1,4 +1,4 @@
-using Core.Models.Orders.Dtos;
+using Microsoft.Extensions.Options;
 
 namespace PaymentsAPI.Services
 {
@@ -9,13 +9,23 @@ namespace PaymentsAPI.Services
         private readonly IBasketAPIService _basketAPIService;
         private readonly IProductsAPIService _productsAPIService;
         private readonly IOrdersAPIService _ordersAPIService;
+        private readonly IAuthAPIService _authAPIService;
+        private readonly LoginOptions _systemRobotCred;
 
-        public PaymentService(IConfiguration config, IBasketAPIService basketAPIService, IProductsAPIService productsAPIService, IOrdersAPIService ordersAPIService)
+        public PaymentService(
+            IConfiguration config, 
+            IBasketAPIService basketAPIService, 
+            IProductsAPIService productsAPIService,
+            IOrdersAPIService ordersAPIService, 
+            IAuthAPIService authAPIService,
+            IOptions<LoginOptions> systemRobotCred)
         {
             _config = config;
             _basketAPIService = basketAPIService;
             _productsAPIService = productsAPIService;
             _ordersAPIService = ordersAPIService;
+            _authAPIService = authAPIService;
+            _systemRobotCred = systemRobotCred.Value;
         }
 
         public async Task<CustomerBasketDto> CreateOrUpdatePaymentIntent(string basketId)
@@ -80,7 +90,14 @@ namespace PaymentsAPI.Services
 
         public async Task<OrderToReturnDto> UpdateOrderPaymentStatus(string paymentIntentId, OrderStatus newPaymentStatus)
         {
-            OrderToReturnDto order = await _ordersAPIService.UpdateOrderPaymentStatusAsync(paymentIntentId, newPaymentStatus);
+            UserWithTokenDto robotUser = await _authAPIService.LoginAsync(
+                new LoginDto() {
+                    Email = _systemRobotCred.Email,
+                    Password = _systemRobotCred.Password
+                }
+            );
+            
+            OrderToReturnDto order = await _ordersAPIService.UpdateOrderPaymentStatusAsync(paymentIntentId, newPaymentStatus, robotUser.Token);
             return order;
         }
     }

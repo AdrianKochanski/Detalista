@@ -14,7 +14,7 @@ namespace Core.Services
         {
             try
             {
-                HttpClient client = CreateClient(GetType());
+                HttpClient client = CreateClient<ProductsAPIService>();
                 HttpResponseMessage response = await client.GetAsync($"/api/products/{id}");
                 return await DeserializeResponse<ProductToReturnDto>(response);
             }

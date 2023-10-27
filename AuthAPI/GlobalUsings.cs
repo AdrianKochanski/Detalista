@@ -25,3 +25,4 @@ global using Core.Controllers;
 global using Core.Models.Identity;
 global using Core.Extensions;
 global using Core.Middleware;
+global using Core.Models.Identity.Dtos;

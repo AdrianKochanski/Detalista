@@ -14,8 +14,9 @@ namespace Core.Services
             _logger = logger;
         }
 
-        public HttpClient CreateClient<T>(T typeObj) {
-            HttpClient client = _httpClientFactory.CreateClient(nameof(typeObj));
+        public HttpClient CreateClient<T>() {
+            string serviceName = typeof(T).Name;
+            HttpClient client = _httpClientFactory.CreateClient(serviceName);
             client.Timeout = new TimeSpan(0, 2, 0);
             return client;
         }

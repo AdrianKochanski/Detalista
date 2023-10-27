@@ -7,6 +7,6 @@ namespace Core.Services.Interfaces
     public interface IOrdersAPIService
     {
         public Task<DeliveryMethod> GetDeliveryMethodAsync(int id);
-        public Task<OrderToReturnDto> UpdateOrderPaymentStatusAsync(string paymentIntentId, OrderStatus newPaymentStatus);
+        public Task<OrderToReturnDto> UpdateOrderPaymentStatusAsync(string paymentIntentId, OrderStatus newPaymentStatus, string bearerToken);
     }
 }

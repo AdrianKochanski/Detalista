@@ -1,4 +1,4 @@
-namespace AuthAPI.Models.Dtos
+namespace Core.Models.Identity.Dtos
 {
     public class UserWithRolesDto
     {

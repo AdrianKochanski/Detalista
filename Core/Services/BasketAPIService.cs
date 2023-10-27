@@ -15,7 +15,7 @@ namespace Core.Services
         {
             try
             {
-                HttpClient client = CreateClient(GetType());
+                HttpClient client = CreateClient<BasketAPIService>();
                 HttpResponseMessage response = await client.GetAsync("/api/basket");
                 return await DeserializeResponse<CustomerBasketDto>(response);
             }
@@ -30,7 +30,7 @@ namespace Core.Services
         {
             try
             {
-                HttpClient client = CreateClient(GetType());
+                HttpClient client = CreateClient<BasketAPIService>();
                 StringContent content = new StringContent(JsonConvert.SerializeObject(basket), System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await client.PostAsync("/api/basket", content);
                 return await DeserializeResponse<CustomerBasketDto>(response);

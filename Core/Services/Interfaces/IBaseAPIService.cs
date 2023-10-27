@@ -5,7 +5,7 @@ namespace Core.Services.Interfaces
 {
     public interface IBaseAPIService
     {
-        public HttpClient CreateClient<T>(T typeObj);
+        public HttpClient CreateClient<T>();
         
         public Task<T> DeserializeResponse<T>(HttpResponseMessage response) where T: class;
     }

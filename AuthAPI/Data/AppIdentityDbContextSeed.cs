@@ -49,14 +49,14 @@ namespace AuthAPI.Identity
                     Address = new Address{
                         FirstName = "Robot",
                         LastName = "Worker",
-                        Street = "10 The Street",
-                        City = "New York",
-                        State = "NY",
-                        Zipcode = "90210"
+                        Street = "20 The Street",
+                        City = "Elwood",
+                        State = "KS",
+                        Zipcode = "66024"
                     }
                 };
 
-                await userManager.CreateAsync(user, "Pa$$w0rd");
+                await userManager.CreateAsync(user, "Ym0!dP9x)4Yo1(j?");
                 await userManager.AddToRoleAsync(user, Role.SystemRobot.Name());
             }
         }
