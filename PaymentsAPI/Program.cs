@@ -1,7 +1,11 @@
+using PaymentsAPI.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure services
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 builder.Services.AddHttpApiClient<IBasketAPIService, BasketAPIService>(builder.Configuration);
 builder.Services.AddHttpApiClient<IProductsAPIService, ProductsAPIService>(builder.Configuration);

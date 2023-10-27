@@ -37,6 +37,7 @@ app.MapControllers();
 
 // On app start
 await app.UpdateMigrations<Program, OrdersContext>(
-    builder.Environment.IsDevelopment()
+    builder.Environment.IsDevelopment(),
+    OrdersContextSeed.SeedAsync
 );
 await app.RunAsync();

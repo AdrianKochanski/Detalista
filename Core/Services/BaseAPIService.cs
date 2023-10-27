@@ -1,4 +1,3 @@
-using Core.Models;
 using Core.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;

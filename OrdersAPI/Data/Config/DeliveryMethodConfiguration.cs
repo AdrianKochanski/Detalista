@@ -1,4 +1,4 @@
-namespace ProductsAPI.Data.Config
+namespace OrdersAPI.Data.Config
 {
     public class DeliveryMethodConfiguration : IEntityTypeConfiguration<DeliveryMethod>
     {

@@ -10,8 +10,9 @@ namespace PaymentsAPI.Services
         private readonly IProductsAPIService _productsAPIService;
         private readonly IOrdersAPIService _ordersAPIService;
 
-        public PaymentService(IBasketAPIService basketAPIService, IProductsAPIService productsAPIService, IOrdersAPIService ordersAPIService)
+        public PaymentService(IConfiguration config, IBasketAPIService basketAPIService, IProductsAPIService productsAPIService, IOrdersAPIService ordersAPIService)
         {
+            _config = config;
             _basketAPIService = basketAPIService;
             _productsAPIService = productsAPIService;
             _ordersAPIService = ordersAPIService;

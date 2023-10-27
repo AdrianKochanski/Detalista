@@ -52,13 +52,6 @@ namespace ProductsAPI.Data
                     context.Products.AddRange(newProducts);
                 }
 
-                if (!context.DeliveryMethods.Any())
-                {
-                    var deliveryData = File.ReadAllText(path + @"/Data/SeedData/delivery.json");
-                    var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryData);
-                    context.DeliveryMethods.AddRange(deliveryMethods);
-                }
-
                 if(context.ChangeTracker.HasChanges()) {
                     await context.SaveChangesAsync();
                 }

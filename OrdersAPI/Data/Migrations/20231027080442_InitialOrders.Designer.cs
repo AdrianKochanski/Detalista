@@ -12,7 +12,7 @@ using OrdersAPI.Data;
 namespace OrdersAPI.Data.Migrations
 {
     [DbContext(typeof(OrdersContext))]
-    [Migration("20231024173511_InitialOrders")]
+    [Migration("20231027080442_InitialOrders")]
     partial class InitialOrders
     {
         /// <inheritdoc />
@@ -40,14 +40,14 @@ namespace OrdersAPI.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ShortName")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeliveryMethod");
+                    b.ToTable("DeliveryMethods");
                 });
 
             modelBuilder.Entity("Core.Models.Orders.Order", b =>
