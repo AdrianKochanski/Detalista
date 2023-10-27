@@ -8,7 +8,7 @@ builder.Services.AddCorsWithOrigin("CorsPolicy", "https://localhost:4200");
 builder.Services.ConnectToRedis(builder.Configuration.GetConnectionString("Redis"));
 builder.Services.AddExceptionHandling();
 builder.Services.AddAuthentication(builder.Configuration);
-builder.Services.AddSwaggerDocumentation();
+builder.Services.AddSwaggerDocumentation("BasketAPI", true);
 
 
 // Configure http request pipeline

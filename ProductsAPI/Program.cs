@@ -13,7 +13,7 @@ builder.Services.AddScoped<IGenericRepositoryFactory, GenericRepositoryFactory<P
 builder.Services.AddCorsWithOrigin("CorsPolicy", "https://localhost:4200");
 builder.Services.ConnectToRedis(builder.Configuration.GetConnectionString("Redis")).WithRedisCache();
 builder.Services.AddExceptionHandling();
-builder.Services.AddSwaggerDocumentation();
+builder.Services.AddSwaggerDocumentation("ProductsAPI");
 
 // Configure http request pipeline
 var app = builder.Build();

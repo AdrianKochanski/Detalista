@@ -10,7 +10,7 @@ namespace Core.Services
         {
         }
 
-        public async Task<ProductToReturnDto> GetProduct(int id)
+        public async Task<ProductToReturnDto> GetProductAsync(int id)
         {
             try
             {
@@ -20,7 +20,7 @@ namespace Core.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Request failed for method: {nameof(GetProduct)} with parameters: {id}", ex.Message);
+                _logger.LogError($"Request failed for method: {nameof(GetProductAsync)} with parameters: {id}", ex.Message);
                 throw;
             }
         }

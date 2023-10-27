@@ -19,7 +19,7 @@ builder.Services.AddCorsWithOrigin("CorsPolicy", builder.Configuration[$"Service
 builder.Services.ConnectToRedis(builder.Configuration.GetConnectionString("Redis")).WithRedisCache();
 builder.Services.AddExceptionHandling();
 builder.Services.AddAuthentication(builder.Configuration);
-builder.Services.AddSwaggerDocumentation();
+builder.Services.AddSwaggerDocumentation("OrdersAPI", true);
 
 // Configure http request pipeline
 var app = builder.Build();

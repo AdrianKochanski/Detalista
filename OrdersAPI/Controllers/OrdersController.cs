@@ -1,6 +1,5 @@
 namespace OrdersAPI.Controllers
 {
-    [Authorize]
     public class OrdersController : BaseApiController
     {
         private readonly IOrderService _orderService;
@@ -12,6 +11,7 @@ namespace OrdersAPI.Controllers
             _mapper = mapper;
         }
         
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<OrderToReturnDto>> CreateOrder(OrderDto orderDto)
         {
@@ -32,7 +32,7 @@ namespace OrdersAPI.Controllers
             return Ok(_mapper.Map<OrderToReturnDto>(order));
         }
 
-        [Authorize(Roles="OrderPaymentService")]
+        [Authorize(Roles="SystemRobot")]
         [HttpPatch("updateOrderPaymentStatus/{paymentIntentId}")]
         public async Task<ActionResult<OrderToReturnDto>> UpdateOrderPaymentStatus(string paymentIntentId, [FromBody] OrderStatus newPaymentStatus)
         {
@@ -40,6 +40,7 @@ namespace OrdersAPI.Controllers
             return Ok(_mapper.Map<OrderToReturnDto>(order));
         }
 
+        [Authorize]
         [Cached(600)]
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrdersForUser() 
@@ -50,6 +51,7 @@ namespace OrdersAPI.Controllers
             return Ok(_mapper.Map<IReadOnlyList<OrderToReturnDto>>(orders));
         }
 
+        [Authorize]
         [Cached(600)]
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderToReturnDto>> GetOrderByIdForUser(int id) 

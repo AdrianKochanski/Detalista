@@ -31,14 +31,14 @@ namespace PaymentsAPI.Services
             if(basket.DeliveryMethodId.HasValue)
             {
                 // Order Service
-                var deliveryMethod = await _ordersAPIService.GetDeliveryMethod(basket.DeliveryMethodId.Value);
+                var deliveryMethod = await _ordersAPIService.GetDeliveryMethodAsync(basket.DeliveryMethodId.Value);
                 shippingPrice = deliveryMethod.Price;
             }
 
             foreach(var item in basket.Items)
             {
                 // Product Service
-                var product = await _productsAPIService.GetProduct(item.Id);
+                var product = await _productsAPIService.GetProductAsync(item.Id);
 
                 if(item.Price != product.Price)
                 {
@@ -73,14 +73,14 @@ namespace PaymentsAPI.Services
             }
 
             // Basket Service
-            await _basketAPIService.UpdateBasket(basket);
+            await _basketAPIService.UpdateBasketAsync(basket);
 
             return basket;
         }
 
         public async Task<OrderToReturnDto> UpdateOrderPaymentStatus(string paymentIntentId, OrderStatus newPaymentStatus)
         {
-            OrderToReturnDto order = await _ordersAPIService.UpdateOrderPaymentStatus(paymentIntentId, newPaymentStatus);
+            OrderToReturnDto order = await _ordersAPIService.UpdateOrderPaymentStatusAsync(paymentIntentId, newPaymentStatus);
             return order;
         }
     }

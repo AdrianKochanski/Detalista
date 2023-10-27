@@ -107,29 +107,31 @@ namespace Core.Extensions
             return services;
         }
 
-        public static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)
+        public static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services, string title, bool addAuthentication = false)
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = title, Version = "v1" });
+                
+                if(addAuthentication) {
+                    var securitySchema = new OpenApiSecurityScheme {
+                        Description = "JWT Auth Bearer Scheme",
+                        Name = "Authorization",
+                        In = ParameterLocation.Header,
+                        Type = SecuritySchemeType.Http,
+                        Scheme = "bearer",
+                        Reference = new OpenApiReference{
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    };
+                    c.AddSecurityDefinition("Bearer", securitySchema);
 
-                var securitySchema = new OpenApiSecurityScheme {
-                    Description = "JWT Auth Bearer Scheme",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "bearer",
-                    Reference = new OpenApiReference{
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
-                };
-                c.AddSecurityDefinition("Bearer", securitySchema);
-
-                var securityRequirements = new OpenApiSecurityRequirement{{securitySchema, new [] {
-                    "Bearer"
-                }}};
-                c.AddSecurityRequirement(securityRequirements);
+                    var securityRequirements = new OpenApiSecurityRequirement{{securitySchema, new [] {
+                        "Bearer"
+                    }}};
+                    c.AddSecurityRequirement(securityRequirements);
+                }
             });
 
             return services;

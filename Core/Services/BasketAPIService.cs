@@ -26,7 +26,7 @@ namespace Core.Services
             }
         }
 
-        public async Task<CustomerBasketDto> UpdateBasket(CustomerBasketDto basket)
+        public async Task<CustomerBasketDto> UpdateBasketAsync(CustomerBasketDto basket)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace Core.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Request failed for method: {nameof(UpdateBasket)} with parameters: {JsonConvert.SerializeObject(basket)}", ex.Message);
+                _logger.LogError($"Request failed for method: {nameof(UpdateBasketAsync)} with parameters: {JsonConvert.SerializeObject(basket)}", ex.Message);
                 throw;
             }
         }

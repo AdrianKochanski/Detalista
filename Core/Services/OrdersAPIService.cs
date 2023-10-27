@@ -13,7 +13,7 @@ namespace Core.Services
         {
         }
 
-        public async Task<DeliveryMethod> GetDeliveryMethod(int id)
+        public async Task<DeliveryMethod> GetDeliveryMethodAsync(int id)
         {
             try
             {
@@ -23,12 +23,12 @@ namespace Core.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Request failed for method: {nameof(GetDeliveryMethod)} with parameters: {id}", ex.Message);
+                _logger.LogError($"Request failed for method: {nameof(GetDeliveryMethodAsync)} with parameters: {id}", ex.Message);
                 throw;
             }
         }
 
-        public async Task<OrderToReturnDto> UpdateOrderPaymentStatus(string paymentIntentId, OrderStatus newPaymentStatus)
+        public async Task<OrderToReturnDto> UpdateOrderPaymentStatusAsync(string paymentIntentId, OrderStatus newPaymentStatus)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace Core.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Request failed for method: {nameof(UpdateOrderPaymentStatus)} with parameters: {paymentIntentId}, {newPaymentStatus}", ex.Message);
+                _logger.LogError($"Request failed for method: {nameof(UpdateOrderPaymentStatusAsync)} with parameters: {paymentIntentId}, {newPaymentStatus}", ex.Message);
                 throw;
             }
         }

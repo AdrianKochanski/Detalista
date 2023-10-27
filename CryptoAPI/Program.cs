@@ -5,7 +5,7 @@ builder.Services.AddControllers();
 builder.Services.AddCorsWithOrigin("CorsPolicy", "https://localhost:4200");
 builder.Services.ConnectToRedis(builder.Configuration.GetConnectionString("Redis")).WithRedisCache();
 builder.Services.AddExceptionHandling();
-builder.Services.AddSwaggerDocumentation();
+builder.Services.AddSwaggerDocumentation("CryptoAPI");
 
 // Configure http request pipeline
 var app = builder.Build();

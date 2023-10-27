@@ -2,19 +2,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            // Use IntelliSense to find out which attributes exist for C# debugging
-            // Use hover for the description of the existing attributes
-            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
-            "name": ".NET Core Launch (web)",
+            "name": "API",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
-            // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/API/bin/Debug/net7.0/API.dll",
             "args": [],
             "cwd": "${workspaceFolder}/API",
             "stopAtEntry": false,
-            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
             "serverReadyAction": {
                 "action": "openExternally",
                 "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
@@ -24,12 +18,130 @@
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
-            }
+            },
         },
         {
-            "name": ".NET Core Attach",
+            "name": "AuthAPI",
             "type": "coreclr",
-            "request": "attach"
+            "request": "launch",
+            "program": "${workspaceFolder}/AuthAPI/bin/Debug/net7.0/AuthAPI.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/AuthAPI",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+        },
+        {
+            "name": "BasketAPI",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/BasketAPI/bin/Debug/net7.0/BasketAPI.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/BasketAPI",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+        },
+        {
+            "name": "CryptoAPI",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/CryptoAPI/bin/Debug/net7.0/CryptoAPI.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/CryptoAPI",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+        },
+        {
+            "name": "OrdersAPI",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/OrdersAPI/bin/Debug/net7.0/OrdersAPI.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/OrdersAPI",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+        },
+        {
+            "name": "PaymentsAPI",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/PaymentsAPI/bin/Debug/net7.0/PaymentsAPI.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/PaymentsAPI",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+        },
+        {
+            "name": "ProductsAPI",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/ProductsAPI/bin/Debug/net7.0/ProductsAPI.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/ProductsAPI",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+        }
+    ],
+    "compounds": [
+        {
+            "name": "ServerAPIs",
+            "configurations": ["API", "AuthAPI", "BasketAPI", "CryptoAPI", "OrdersAPI", "PaymentsAPI", "ProductsAPI"],
+            "preLaunchTask": "build-docker-compose-up",
+            "postDebugTask": "docker-compose-down",
+            "stopAll": true
         }
     ]
 }

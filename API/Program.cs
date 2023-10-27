@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddCorsWithOrigin("CorsPolicy", "https://localhost:4200");
 builder.Services.AddExceptionHandling();
-builder.Services.AddSwaggerDocumentation();
+builder.Services.AddSwaggerDocumentation("API");
 
 // Configure http request pipeline
 var app = builder.Build();

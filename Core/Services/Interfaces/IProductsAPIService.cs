@@ -4,6 +4,6 @@ namespace Core.Services.Interfaces
 {
     public interface IProductsAPIService
     {
-        public Task<ProductToReturnDto> GetProduct(int id);
+        public Task<ProductToReturnDto> GetProductAsync(int id);
     }
 }

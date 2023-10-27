@@ -4,10 +4,10 @@ namespace AuthAPI.Identity
     {
         public static async Task SeedUserWithRoleAsync(AppIdentityDbContext context, IServiceProvider services, bool isDevelopment, ILoggerFactory loggerFactory)
         {
-            if (!isDevelopment) return;
-            
             RoleManager<IdentityRole> roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
             await SeedRolesAsync(roleManager);
+
+            if (!isDevelopment) return;
 
             UserManager<AppUser> userManager = services.GetRequiredService<UserManager<AppUser>>();
             await SeedUsersAsync(userManager);
@@ -17,12 +17,12 @@ namespace AuthAPI.Identity
         {
             if(!userManager.Users.Any()){
                 AppUser user = new AppUser{
-                    DisplayName = "Bob",
-                    Email = "bob@test.com",
-                    UserName = "bob@test.com",
+                    DisplayName = "Robot",
+                    Email = "robot@robot.com",
+                    UserName = "robot@robot.com",
                     Address = new Address{
-                        FirstName = "Bob",
-                        LastName = "Bobbity",
+                        FirstName = "Robot",
+                        LastName = "Worker",
                         Street = "10 The Street",
                         City = "New York",
                         State = "NY",

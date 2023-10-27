@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/API/API.csproj",
+                "${workspaceFolder}/skinet.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/API/API.csproj",
+                "${workspaceFolder}/skinet.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,9 +33,26 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/API/API.csproj"
+                "${workspaceFolder}/skinet.sln",
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "docker-compose-down",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["down"],
+            "group": "build"
+        },
+        {
+            "label": "build-docker-compose-up",
+            "type": "shell",
+            "command": "cmd",
+            "args": ["/c", "build-and-compose-up.bat"], // Use the batch script
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }

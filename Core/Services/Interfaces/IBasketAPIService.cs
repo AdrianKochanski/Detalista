@@ -6,6 +6,6 @@ namespace Core.Services.Interfaces
     public interface IBasketAPIService
     {
         public Task<CustomerBasketDto> GetBasketAsync(string basketId);
-        public Task<CustomerBasketDto> UpdateBasket(CustomerBasketDto basket);
+        public Task<CustomerBasketDto> UpdateBasketAsync(CustomerBasketDto basket);
     }
 }
