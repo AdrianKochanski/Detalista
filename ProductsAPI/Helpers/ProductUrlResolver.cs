@@ -12,7 +12,7 @@ namespace ProductsAPI.Helpers
         {
             if (!string.IsNullOrEmpty(source.PictureUrl)) 
             {
-                return _config["ApiUrl"] + source.PictureUrl;
+                return _config["ServiceUrls:ImageResourceContentUrl"] + source.PictureUrl;
             }
             return null;
         }   

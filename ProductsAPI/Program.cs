@@ -10,7 +10,7 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork<ProductsContext>>();
 builder.Services.AddScoped<IGenericRepositoryFactory, GenericRepositoryFactory<ProductsContext>>();
 
-builder.Services.AddCorsWithOrigin("CorsPolicy", "https://localhost:4200");
+builder.Services.AddCorsWithOrigin("CorsPolicy", builder.Configuration[$"ServiceUrls:ClientUrl"]);
 builder.Services.ConnectToRedis(builder.Configuration.GetConnectionString("Redis")).WithRedisCache();
 builder.Services.AddExceptionHandling();
 builder.Services.AddSwaggerDocumentation("ProductsAPI");

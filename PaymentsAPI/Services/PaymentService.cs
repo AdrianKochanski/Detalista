@@ -5,7 +5,6 @@ namespace PaymentsAPI.Services
     public class PaymentService : IPaymentService
     {
         private readonly IConfiguration _config;
-
         private readonly IBasketAPIService _basketAPIService;
         private readonly IProductsAPIService _productsAPIService;
         private readonly IOrdersAPIService _ordersAPIService;

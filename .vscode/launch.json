@@ -138,7 +138,7 @@
     "compounds": [
         {
             "name": "ServerAPIs",
-            "configurations": ["API", "AuthAPI", "BasketAPI", "CryptoAPI", "OrdersAPI", "PaymentsAPI", "ProductsAPI"],
+            "configurations": ["API", "AuthAPI", "ProductsAPI", "CryptoAPI", "BasketAPI", "OrdersAPI", "PaymentsAPI"],
             "preLaunchTask": "build-docker-compose-up",
             "postDebugTask": "docker-compose-down",
             "stopAll": true

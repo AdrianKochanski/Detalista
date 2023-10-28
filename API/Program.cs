@@ -2,7 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Configure services
 builder.Services.AddControllers();
-builder.Services.AddCorsWithOrigin("CorsPolicy", "https://localhost:4200");
+builder.Services.AddCorsWithOrigin("CorsPolicy", builder.Configuration[$"ServiceUrls:ClientUrl"]);
 builder.Services.AddExceptionHandling();
 builder.Services.AddSwaggerDocumentation("API");
 

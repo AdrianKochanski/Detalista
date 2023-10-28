@@ -15,7 +15,7 @@ identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 identityBuilder.AddRoles<IdentityRole>();
 identityBuilder.AddRoleManager<RoleManager<IdentityRole>>();
 
-builder.Services.AddCorsWithOrigin("CorsPolicy", "https://localhost:4200");
+builder.Services.AddCorsWithOrigin("CorsPolicy", builder.Configuration[$"ServiceUrls:ClientUrl"]);
 builder.Services.AddExceptionHandling();
 builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddSwaggerDocumentation("AuthAPI", true);

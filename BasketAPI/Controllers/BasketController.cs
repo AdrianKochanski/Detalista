@@ -11,7 +11,7 @@ namespace BasketAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<CustomerBasket>> GetBasketById(string id)
+        public async Task<ActionResult<CustomerBasket>> GetBasketById(Guid id)
         {
             CustomerBasket basket = await _basketRepository.GetBasketAsync(id);
             return Ok(basket ?? new CustomerBasket(id));
@@ -25,7 +25,7 @@ namespace BasketAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task DeleteBasket(string id)
+        public async Task DeleteBasket(Guid id)
         {
             await _basketRepository.DeleteBasketAsync(id);
         }
