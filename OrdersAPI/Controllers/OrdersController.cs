@@ -37,11 +37,12 @@ namespace OrdersAPI.Controllers
         public async Task<ActionResult<OrderToReturnDto>> UpdateOrderPaymentStatus(string paymentIntentId, [FromBody] OrderStatus newPaymentStatus)
         {
             Order order = await _orderService.UpdateOrderPaymentStatus(paymentIntentId, newPaymentStatus);
-            return Ok(_mapper.Map<OrderToReturnDto>(order));
+            OrderToReturnDto orderToReturn = _mapper.Map<OrderToReturnDto>(order);
+            return Ok(orderToReturn);
         }
 
         [Authorize]
-        [Cached(600)]
+        //[Cached(600)]
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrdersForUser() 
         {
@@ -52,7 +53,7 @@ namespace OrdersAPI.Controllers
         }
 
         [Authorize]
-        [Cached(600)]
+        //[Cached(600)]
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderToReturnDto>> GetOrderByIdForUser(int id) 
         {

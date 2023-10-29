@@ -57,6 +57,10 @@ namespace PaymentsAPI.Controllers
             return basket;
         }
 
+        // Local test
+        // 1. stripe login --interactive
+        // 2. stripe listen --events payment_intent.succeeded,payment_intent.payment_failed --forward-to https://localhost:7006/api/payments/webhook
+        // 3. stripe trigger payment_intent.succeeded
         [HttpPost("webhook")]
         public async Task<ActionResult> StripeWebHook()
         {

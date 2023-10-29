@@ -6,7 +6,7 @@ builder.Services.AddControllers();
 builder.Services.Configure<LoginOptions>(builder.Configuration.GetSection("SystemRobot"));
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
-builder.Services.AddHttpApiClient<IBasketAPIService, BasketAPIService>(builder.Configuration, true);
+builder.Services.AddHttpApiClient<IBasketAPIService, BasketAPIService>(builder.Configuration);
 builder.Services.AddHttpApiClient<IProductsAPIService, ProductsAPIService>(builder.Configuration);
 builder.Services.AddHttpApiClient<IOrdersAPIService, OrdersAPIService>(builder.Configuration);
 builder.Services.AddHttpApiClient<IAuthAPIService, AuthAPIService>(builder.Configuration);
