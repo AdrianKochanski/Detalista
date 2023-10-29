@@ -19,7 +19,7 @@ namespace Core.Services
             try
             {
                 HttpClient client = CreateClient<OrdersAPIService>();
-                HttpResponseMessage response = await client.GetAsync($"/api/deliveryMethod/{id}");
+                HttpResponseMessage response = await client.GetAsync($"/api/orders/deliveryMethod?id={id}");
                 return await DeserializeResponse<DeliveryMethod>(response);
             }
             catch (Exception ex)

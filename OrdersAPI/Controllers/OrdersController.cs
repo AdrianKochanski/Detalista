@@ -75,7 +75,7 @@ namespace OrdersAPI.Controllers
         }
 
         [Cached(600)]
-        [HttpGet("deliveryMethod/{id}")]
+        [HttpGet("deliveryMethod")]
         public async Task<ActionResult<DeliveryMethod>> GetDeliveryMethod(int id)
         {
             return Ok(await _orderService.GetDeliveryMethodByIdAsync(id));

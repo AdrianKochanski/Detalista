@@ -12,6 +12,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using Core.Services.Interfaces;
+using Core.Utility;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Core.Extensions
 {
@@ -38,7 +40,7 @@ namespace Core.Extensions
             return services;
         }
 
-        public static IServiceCollection AddHttpApiClient<TService, TImplementation>(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddHttpApiClient<TService, TImplementation>(this IServiceCollection services, IConfiguration config, bool passCredentials = false)
         where TService : class
         where TImplementation : class, TService
         {
@@ -46,7 +48,14 @@ namespace Core.Extensions
 
             string uriPath = $"ServiceUrls:{typeof(TImplementation).Name}";
             string uri = config[uriPath];
-            services.AddHttpClient<TImplementation>(u => u.BaseAddress = new Uri(uri));
+            IHttpClientBuilder httpClientBuilder = services.AddHttpClient<TImplementation>(u => u.BaseAddress = new Uri(uri));
+            
+            if(passCredentials) {
+                services.AddHttpContextAccessor();
+                services.TryAddScoped<AuthenticationContextAccessorHandler>();
+                httpClientBuilder.AddHttpMessageHandler<AuthenticationContextAccessorHandler>();
+            }
+
             return services;
         }
 

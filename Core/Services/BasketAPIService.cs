@@ -16,7 +16,7 @@ namespace Core.Services
             try
             {
                 HttpClient client = CreateClient<BasketAPIService>();
-                HttpResponseMessage response = await client.GetAsync("/api/basket");
+                HttpResponseMessage response = await client.GetAsync($"/api/basket?id={basketId}");
                 return await DeserializeResponse<CustomerBasketDto>(response);
             }
             catch (Exception ex)
