@@ -1,0 +1,10 @@
+Mapper in crypto for models
+GetProducts method (reason for not iterating and sending request for each product in PaymentService.CreateOrUpdatePaymentIntent)
+Exception middleware (check)
+View after order paid (return data)
+Fallback controller with wwwroot one level up
+Correct API lvl hierarchy
+
+Introducing delays when starting the debugging for database migrations
+Refresh API cache (ex. when creating new order)
+New methods for admin role

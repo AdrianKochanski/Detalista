@@ -5,9 +5,9 @@
             "name": "API",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/API/bin/Debug/net7.0/API.dll",
+            "program": "${workspaceFolder}/Microservices/API/bin/Debug/net7.0/API.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/API",
+            "cwd": "${workspaceFolder}/Microservices/API",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -17,16 +17,16 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
+                "/Views": "${workspaceFolder}/Microservices/Views"
             },
         },
         {
             "name": "AuthAPI",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/AuthAPI/bin/Debug/net7.0/AuthAPI.dll",
+            "program": "${workspaceFolder}/Microservices/AuthAPI/bin/Debug/net7.0/AuthAPI.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/AuthAPI",
+            "cwd": "${workspaceFolder}/Microservices/AuthAPI",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -36,16 +36,16 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
+                "/Views": "${workspaceFolder}/Microservices/Views"
             },
         },
         {
             "name": "BasketAPI",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/BasketAPI/bin/Debug/net7.0/BasketAPI.dll",
+            "program": "${workspaceFolder}/Microservices/BasketAPI/bin/Debug/net7.0/BasketAPI.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/BasketAPI",
+            "cwd": "${workspaceFolder}/Microservices/BasketAPI",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -55,16 +55,16 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
+                "/Views": "${workspaceFolder}/Microservices/Views"
             },
         },
         {
             "name": "CryptoAPI",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/CryptoAPI/bin/Debug/net7.0/CryptoAPI.dll",
+            "program": "${workspaceFolder}/Microservices/CryptoAPI/bin/Debug/net7.0/CryptoAPI.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/CryptoAPI",
+            "cwd": "${workspaceFolder}/Microservices/CryptoAPI",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -74,16 +74,16 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
+                "/Views": "${workspaceFolder}/Microservices/Views"
             },
         },
         {
             "name": "OrdersAPI",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/OrdersAPI/bin/Debug/net7.0/OrdersAPI.dll",
+            "program": "${workspaceFolder}/Microservices/OrdersAPI/bin/Debug/net7.0/OrdersAPI.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/OrdersAPI",
+            "cwd": "${workspaceFolder}/Microservices/OrdersAPI",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -93,16 +93,16 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
+                "/Views": "${workspaceFolder}/Microservices/Views"
             },
         },
         {
             "name": "PaymentsAPI",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/PaymentsAPI/bin/Debug/net7.0/PaymentsAPI.dll",
+            "program": "${workspaceFolder}/Microservices/PaymentsAPI/bin/Debug/net7.0/PaymentsAPI.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/PaymentsAPI",
+            "cwd": "${workspaceFolder}/Microservices/PaymentsAPI",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -112,16 +112,16 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
+                "/Views": "${workspaceFolder}/Microservices/Views"
             },
         },
         {
             "name": "ProductsAPI",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/ProductsAPI/bin/Debug/net7.0/ProductsAPI.dll",
+            "program": "${workspaceFolder}/Microservices/ProductsAPI/bin/Debug/net7.0/ProductsAPI.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/ProductsAPI",
+            "cwd": "${workspaceFolder}/Microservices/ProductsAPI",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -131,7 +131,7 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
+                "/Views": "${workspaceFolder}/Microservices/Views"
             },
         }
     ],
